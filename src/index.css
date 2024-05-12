@@ -4,8 +4,35 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box;
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.filter{
+  backdrop-filter: blur(1px);
+}
+
+.inner-box {
+  position: absolute;
+  width: calc(100% - 4.1rem);
+  height: auto !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.videoDiv {
+  position: relative;
+  display: flex;
+  flex-basis: 50%;
+  width: 70%;
+  height: 100%;
+  padding: 0 1.5rem;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto 0;
+  border-radius: 10px;
+  overflow: hidden;
 }
