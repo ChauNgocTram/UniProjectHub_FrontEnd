@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import TeamSidebar from "../../../components/Sidebar/TeamSidebar";
+import TeamSidebar from "../../../../components/Sidebar/TeamSidebar";
 import FirstStep from "./stepper/steps/FirstStep";
 import SecondStep from "./stepper/steps/SecondStep";
 import Stepper from "./stepper/Stepper";
