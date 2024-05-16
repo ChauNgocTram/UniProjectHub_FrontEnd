@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineFileSearch, AiOutlineIdcard } from "react-icons/ai";
-import { ALL_TEAM_PROJECTS} from "../../routes/constant";
+import {
+  ALL_PERSONAL_PROJECTS,
+  CREATE_PERSONAL_PROJECT,
+} from "../../routes/constant";
 
-function TeamSidebar() {
+function PersonalSidebar() {
   const Menus = [
     {
       title: "Dự án",
       icon: <AiOutlineFileSearch />,
-      path: `/${ALL_TEAM_PROJECTS}`,
+      path: `/${ALL_PERSONAL_PROJECTS}`,
     },
     {
-      title: "Thảo luận",
+      title: "Tạo dự án",
       icon: <AiOutlineIdcard />,
-      path: "",
+      path: `/${CREATE_PERSONAL_PROJECT}`,
     },
   ];
   return (
@@ -53,4 +56,4 @@ function TeamSidebar() {
   );
 }
 
-export default TeamSidebar;
+export default PersonalSidebar;

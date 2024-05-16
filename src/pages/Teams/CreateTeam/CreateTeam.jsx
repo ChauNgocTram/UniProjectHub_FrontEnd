@@ -40,11 +40,8 @@ function CreateTeam() {
           </div>
 
           <div>
-            <Stepper steps={steps} currentStep={currentStep -1} />
-            <div className="my-2 p-5">
-            {displaySteps(currentStep)}
-            </div>
-            
+            <Stepper steps={steps} currentStep={currentStep - 1} />
+            <div className="my-2 p-5">{displaySteps(currentStep)}</div>
           </div>
         </div>
       </div>
