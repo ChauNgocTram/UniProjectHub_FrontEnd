@@ -6,13 +6,12 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
-      },
+      
       colors: {
         primaryColor: "hsl(94, 55%, 56%)",
         hoverBtn: "#A9EBEF",
-        mainBg:"#AFCED0"
+        mainBg:"#AFCED0",
+        mainColor:"#8CCADD"
       },
       fontSize: {
         14: "14px",

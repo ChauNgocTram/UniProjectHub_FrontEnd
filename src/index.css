@@ -1,13 +1,45 @@
-@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); 
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
+* {
   margin: 0;
   padding: 0;
+  font-family: "Montserrat", sans-serif;
 }
+
+
+
+.wrapper-body{
+  @apply w-[1024px] mt-16 mx-auto mb-0
+}
+
+/* navbar */
+.menuItem {
+  @apply relative hover:text-black;
+}
+.menuItem::after {
+  @apply content-[''] bg-mainColor h-[3px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute duration-300;
+}
+
+.menuItem:hover::after {
+  @apply w-[100%];
+}
+
+.activeNavbar {
+  @apply text-mainColor px-2 py-1 hover:border-none;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+
 
 .filter{
   backdrop-filter: blur(1px);
