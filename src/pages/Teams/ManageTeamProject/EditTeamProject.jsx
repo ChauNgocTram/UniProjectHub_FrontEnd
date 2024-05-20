@@ -1,8 +1,8 @@
 import React from "react";
 import { FaArrowLeft, FaAsterisk } from "react-icons/fa";
 import { Button, Form, Input, Select } from "antd";
-import PersonalSidebar from "../../../components/Sidebar/PersonalSidebar";
 import { NavLink } from "react-router-dom";
+import TeamSidebar from "../../../components/Sidebar/TeamSidebar";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -11,7 +11,7 @@ function EditTeamProject() {
   return (
     <>
     <div className="flex">
-      <PersonalSidebar />
+      <TeamSidebar/>
       <div className="w-full mt-8">
         <div className="my-3">
           <NavLink to="" onClick={() => window.history.back()}>

@@ -58,6 +58,7 @@ function SecondStep() {
             message: "Vui lòng nhập tên thành viên tham gia dự án",
           },
         ]}
+        style={{ width: '300px' }}
       >
         <Search
           placeholder="Tìm kiếm thành viên..."

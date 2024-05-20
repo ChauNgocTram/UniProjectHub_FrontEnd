@@ -5,6 +5,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { FaAsterisk } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { LOGIN_PAGE } from "../../routes/constant";
+import logo from "../../assets/images/logo.png";
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -30,7 +31,12 @@ function Register() {
             <div className="inner-box flex justify-center items-center">
               <div className="h-[75%] w-full m-auto flex justify-between rounded-xl p-0">
                 <div className="w-1/2 flex items-center justify-center">
+                  
                   <div className="w-full px-4">
+                    <div className="flex justify-center mb-6">
+                    <img src={logo} alt="" width={100}/>
+                    </div>
+                 
                     <Form
                       {...formItemLayout}
                       initialValues={{

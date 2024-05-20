@@ -51,6 +51,7 @@ function FirstStep() {
         name="type"
         rules={[{ required: true, message: "Vui lòng chọn loại không gian làm việc" }]}
         initialValue={userData.type}
+        style={{ width: '300px' }}
       >
         <Select
           placeholder="Chọn..."
@@ -69,7 +70,7 @@ function FirstStep() {
         initialValue={userData.description}
       >
         <TextArea
-          rows={4}
+          rows={5}
           placeholder="Nhóm của chúng tôi tổ chức mọi thứ ở đây..."
           value={userData.description}
           onChange={(e) => handleInputChange(e, "description")}

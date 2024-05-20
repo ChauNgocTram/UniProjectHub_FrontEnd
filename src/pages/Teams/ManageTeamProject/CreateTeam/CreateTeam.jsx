@@ -28,7 +28,7 @@ function CreateTeam() {
     <>
       <div className="flex">
         <TeamSidebar />
-        <div className="w-full mt-8">
+        <div className="w-full mt-8 mx-12">
           <div>
             <p className="pb-2 text-xl font-semibold border-b border-neutral-900">
               Hãy xây dựng một Không gian làm việc

@@ -32,7 +32,7 @@ function TeamSidebar() {
             >
               <li
                 key={index}
-                className={`flex my-2 rounded-md p-2 cursor-pointer hover:bg-neutral-200 text-black hover:text-mainColor text-sm items-center gap-x-4 
+                className={`flex my-2 rounded-md p-2 cursor-pointer hover:bg-mainBg/20 text-black  text-sm items-center gap-x-4 
             ${Menu.gap ? "mt-9" : "mt-2"} ${
                   index === 0 && "bg-mainBg text-black"
                 } `}

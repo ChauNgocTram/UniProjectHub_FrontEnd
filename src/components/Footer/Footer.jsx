@@ -7,8 +7,8 @@ import logo from "../../assets/images/logo.png";
 function Footer() {
   return (
     <footer>
-      <div className="container mx-auto pt-12 px-4 ">
-        <p className="tracking-wide text-neutral-700 font-semibold border-b border-slate-700 my-4 uppercase mx-12">
+      <div className="container mx-auto px-4 pb-8">
+        <p className="tracking-wide text-neutral-700 font-semibold border-b border-slate-700 mb-4 uppercase mx-12">
           Kết nối với chúng tôi
         </p>
         <div className="grid md:grid-cols-12 grid-cols-1 gap-7 mx-12 md:mx-auto">
