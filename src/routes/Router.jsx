@@ -40,6 +40,20 @@ const appRoutes = [
     ],
   },
   {
+    path: "/chi-tiet-du-an-nhom",
+    element: <CommonLayout />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: ALL_TEAM_PROJECTS, element: <AllTeamProject /> },
+      { path: CREATE_TEAM_PROJECT, element: <CreateTeam /> },
+      { path: EDIT_TEAM_PROJECT, element: <EditTeamProject/> },
+
+      { path: ALL_PERSONAL_PROJECTS, element: <AllPersonalProject /> },
+      { path: CREATE_PERSONAL_PROJECT, element: <CreateProject /> },
+      { path: EDIT_PERSONAL_PROJECT, element: <EditProject /> },
+    ],
+  },
+  {
     path: "/auth",
     element: <AuthLayout />,
     children: [

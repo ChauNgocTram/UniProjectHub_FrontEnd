@@ -7,6 +7,7 @@ export const REGISTER_PAGE = 'dang-ki';
 export const ALL_TEAM_PROJECTS = 'du-an-nhom'
 export const CREATE_TEAM_PROJECT = 'tao-du-an-nhom'
 export const EDIT_TEAM_PROJECT = 'chinh-sua-du-an-nhom'
+export const ALL_TASK = 'nhiem vu'
 
 // Dự án Cá nhân
 export const ALL_PERSONAL_PROJECTS = 'du-an-ca-nhan'

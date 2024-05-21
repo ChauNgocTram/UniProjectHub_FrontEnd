@@ -5,10 +5,8 @@ import { NavLink } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Space, Input } from "antd";
 import { CREATE_TEAM_PROJECT } from "../../../routes/constant";
+import SearchBar from "../../../components/Search/SearchBar";
 
-const { Search } = Input;
-
-const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 const items = [
   {
@@ -24,10 +22,11 @@ const items = [
 function AllTeamProject() {
   return (
     <>
-      <div className="flex">
+      <div className="flex ">
         <TeamSidebar />
-        <div className="w-full mt-8 ">
-          <div className="flex justify-between">
+        <div className="w-full mt-6">
+          <SearchBar/>
+          <div className="flex justify-between my-6">
             <Dropdown
               menu={{
                 items,
@@ -42,14 +41,7 @@ function AllTeamProject() {
               </Button>
             </Dropdown>
 
-            <Search
-              placeholder="Tìm kiếm nội dung..."
-              allowClear
-              onSearch={onSearch}
-              style={{
-                width: 400,
-              }}
-            />
+          
 
             <NavLink to={`/${CREATE_TEAM_PROJECT}`} className="py-2">
               <span className="rounded-lg py-2 px-2 font-medium bg-mainBg text-black hover:bg-hoverBtn">
@@ -58,7 +50,7 @@ function AllTeamProject() {
             </NavLink>
           </div>
 
-          <div className="flex gap-x-6 mt-8">
+          <div className="grid md:grid-cols-3 grid-cols-2 gap-4 mx-4 justify-items-center items-center ">
             <CardProject />
             <CardProject />
             <CardProject />

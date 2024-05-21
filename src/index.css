@@ -13,7 +13,7 @@
 
 
 .wrapper-body{
-  @apply w-[1280px] mt-20 mx-auto mb-0 overflow-hidden;
+  @apply lg:w-[1280px] mt-20 mx-auto mb-0 overflow-hidden;
 }
 
 /* navbar */

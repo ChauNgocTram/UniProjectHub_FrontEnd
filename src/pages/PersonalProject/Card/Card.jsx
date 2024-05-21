@@ -1,14 +1,14 @@
 import React from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FiShare2 } from "react-icons/fi";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { PiClockCounterClockwiseFill } from "react-icons/pi";
 
-function CardProject() {
+function Card() {
   return (
     <>
-      <div className="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none border-2 border-neutral-200 pt-4 px-2">
+      <div className="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none border-2 border-neutral-200 pt-4 px-4">
         <div className="flex justify-between border-b-2 border-neutral-200">
           <div className="text-sm text-neutral-400">19/05/2024</div>
           <div className="flex items-center space-x-3 pb-3">
@@ -56,18 +56,24 @@ function CardProject() {
           <div className="flex w-full flex-col gap-0.5">
             <NavLink>
               <h5 className="block text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                Tania Andrew
+                Mini Project
               </h5>
             </NavLink>
 
-            <p className="block text-base antialiased font-light leading-relaxed text-blue-gray-900">
-              Frontend Lead @ Google
+            <p className="block text-sm antialiased font-light leading-relaxed text-blue-gray-900">
+              Tổng số task: 10
+            </p>
+            <p className="block text-sm antialiased font-light leading-relaxed text-blue-gray-900">
+              In progress: 5
+            </p>
+            <p className="block text-sm antialiased font-light leading-relaxed text-blue-gray-900">
+              Not start: 5
             </p>
           </div>
         </div>
 
-        <div className="pb-2 px-2 flex justify-end items-center italic space-x-1">
-          <PiClockCounterClockwiseFill />
+        <div className="py-2 flex justify-end items-center italic space-x-1">
+        <PiClockCounterClockwiseFill />
           <p className="block text-sm antialiased font-medium leading-relaxed text-blue-gray-900">
             Cập nhật lần cuối: 9 giờ trước
           </p>
@@ -77,4 +83,4 @@ function CardProject() {
   );
 }
 
-export default CardProject;
+export default Card;
