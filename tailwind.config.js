@@ -11,7 +11,11 @@ export default {
         primaryColor: "hsl(94, 55%, 56%)",
         hoverBtn: "#A9EBEF",
         mainBg:"#AFCED0",
-        mainColor:"#8CCADD"
+        mainColor:"#8CCADD",
+        toDo:"#FFECEC",
+        inProgress:"#D9F6FF",
+        completed:"#D1FEC6",
+        pending:"#FFFCB5"
       },
       fontSize: {
         14: "14px",

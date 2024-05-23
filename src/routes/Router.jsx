@@ -3,6 +3,7 @@ import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 
 import {
   ALL_PERSONAL_PROJECTS,
+  ALL_TASK,
   ALL_TEAM_PROJECTS,
   CREATE_PERSONAL_PROJECT,
   CREATE_TEAM_PROJECT,
@@ -23,6 +24,8 @@ import AllTeamProject from "../pages/Teams/TeamProjects/AllTeamProject";
 import AllPersonalProject from "../pages/PersonalProject/AllPersonalProject";
 import EditProject from "../pages/PersonalProject/ManageProject/EditProject";
 import EditTeamProject from "../pages/Teams/ManageTeamProject/EditTeamProject";
+import AllTask from "../pages/Teams/TeamProjectDetails/AllTask/AllTask";
+import TeamLayout from "../layouts/TeamLayout";
 
 const appRoutes = [
   {
@@ -40,17 +43,11 @@ const appRoutes = [
     ],
   },
   {
-    path: "/chi-tiet-du-an-nhom",
-    element: <CommonLayout />,
+    path: "/du-an-nhom",
+    element: <TeamLayout />,
     children: [
-      { path: "/", element: <Home /> },
-      { path: ALL_TEAM_PROJECTS, element: <AllTeamProject /> },
-      { path: CREATE_TEAM_PROJECT, element: <CreateTeam /> },
-      { path: EDIT_TEAM_PROJECT, element: <EditTeamProject/> },
-
-      { path: ALL_PERSONAL_PROJECTS, element: <AllPersonalProject /> },
-      { path: CREATE_PERSONAL_PROJECT, element: <CreateProject /> },
-      { path: EDIT_PERSONAL_PROJECT, element: <EditProject /> },
+      { path: ALL_TASK, element: <AllTask/> },
+     
     ],
   },
   {

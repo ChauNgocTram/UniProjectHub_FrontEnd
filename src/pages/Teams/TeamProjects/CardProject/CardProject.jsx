@@ -4,6 +4,7 @@ import { FiShare2 } from "react-icons/fi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { PiClockCounterClockwiseFill } from "react-icons/pi";
+import { ALL_TASK } from "../../../../routes/constant";
 
 function CardProject() {
   return (
@@ -54,9 +55,9 @@ function CardProject() {
             className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
           />
           <div className="flex w-full flex-col gap-0.5">
-            <NavLink>
+            <NavLink to={`/du-an-nhom/${ALL_TASK}`}>
               <h5 className="block text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                Tania Andrew
+                Mini Project
               </h5>
             </NavLink>
 
