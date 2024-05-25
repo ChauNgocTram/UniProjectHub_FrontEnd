@@ -12,6 +12,7 @@ import Tabs from "../../../../components/Tabs/Tabs";
 
 import BoardViewByStatus from '../../../../components/Tasks/ViewTask/BoardViewByStatus';
 import ListView from '../../../../components/Tasks/ViewTask/ListView';
+import AddTask from '../../../../components/Tasks/ManageTask/AddTask';
 
 const TABS = [
   { title: "Bảng", icon: <MdGridView /> },
@@ -81,7 +82,7 @@ function Task() {
         )}
       </Tabs>
 
-      {/* <AddTask open={open} setOpen={setOpen} /> */}
+      <AddTask open={open} setOpen={setOpen} />
     </div>
   )
 }

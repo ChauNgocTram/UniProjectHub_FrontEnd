@@ -19,6 +19,7 @@ import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../../../../../utils";
 //import Loading from "../components/Loader";
 import Button from "../../../../../components/Button";
 import { IoMdAdd } from "react-icons/io";
+import AddSubTask from "../../../../../components/Tasks/ManageTask/AddSubTask";
 
 const assets = [
   "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -54,7 +55,7 @@ const TASKTYPEICON = {
 
 const TaskDetails = () => {
   const { id } = useParams();
-
+  const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(0);
   // const task = tasks[3];
 
@@ -218,6 +219,7 @@ const TaskDetails = () => {
           </>
         )}
       </Tabs>
+      <AddSubTask open={open} setOpen={setOpen}/>
     </div>
   );
 };
