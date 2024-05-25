@@ -34,7 +34,7 @@ function ListView({ tasks }) {
   
     const TableHeader = () => (
       <thead className='w-full border-b border-gray-300'>
-        <tr className='w-full text-black  text-left'>
+        <tr className='w-full text-left'>
           <th className='py-2'>Tiêu đề</th>
           <th className='py-2'>Độ ưu tiên</th>
           <th className='py-2'>Trạng thái</th>

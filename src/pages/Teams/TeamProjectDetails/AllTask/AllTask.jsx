@@ -7,6 +7,7 @@ import Tabs from '../../../../components/Tabs/Tabs';
 import Button from "../../../../components/Button"
 import BoardViewAll from "../../../../components/Tasks/ViewTask/BoardViewAll";
 import ListView from "../../../../components/Tasks/ViewTask/ListView";
+import AddTask from "../../../../components/Tasks/ManageTask/AddTask";
 
 const TABS = [
   { title: "Bảng", icon: <BsGrid /> },

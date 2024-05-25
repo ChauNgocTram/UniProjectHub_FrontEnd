@@ -11,6 +11,11 @@ import {
   EDIT_TEAM_PROJECT,
   LOGIN_PAGE,
   REGISTER_PAGE,
+  TASK_COMPLETED,
+  TASK_DETAILS,
+  TASK_INPROGRESS,
+  TASK_PENDING,
+  TASK_TODO,
 } from "./constant";
 
 import Home from "../pages/Home/Home";
@@ -26,6 +31,8 @@ import EditProject from "../pages/PersonalProject/ManageProject/EditProject";
 import EditTeamProject from "../pages/Teams/ManageTeamProject/EditTeamProject";
 import AllTask from "../pages/Teams/TeamProjectDetails/AllTask/AllTask";
 import TeamLayout from "../layouts/TeamLayout";
+import Task from "../pages/Teams/TeamProjectDetails/AllTask/Task";
+import TaskDetails from "../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails";
 
 const appRoutes = [
   {
@@ -47,7 +54,12 @@ const appRoutes = [
     element: <TeamLayout />,
     children: [
       { path: ALL_TASK, element: <AllTask/> },
-     
+      { path: TASK_TODO, element: <Task/> },
+      { path: TASK_INPROGRESS, element: <Task/> },
+      { path: TASK_COMPLETED, element: <Task/> },
+      { path: TASK_PENDING, element: <Task/> },
+
+      { path: TASK_DETAILS, element: <TaskDetails/> },
     ],
   },
   {

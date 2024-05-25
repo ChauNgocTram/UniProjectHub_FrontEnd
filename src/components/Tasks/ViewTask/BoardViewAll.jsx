@@ -17,17 +17,17 @@ const BoardViewAll = ({ tasks }) => {
       </div>
 
       <div className="flex flex-col bg-inProgress rounded-lg h-fit p-4">
-        <p className="font-semibold border-b-2 border-neutral-400 mb-4 pb-2">In Progress</p>
+        <p className="font-semibold border-b-2 border-neutral-400 mb-4 pb-2">IN PROGRESS</p>
         <TaskCard/>
       </div>
 
       <div className="flex flex-col bg-completed rounded-lg h-fit p-4">
-        <p className="font-semibold border-b-2 border-neutral-400 mb-4 pb-2">Completed</p>
+        <p className="font-semibold border-b-2 border-neutral-400 mb-4 pb-2">COMPLETED</p>
         <TaskCard/>
       </div>
 
       <div className="flex flex-col bg-pending rounded-lg h-fit p-4">
-        <p className="font-semibold border-b-2 border-neutral-400 mb-4 pb-2">Pending</p>
+        <p className="font-semibold border-b-2 border-neutral-400 mb-4 pb-2">PENDING</p>
         <TaskCard/>
       </div>
     </div>

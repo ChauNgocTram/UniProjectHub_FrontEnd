@@ -11,6 +11,8 @@ import {
 import { motion } from "framer-motion";
 
 import LeftArrowIcon from "../../assets/icons/leftArrow.svg";
+import { NavLink } from "react-router-dom";
+import { ALL_TASK, TASK_COMPLETED, TASK_INPROGRESS, TASK_PENDING, TASK_TODO } from "../../routes/constant";
 
 const variants = {
   expanded: { width: "220px" },
@@ -19,23 +21,36 @@ const variants = {
 
 const navLinks = [
   {
-    link: "Task",
+    title: "Task",
     icon: LayoutDashboard,
+    path: `/du-an-nhom/${ALL_TASK}`
   },
   {
-    link: "Activity",
+    title: "To Do",
     icon: Clock4Icon,
+    path: `/du-an-nhom/${TASK_TODO}`
   },
   {
-    link: "Analytics",
+    title: "In Progress",
     icon: BarChart3Icon,
+    path: `/du-an-nhom/${TASK_INPROGRESS}`
   },
   {
-    link: "Transactions",
+    title: "Completed",
     icon: ArrowLeftRightIcon,
+    path: `/du-an-nhom/${TASK_COMPLETED}`
   },
   {
-    link: "Support",
+    title: "Pending",
+    icon: HelpCircleIcon,
+    path: `/du-an-nhom/${TASK_PENDING}`
+  },
+  {
+    title: "Thành viên",
+    icon: HelpCircleIcon,
+  },
+  {
+    title: "Thùng rác",
     icon: HelpCircleIcon,
   },
 ];
@@ -83,7 +98,10 @@ function ProjectSidebarr() {
       <div className="flex flex-col space-y-8 mt-8">
         {navLinks.map((item, index) => (
           <div className="nav-links w-full" key={index}>
-            <div
+
+<NavLink key={index}
+                    to={item.path}>
+<div
               onClick={() => setActiveIndex(index)}
               className={
                 "flex space-x-3 w-full p-2 rounded " +
@@ -95,9 +113,12 @@ function ProjectSidebarr() {
             >
               <item.icon className="md:w-6 w-4" />
               <span className={!isExpanded ? "hidden" : "block"}>
-                {item.link}
+                {item.title}
               </span>
             </div>
+</NavLink>
+            
+
           </div>
         ))}
       </div>

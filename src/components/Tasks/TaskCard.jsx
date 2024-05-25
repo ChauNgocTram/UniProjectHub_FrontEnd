@@ -14,6 +14,8 @@ import { FaList } from "react-icons/fa";
 //import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
 import UserInfo from "../UserInfo/UserInfo";
+import { NavLink } from "react-router-dom";
+import { TASK_DETAILS } from "../../routes/constant";
 //import AddSubTask from "./task/AddSubTask";
 
 const ICONS = {
@@ -56,10 +58,13 @@ const TaskCard = ({ task }) => {
               className="w-4 h-4 rounded-full"
               // className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
             />
+            <NavLink to={`/du-an-nhom/${TASK_DETAILS}`}>
             <h4 className="line-clamp-1 text-black">
               {/* {task?.title} */}
               Xây dựng Master plan
             </h4>
+            </NavLink>
+            
           </div>
           <span className="text-sm text-gray-600">
             {/* {formatDate(new Date(task?.date))} */}
