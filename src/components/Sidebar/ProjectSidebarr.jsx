@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 
 import LeftArrowIcon from "../../assets/icons/leftArrow.svg";
 import { NavLink } from "react-router-dom";
-import { ALL_TASK, TASK_COMPLETED, TASK_INPROGRESS, TASK_PENDING, TASK_TODO } from "../../routes/constant";
+import { ALL_TASK, MEMBERS, TASK_COMPLETED, TASK_INPROGRESS, TASK_PENDING, TASK_TODO } from "../../routes/constant";
 
 const variants = {
   expanded: { width: "220px" },
@@ -48,6 +48,7 @@ const navLinks = [
   {
     title: "Thành viên",
     icon: HelpCircleIcon,
+    path: `/du-an-nhom/${MEMBERS}`
   },
   {
     title: "Thùng rác",

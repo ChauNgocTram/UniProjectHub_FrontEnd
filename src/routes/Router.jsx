@@ -10,6 +10,7 @@ import {
   EDIT_PERSONAL_PROJECT,
   EDIT_TEAM_PROJECT,
   LOGIN_PAGE,
+  MEMBERS,
   REGISTER_PAGE,
   TASK_COMPLETED,
   TASK_DETAILS,
@@ -33,6 +34,7 @@ import AllTask from "../pages/Teams/TeamProjectDetails/AllTask/AllTask";
 import TeamLayout from "../layouts/TeamLayout";
 import Task from "../pages/Teams/TeamProjectDetails/AllTask/Task";
 import TaskDetails from "../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails";
+import Members from "../pages/Teams/TeamProjectDetails/Members/Members"
 
 const appRoutes = [
   {
@@ -60,6 +62,8 @@ const appRoutes = [
       { path: TASK_PENDING, element: <Task/> },
 
       { path: TASK_DETAILS, element: <TaskDetails/> },
+
+      { path: MEMBERS, element: <Members/> },
     ],
   },
   {
