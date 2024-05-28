@@ -323,7 +323,7 @@ function FileUpload({ open2, setOpen2 }) {
                   )}
                 </div>
 
-                <div className="w-[450px] ">
+                <div className="w-[450px]">
                   <p className="break-all mb-2">{file.name}</p>
                   <p className="text-neutral-600 text-sm">
                     {fileSize(file.size)}
