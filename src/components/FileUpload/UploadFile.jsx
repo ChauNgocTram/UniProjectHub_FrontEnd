@@ -2,9 +2,9 @@ import { FileOutlined } from "@ant-design/icons";
 import { Progress, Space, Typography, Upload } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
-import ModalWrapper from "../../../../../components/Modal/ModalWrapper";
-import Button from "../../../../../components/Button";
-import ProgressBar from "../../../../../components/FileUpload/ProgressBar";
+import ModalWrapper from "../Modal/ModalWrapper";
+import Button from "../Button";
+import ProgressBar from "./ProgressBar";
 
 function UploadFile({ open, setOpen }) {
   const [files, setFiles] = useState({});

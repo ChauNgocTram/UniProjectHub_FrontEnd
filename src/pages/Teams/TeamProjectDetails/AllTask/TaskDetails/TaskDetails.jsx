@@ -23,7 +23,7 @@ import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "../../../../../components/Tasks/ManageTask/AddSubTask";
 
 import Activities from "./Activities";
-import UploadFile from "./UploadFile";
+import UploadFile from "../../../../../components/FileUpload/UploadFile";
 import FileUpload from "../../../../../components/FileUpload/FileUpload";
 import ManageFile from "./ManageFile";
 

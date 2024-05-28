@@ -78,13 +78,13 @@ function AddSubTask({ open, setOpen, id }) {
               <div className='py-3 mt-4 flex sm:flex-row-reverse gap-4'>
                 <Button
                   type='submit'
-                  className='bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 sm:ml-3 sm:w-auto'
+                  className='bg-mainColor text-sm font-semibold text-neutral-800 hover:bg-mainBg sm:ml-3 sm:w-auto rounded-lg'
                   label='Thêm việc cần làm'
                 />
     
                 <Button
                   type='button'
-                  className='bg-white border text-sm font-semibold text-gray-900 sm:w-auto'
+                  className='bg-white hover:bg-neutral-200 border text-sm font-semibold text-gray-700 sm:w-auto rounded-lg'
                   onClick={() => setOpen(false)}
                   label='Huỷ'
                 />
