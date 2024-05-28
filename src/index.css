@@ -69,3 +69,48 @@
   border-radius: 10px;
   overflow: hidden;
 }
+
+/* file upload */
+.progress__wrapper > .upload__progress__container.default .progress{
+  @apply w-0 bg-transparent
+}
+
+.progress__wrapper > .upload__progress__container.bad{
+  @apply border-[#fc605b]
+}
+
+.progress__wrapper > .upload__progress__container.bad .progress{
+  @apply w-0 bg-[#fc605b]
+}
+
+.progress__wrapper > .upload__progress__container.fair{
+  @apply border-[#ffbb55]
+}
+
+.progress__wrapper > .upload__progress__container.fair .progress{
+  @apply w-0 bg-[#ffbb55]
+}
+
+.progress__wrapper > .upload__progress__container.good{
+  @apply border-[#33c648]
+}
+
+.progress__wrapper > .upload__progress__container.good .progress{
+  @apply w-0 bg-[#33c648]
+}
+
+.progress__wrapper .text.default{
+  @apply text-white
+}
+
+.progress__wrapper .text.bad{
+  @apply text-[#fc605b]
+}
+
+.progress__wrapper .text.fair{
+  @apply text-[#ffbb55]
+}
+
+.progress__wrapper .text.good{
+  @apply text-[#33c648]
+}

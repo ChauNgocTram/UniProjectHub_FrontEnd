@@ -8,9 +8,9 @@ import "tailwindcss/tailwind.css";
 import StepperContext from "./pages/Teams/ManageTeamProject/CreateTeam/stepper/StepperContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-   <React.StrictMode>
+  //  <React.StrictMode>
     <StepperContext>
       <App />
     </StepperContext>
-   </React.StrictMode>
+  //  </React.StrictMode>
 );

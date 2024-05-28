@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import moment from "moment";
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaTasks } from "react-icons/fa";
 
@@ -15,16 +15,17 @@ import {
   MdTaskAlt,
 } from "react-icons/md";
 //import { toast } from "sonner";
-import Tabs from "../../../../../components/Tabs/Tabs";
+import TabsFilter from "../../../../../components/Tabs/TabsFilter";
 import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../../../../../utils";
 //import Loading from "../components/Loader";
 import Button from "../../../../../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "../../../../../components/Tasks/ManageTask/AddSubTask";
 
-
 import Activities from "./Activities";
-
+import UploadFile from "./UploadFile";
+import FileUpload from "../../../../../components/FileUpload/FileUpload";
+import ManageFile from "./ManageFile";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -65,6 +66,7 @@ const TaskDetails = () => {
       <div className="flex items-center justify-between mb-4 mx-4 ">
         <h1 className="text-2xl text-gray-600 font-bold">
           Xây dựng Master plan
+          
         </h1>
 
         <Button
@@ -73,10 +75,11 @@ const TaskDetails = () => {
           icon={<IoMdAdd className="text-lg" />}
           className="flex flex-row-reverse gap-1 items-center bg-mainColor font-semibold text-white rounded-md py-2 2xl:py-2.5"
         />
+        
       </div>
 
-      <Tabs tabs={TABS} setSelected={setSelected}>
-        {selected === 0 ? (
+      <TabsFilter tabs={TABS} setSelected={setSelected}>
+        {selected === 0 && (
           <>
             <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 border-slate-200 border-2 rounded-xl shadow-xl p-8 mt-3 overflow-y-auto">
               {/* LEFT */}
@@ -127,7 +130,7 @@ const TaskDetails = () => {
 
                   <div className="space-x-2">
                     <span className="font-semibold">
-                      Việc cần làm (sub-task):
+                      Việc cần làm:
                     </span>
                     {/* <span>{task?.subTasks?.length}</span> */}
                     <span>5</span>
@@ -211,16 +214,14 @@ const TaskDetails = () => {
               </div>
             </div>
           </>
-        ) : (
-          <>
-            {/* <Activities activity={task?.activities} id={id} />  */}
-            <Activities />
-          </>
         )}
-      </Tabs>
+        {selected === 1 && <Activities /> }
+        {selected === 2 && <ManageFile/>}
+        
+      </TabsFilter>
       <AddSubTask open={open} setOpen={setOpen} />
+    
     </div>
   );
 };
-;
 export default TaskDetails;
