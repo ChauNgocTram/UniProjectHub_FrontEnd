@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import SelectList from "../../SelectList";
 import { BiImages } from "react-icons/bi";
 import Button from "../../Button"
+import UserList from "../../UserInfo/UserList";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
@@ -43,7 +44,7 @@ function AddTask({ open, setOpen }) {
             as='h2'
             className='text-base font-bold leading-6 text-gray-900 mb-4'
           >
-            {task ? "UPDATE TASK" : "TẠO TASK"}
+            {task ? "CẬP NHẬT TASK" : "TẠO TASK"}
           </DialogTitle>
 
           <div className='mt-2 flex flex-col gap-6'>
@@ -58,7 +59,7 @@ function AddTask({ open, setOpen }) {
             />
 
             {/* <UserList setTeam={setTeam} team={team} /> */}
-
+            <UserList/>
             <div className='flex gap-4'>
               <SelectList
                 label='Trạng thái'
@@ -72,10 +73,10 @@ function AddTask({ open, setOpen }) {
                   placeholder='Date'
                   type='date'
                   name='date'
-                  label='Ngày'
+                  label='Ngày hoàn thành'
                   className='w-full rounded'
                   register={register("date", {
-                    required: "Date is required!",
+                    required: "Vui lòng chọn ngày!",
                   })}
                   error={errors.date ? errors.date.message : ""}
                 />
@@ -84,7 +85,7 @@ function AddTask({ open, setOpen }) {
 
             <div className='flex gap-4'>
               <SelectList
-                label='Priority Level'
+                label='Mức độ ưu tiên'
                 lists={PRIORIRY}
                 selected={priority}
                 setSelected={setPriority}
@@ -118,13 +119,13 @@ function AddTask({ open, setOpen }) {
                 <Button
                   label='Tạo'
                   type='submit'
-                  className='bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto'
+                  className='bg-mainColor text-sm font-semibold text-neutral-800 hover:bg-mainBg sm:ml-3 sm:w-auto rounded-lg'
                 />
               )}
 
               <Button
                 type='button'
-                className='bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto'
+                className='bg-white hover:bg-neutral-200 border text-sm font-semibold text-gray-700 sm:w-auto rounded-lg'
                 onClick={() => setOpen(false)}
                 label='Huỷ'
               />

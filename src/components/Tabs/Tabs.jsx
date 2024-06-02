@@ -6,7 +6,7 @@ function classNames(...classes) {
 
 export default function Tabs({ tabs, setSelected, children }) {
   return (
-    <div className='w-fit px-1 sm:px-0'>
+    <div className='w-full px-1 sm:px-0'>
       <TabGroup>
         <TabList className='flex space-x-6 rounded-xl px-1'>
           {tabs.map((tab, index) => (

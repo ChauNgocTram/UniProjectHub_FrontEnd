@@ -45,7 +45,7 @@ function AddSubTask({ open, setOpen, id }) {
                   label='Tiêu đề'
                   className='w-full rounded'
                   register={register("title", {
-                    required: "Title is required!",
+                    required: "Vui lòng điền việc cần làm!",
                   })}
                   error={errors.title ? errors.title.message : ""}
                 />
@@ -58,7 +58,7 @@ function AddSubTask({ open, setOpen, id }) {
                     label='Ngày'
                     className='w-full rounded'
                     register={register("date", {
-                      required: "Date is required!",
+                      required: "Vui lòng chọn ngày tháng!",
                     })}
                     error={errors.date ? errors.date.message : ""}
                   />

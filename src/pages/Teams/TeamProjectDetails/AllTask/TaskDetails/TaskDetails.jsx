@@ -83,7 +83,7 @@ const TaskDetails = () => {
           <>
             <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 border-slate-200 border-2 rounded-xl shadow-xl p-8 mt-3 overflow-y-auto">
               {/* LEFT */}
-              <div className="w-full md:w-1/2 space-y-8">
+              <div className="w-full md:w-1/2 space-y-4">
                 <div className="flex items-center gap-5">
                   <div
                     // className={clsx(
@@ -118,6 +118,7 @@ const TaskDetails = () => {
                   Created At: {new Date(task?.date).toDateString()}
                 </p> */}
                 <p className="text-gray-500">Ngày tạo: 23-05-2024</p>
+                <p className="text-gray-500">Deadline: 28-05-2024</p>
 
                 <div className="flex items-center gap-8 p-4 border-y border-gray-200">
                   <div className="space-x-2">

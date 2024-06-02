@@ -104,12 +104,12 @@ function ProjectSidebarr() {
     //     />
     //   </div>
     <div className='w-full h-full flex flex-col gap-6 p-5'>
-      <div className="flex gap-1 space-x-4 items-center">
+      <NavLink to="/" className="flex gap-1 space-x-4 items-center">
         <img src={mainicon} className="md:w-10 w-8 ml-1" />
         <span className={!isExpanded ? "hidden" : "block mt-1 font-medium"}>
           UniProjectHub
         </span>
-      </div>
+      </NavLink>
 
       <div className="flex-1 flex flex-col gap-y-5 py-8 ">
         {navLinks.map((item, index) => (

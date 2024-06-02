@@ -46,7 +46,7 @@ function Activities({ activity, id }) {
                 <div className="w-10 h-10 flex items-center justify-center">
                   {/* {TASKTYPEICON[item?.type]} */}
                   <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white">
-                    <MdOutlineMessage />,
+                    <MdOutlineMessage />
                   </div>
                 </div>
                 <div className="w-full flex items-center">

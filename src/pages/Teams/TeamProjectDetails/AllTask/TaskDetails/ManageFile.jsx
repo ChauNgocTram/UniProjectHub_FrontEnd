@@ -3,6 +3,7 @@ import Button from "../../../../../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import { AiOutlinePicture } from "react-icons/ai";
 import { GoFileZip } from "react-icons/go";
+import { LuUpload } from "react-icons/lu";
 import FileUpload from "../../../../../components/FileUpload/FileUpload";
 import Tabs from "../../../../../components/Tabs/Tabs";
 
@@ -19,6 +20,12 @@ function ManageFile() {
   return (
     <div>
       <div className="flex justify-end items-center space-x-6">
+      <Button
+          onClick={() => setOpen2(true)}
+          label="Upload"
+          icon={<LuUpload className="text-lg mr-2" />}
+          className="flex flex-row-reverse items-center bg-mainColor hover:bg-mainBg font-semibold text-white rounded-md "
+        />
         <Tabs tabs={TABS} setSelected={setSelectedTab}>
           {/* {selectedTab === 0 ? (
             <div className="w-full grid grid-cols-6 gap-4">
@@ -60,12 +67,7 @@ function ManageFile() {
             </div>
           )} */}
         </Tabs>
-        <Button
-          onClick={() => setOpen2(true)}
-          label="Thêm file"
-          icon={<IoMdAdd className="text-lg" />}
-          className="flex flex-row-reverse items-center bg-mainColor font-semibold text-white rounded-md "
-        />
+        
       </div>
 
       <FileUpload open2={open2} setOpen2={setOpen2} />

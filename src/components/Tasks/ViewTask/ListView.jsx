@@ -37,10 +37,12 @@ function ListView({ tasks }) {
         <tr className='w-full text-left'>
           <th className='py-2'>Tiêu đề</th>
           <th className='py-2'>Độ ưu tiên</th>
-          <th className='py-2'>Trạng thái</th>
-          <th className='py-2 line-clamp-1'>Ngày tạo</th>
+          <th className='py-2'>Ngày tạo</th>
+          <th className='py-2 line-clamp-1'>Deadline</th>
           <th className='py-2'>File</th>
           <th className='py-2'>Tạo bởi</th>
+          <th className='py-2'>Người phụ trách</th>
+          <th className='py-2'></th>
         </tr>
       </thead>
     );
@@ -75,7 +77,7 @@ function ListView({ tasks }) {
 
         <td className='py-2'>
           <div className={"flex gap-1 items-center"}>
-          {/* <TaskStatusBadge taskStatus={item.status} /> */}
+          23-04-2024
           </div>
         </td>
   
@@ -83,7 +85,7 @@ function ListView({ tasks }) {
           {/* <span className='text-sm text-gray-600'>
             {formatDate(new Date(task?.date))}
           </span> */}
-          <span>23-04-2024</span>
+          <span>28-04-2024</span>
         </td>
   
         <td className='py-2'>
@@ -105,6 +107,23 @@ function ListView({ tasks }) {
         <td className='py-2'>
           Chau Ngoc Tram
         </td>
+
+        <td className='py-2'>
+        <div className='flex'>
+          {task?.team?.map((m, index) => (
+            <div
+              key={m._id}
+              className={clsx(
+                "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
+                BGS[index % BGS?.length]
+              )}
+            >
+              <UserInfo user={m} />
+            </div>
+          ))}
+        </div>
+      </td>
+
   
         <td className='py-2 flex gap-2 md:gap-4 justify-end'>
           <Button
