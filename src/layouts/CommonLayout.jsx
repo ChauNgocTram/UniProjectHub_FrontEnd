@@ -7,7 +7,7 @@ function CommonLayout() {
   return (
     <div>
       <Navbar />
-      <div className="wrapper-body">
+      <div className="mt-16">
         <Outlet />
       </div>
 

@@ -9,6 +9,7 @@ import {
   CREATE_TEAM_PROJECT,
   EDIT_PERSONAL_PROJECT,
   EDIT_TEAM_PROJECT,
+  GROUP_CHAT,
   LOGIN_PAGE,
   MEMBERS,
   REGISTER_PAGE,
@@ -35,6 +36,7 @@ import TeamLayout from "../layouts/TeamLayout";
 import Task from "../pages/Teams/TeamProjectDetails/AllTask/Task";
 import TaskDetails from "../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails";
 import Members from "../pages/Teams/TeamProjectDetails/Members/Members"
+import GeneralChat from "../pages/Teams/Chat/GeneralChat"
 
 const appRoutes = [
   {
@@ -45,6 +47,8 @@ const appRoutes = [
       { path: ALL_TEAM_PROJECTS, element: <AllTeamProject /> },
       { path: CREATE_TEAM_PROJECT, element: <CreateTeam /> },
       { path: EDIT_TEAM_PROJECT, element: <EditTeamProject/> },
+
+      { path: GROUP_CHAT, element: <GeneralChat/>},
 
       { path: ALL_PERSONAL_PROJECTS, element: <AllPersonalProject /> },
       { path: CREATE_PERSONAL_PROJECT, element: <CreateProject /> },
@@ -64,6 +68,8 @@ const appRoutes = [
       { path: TASK_DETAILS, element: <TaskDetails/> },
 
       { path: MEMBERS, element: <Members/> },
+
+     
     ],
   },
   {

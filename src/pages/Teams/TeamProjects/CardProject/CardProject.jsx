@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { PiClockCounterClockwiseFill } from "react-icons/pi";
 import { ALL_TASK } from "../../../../routes/constant";
+import ProjectAvatar from "../../../../components/ProjectAvatar";
 
 function CardProject() {
   return (
@@ -23,7 +24,7 @@ function CardProject() {
               <span>
                 <BsThreeDotsVertical className="transition-all duration-200 " />
               </span>
-              <div className="absolute -left-9 z-[9999] hidden rounded-md bg-white p-2 text-black group-hover:block shadow-md w-48 cursor-pointer">
+              <div className="absolute -right-16 z-[9999] hidden rounded-md bg-white p-2 text-black group-hover:block shadow-md w-48 cursor-pointer">
                 <ul className="space-y-3">
                   <li>
                     <NavLink
@@ -49,11 +50,12 @@ function CardProject() {
         </div>
 
         <div className="relative flex items-center gap-4 mx-0 my-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-          <img
+          {/* <img
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
             alt=""
             className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
-          />
+          /> */}
+          <ProjectAvatar/>
           <div className="flex w-full flex-col gap-0.5">
             <NavLink to={`/du-an-nhom/${ALL_TASK}`}>
               <h5 className="block text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">

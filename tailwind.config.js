@@ -10,7 +10,7 @@ export default {
       colors: {
         primaryColor: "hsl(94, 55%, 56%)",
         hoverBtn: "#A9EBEF",
-        mainBg:"#AFCED0",
+        mainBg:"#bddae0",
         mainColor:"#8CCADD",
         toDo:"#FFECEC",
         inProgress:"#D9F6FF",

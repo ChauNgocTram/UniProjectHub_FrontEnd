@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineFileSearch, AiOutlineIdcard } from "react-icons/ai";
-import { ALL_TEAM_PROJECTS} from "../../routes/constant";
+import { IoFileTrayStackedOutline } from "react-icons/io5";
+import { BsChatDots } from "react-icons/bs";
+import { ALL_TEAM_PROJECTS, GROUP_CHAT } from "../../routes/constant";
 
 function TeamSidebar() {
   const Menus = [
     {
-      title: "Dự án",
-      icon: <AiOutlineFileSearch />,
+      icon: <IoFileTrayStackedOutline />,
       path: `/${ALL_TEAM_PROJECTS}`,
     },
     {
-      title: "Thảo luận",
-      icon: <AiOutlineIdcard />,
-      path: "",
+      icon: <BsChatDots />,
+      path: `/${GROUP_CHAT}`,
     },
   ];
   return (
-    <div className="flex pr-4">
-      <div
-        className={` ${
-          open ? "w-64" : "w-20 "
-        } bg-white h-auto p-5 pt-7 relative duration-300 `}
-      >
-        <ul className="pr-2 border-r-2 border-neutral-200">
+    <div className="flex  bg-white w-[100px] h-[665px] border-r-2 border-neutral-200">
+      <div className="px-4 w-[100px]">
+        <ul className="">
           {Menus.map((Menu, index) => (
             <NavLink
               key={index}
@@ -32,18 +28,12 @@ function TeamSidebar() {
             >
               <li
                 key={index}
-                className={`flex my-2 rounded-md p-2 cursor-pointer hover:bg-mainBg/20 text-black  text-sm items-center gap-x-4 
-            ${Menu.gap ? "mt-9" : "mt-2"} ${
-                  index === 0 && "bg-mainBg text-black"
+                className={`flex justify-center my-2 rounded-md p-4 cursor-pointer hover:bg-mainBg/20 text-black items-center gap-x-4 
+           ${
+                  index && "bg-mainBg text-neutral-700"
                 } `}
               >
-                <span style={{ fontSize: "24px" }}>{Menu.icon}</span>
-
-                <span
-                  className={`${!open && "hidden"} origin-left duration-200`}
-                >
-                  {Menu.title}
-                </span>
+                <span style={{ fontSize: "28px" }}>{Menu.icon}</span>
               </li>
             </NavLink>
           ))}

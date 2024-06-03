@@ -22,6 +22,8 @@ export const TASK_DETAILS = 'nhiem-vu/chi-tiet'
 
 export const MEMBERS = 'thanh-vien'
 
+export const GROUP_CHAT = 'thao-luan'
+
 // Dự án Cá nhân
 export const ALL_PERSONAL_PROJECTS = 'du-an-ca-nhan'
 export const CREATE_PERSONAL_PROJECT = 'tao-du-an-ca-nhan'
