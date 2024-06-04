@@ -46,7 +46,6 @@ function Login() {
           >
             <div className="inner-box flex justify-center items-center">
               <div className="h-[75%] w-full m-auto flex justify-between rounded-xl p-0">
-                
                 <div className="videoDiv h-[500px] lg:flex md:hidden sm:hidden">
                   <video
                     className="absolute h-full w-full object-cover top-0 bottom-0 right-0 left-0"
@@ -68,8 +67,10 @@ function Login() {
                   </div>
 
                   <div className="absolute flex bottom-3 px-4 h-16 bg-white bg-opacity-[0.248] left-2 right-2 justify-between items-center rounded-xl filter">
-                    <span className="text-white">Bạn mới biết đến UniProjectHub?</span>
-                    <NavLink  to={`/auth/${REGISTER_PAGE}`}>
+                    <span className="text-white">
+                      Bạn mới biết đến UniProjectHub?
+                    </span>
+                    <NavLink to={`/auth/${REGISTER_PAGE}`}>
                       <button className="rounded-lg py-3 px-4 bg-white font-semibold hover:bg-hoverBtn hover:translate-x-1  transition duration-200">
                         Đăng kí
                       </button>
@@ -79,8 +80,8 @@ function Login() {
 
                 <div className="w-1/2 flex items-center justify-center">
                   <div className="w-full px-4">
-                  <div className="flex justify-center mb-6">
-                    <img src={logo} alt="" width={100}/>
+                    <div className="flex justify-center mb-6">
+                      <img src={logo} alt="" width={100} />
                     </div>
                     <Form
                       {...formItemLayout}

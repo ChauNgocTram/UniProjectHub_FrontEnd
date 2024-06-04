@@ -3,6 +3,9 @@
 export const LOGIN_PAGE = 'dang-nhap';
 export const REGISTER_PAGE = 'dang-ki';
 
+// Hồ sơ cá nhân
+export const PROFILE = 'quan-ly-ho-so/:activepage'
+
 // Dự án Teams
 export const ALL_TEAM_PROJECTS = 'du-an-nhom'
 export const CREATE_TEAM_PROJECT = 'tao-du-an-nhom'

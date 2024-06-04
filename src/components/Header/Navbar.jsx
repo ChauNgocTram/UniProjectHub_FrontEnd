@@ -7,12 +7,13 @@ import logo from "../../assets/images/logo.png";
 import {
   ALL_PERSONAL_PROJECTS,
   ALL_TEAM_PROJECTS,
+  PROFILE,
 } from "../../routes/constant";
 
 const UserDropdownLinks = [
   {
     name: "Hồ sơ cá nhân",
-    // link: AGENT_PROFILE_PAGE,
+    link: 'quan-ly-ho-so/thong-tin-ca-nhan',
   },
 ];
 
@@ -49,7 +50,7 @@ function Navbar() {
       <nav
         className={`fixed top-0 right-0 w-full flex justify-between items-center z-50 font-semibold ${
           header
-            ? "bg-black backdrop-blur-sm text-white shadow-md"
+            ? "bg-white backdrop-blur-sm text-black shadow-md"
             : "bg-transparent text-black"
         }`}
       >
@@ -125,6 +126,16 @@ function Navbar() {
                     Tài nguyên
                   </NavLink>
                 </li>
+                <li className="py-4  m-1">
+                  <NavLink
+                    to="/"
+                    className={` menuItem ${
+                      location.pathname === "/tai nguyen" ? "activeNavbar" : ""
+                    }`}
+                  >
+                    Blog
+                  </NavLink>
+                </li>
               </ul>
             </div>
 
@@ -146,12 +157,12 @@ function Navbar() {
                   <ul className="space-y-3">
                     {UserDropdownLinks.map((link) => (
                       <li key={link.name}>
-                        <a
+                        <NavLink
                           className="inline-block w-full rounded-md p-2 hover:bg-mainBg/20 text-center"
-                          //  href={link.link}
+                           to={link.link}
                         >
                           {link.name}
-                        </a>
+                        </NavLink>
                       </li>
                     ))}
                     <li>

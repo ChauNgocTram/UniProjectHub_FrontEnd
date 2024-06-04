@@ -12,6 +12,7 @@ import {
   GROUP_CHAT,
   LOGIN_PAGE,
   MEMBERS,
+  PROFILE,
   REGISTER_PAGE,
   TASK_COMPLETED,
   TASK_DETAILS,
@@ -37,6 +38,7 @@ import Task from "../pages/Teams/TeamProjectDetails/AllTask/Task";
 import TaskDetails from "../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails";
 import Members from "../pages/Teams/TeamProjectDetails/Members/Members"
 import GeneralChat from "../pages/Teams/Chat/GeneralChat"
+import Profile from "../pages/UserProfile/Profile";
 
 const appRoutes = [
   {
@@ -44,6 +46,7 @@ const appRoutes = [
     element: <CommonLayout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: PROFILE, element: <Profile /> },
       { path: ALL_TEAM_PROJECTS, element: <AllTeamProject /> },
       { path: CREATE_TEAM_PROJECT, element: <CreateTeam /> },
       { path: EDIT_TEAM_PROJECT, element: <EditTeamProject/> },

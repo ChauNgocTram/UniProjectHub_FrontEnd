@@ -15,7 +15,9 @@ export default {
         toDo:"#FFECEC",
         inProgress:"#D9F6FF",
         completed:"#D1FEC6",
-        pending:"#FFFCB5"
+        pending:"#FFFCB5",
+        tagMemberBg:"#FFD6E8",
+        tagMemberText:"#B94B7B"
       },
       fontSize: {
         14: "14px",
