@@ -36,6 +36,7 @@ function SecondStep() {
           { required: true, message: "Vui lòng nhập tên leader của dự án" },
         ]}
         initialValue={userData.username}
+        className="w-[500px]"
       >
         <Input
           placeholder="Họ và tên của bạn"

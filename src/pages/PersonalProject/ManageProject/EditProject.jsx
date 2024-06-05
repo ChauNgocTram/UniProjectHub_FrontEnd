@@ -11,8 +11,7 @@ function EditProject() {
   return (
     <>
       <div className="flex">
-        <PersonalSidebar />
-        <div className="w-full mt-8">
+        <div className="mt-6 mx-12 md:mx-48 wrapper-body">
           <div className="my-3">
             <NavLink to="" onClick={() => window.history.back()}>
               <div className="flex items-center space-x-2 text-green-600 hover:text-green-400">
@@ -31,11 +30,29 @@ function EditProject() {
             </p>
           </div>
 
-          <div>
+          <div className="my-4 p-5 md:mx-24">
             <Form
               layout="vertical"
               //</div>onFinish={handleSubmit}
             >
+               <div className="mb-3">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Ảnh đại diện
+                </label>
+                <div className="mt-2 flex items-center gap-x-3">
+                
+                  <img src="" alt="" className="h-12 w-12 rounded-xl" />
+                  <button
+                    type="button"
+                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    Thay đổi
+                  </button>
+                </div>
+              </div>
               <Form.Item
                 label={
                   <span className="flex items-center">
@@ -74,6 +91,7 @@ function EditProject() {
                   },
                 ]}
                 // initialValue={userData.type}
+                style={{ width: "300px" }}
               >
                 <Select
                   placeholder="Chọn..."

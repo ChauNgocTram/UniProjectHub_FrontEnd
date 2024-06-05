@@ -28,7 +28,7 @@ function CreateTeam() {
     <>
       <div className="flex">
         <TeamSidebar />
-        <div className="w-full mt-8 mx-12">
+        <div className=" mt-12 mx-12 md:mx-48 wrapper-body">
           <div>
             <p className="pb-2 text-xl font-semibold border-b border-neutral-900">
               Hãy xây dựng một Không gian làm việc
@@ -41,7 +41,7 @@ function CreateTeam() {
 
           <div>
             <Stepper steps={steps} currentStep={currentStep - 1} />
-            <div className="my-2 p-5">{displaySteps(currentStep)}</div>
+            <div className="my-4 p-5 md:mx-24">{displaySteps(currentStep)}</div>
           </div>
         </div>
       </div>

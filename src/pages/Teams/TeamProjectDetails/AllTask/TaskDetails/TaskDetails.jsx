@@ -185,7 +185,7 @@ const TaskDetails = () => {
                       className="flex gap-3"
                     >
                       <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-50-200">
-                        <MdTaskAlt className="text-violet-600" size={26} />
+                        <MdTaskAlt className="text-green-600" size={26} />
                       </div>
 
                       <div className="space-y-1">

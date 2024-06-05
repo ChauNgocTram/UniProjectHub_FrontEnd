@@ -9,16 +9,16 @@ import {
 
 function ProjectAvatar() {
   return (
-     <div className="px-4">
+     <div className="px-3">
       <Popover className="relative">
         {/* {({ open }) => ( */}
         <>
           <PopoverButton className="group flex items-center justify-center outline-none w-16 h-16 rounded-xl text-white bg-mainColor font-medium">
             <span>
                 {/* {getInitials(user?.name)} */}
-                {getInitials("Mi")}
+                {getInitials("M")}
                 </span>
-            <span>Mi</span>
+            
           </PopoverButton>
 
           

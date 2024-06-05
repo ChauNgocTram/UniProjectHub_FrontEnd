@@ -11,7 +11,8 @@ function AccountSetting() {
               Profile
             </h2> */}
             <p className="mt-1 text-sm italic leading-6 text-gray-600">
-            Thông tin này sẽ được hiển thị công khai vì vậy hãy cẩn thận với những gì bạn chia sẻ.
+              Thông tin này sẽ được hiển thị công khai vì vậy hãy cẩn thận với
+              những gì bạn chia sẻ.
             </p>
 
             <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -27,7 +28,6 @@ function AccountSetting() {
                     type="text"
                     name="first-name"
                     id="first-name"
-                  
                     className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -45,8 +45,7 @@ function AccountSetting() {
                     type="text"
                     name="last-name"
                     id="last-name"
-                    
-                     className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -55,20 +54,16 @@ function AccountSetting() {
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium leading-6 text-gray-900"
-                  
                 >
                   Tên người dùng
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    
                     <input
                       type="text"
                       name="username"
                       id="username"
-                     
                       className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
-                      
                     />
                   </div>
                 </div>
@@ -86,11 +81,11 @@ function AccountSetting() {
                     id="about"
                     name="about"
                     rows="3"
-                     className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                   ></textarea>
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
-                Viết vài câu về bản thân.
+                  Viết vài câu về bản thân.
                 </p>
               </div>
 
@@ -106,13 +101,10 @@ function AccountSetting() {
                     id="email"
                     name="email"
                     type="email"
-                   
-                     className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
-
-             
 
               <div className="col-span-full">
                 <label
@@ -126,8 +118,7 @@ function AccountSetting() {
                     type="text"
                     name="street-address"
                     id="street-address"
-                    
-                     className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -144,29 +135,13 @@ function AccountSetting() {
                     type="text"
                     name="organization"
                     id="organization"
-                   
-                     className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3 py-1.5 outline-none shadow-sm ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
-
-    
-
-             
             </div>
-            <div className="border-b border-slate-300 pb-12">
-            {/* <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Personal Information
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Use a permanent address where you can receive mail.
-            </p> */}
-
-           
-          </div>
+            <div className="border-b border-slate-300 pb-12"></div>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              
-
               <div className="col-span-full">
                 <label
                   htmlFor="photo"
@@ -187,7 +162,7 @@ function AccountSetting() {
                       clip-rule="evenodd"
                     />
                   </svg> */}
-                  <img src="" alt="" className="h-12 w-12 rounded-full"/>
+                  <img src="" alt="" className="h-12 w-12 rounded-full" />
                   <button
                     type="button"
                     className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -206,7 +181,7 @@ function AccountSetting() {
                 </label>
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
-                    <BsFillImageFill className="mx-auto h-12 w-12 text-gray-300"/>
+                    <BsFillImageFill className="mx-auto h-12 w-12 text-gray-300" />
                     <div className="mt-4 flex text-sm leading-6 text-gray-600">
                       <label
                         htmlFor="file-upload"
@@ -230,8 +205,6 @@ function AccountSetting() {
               </div>
             </div>
           </div>
-
-          
         </div>
 
         <div className="mt-6 px-24 pb-6 flex items-center justify-end gap-x-6">
