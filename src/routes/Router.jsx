@@ -3,6 +3,7 @@ import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 
 import {
   ALL_PERSONAL_PROJECTS,
+  ALL_PERSONAL_TASK,
   ALL_TASK,
   ALL_TEAM_PROJECTS,
   CREATE_PERSONAL_PROJECT,
@@ -12,6 +13,7 @@ import {
   GROUP_CHAT,
   LOGIN_PAGE,
   MEMBERS,
+  PERSONAL_TASK_DETAILS,
   PROFILE,
   REGISTER_PAGE,
   TASK_COMPLETED,
@@ -33,12 +35,15 @@ import AllPersonalProject from "../pages/PersonalProject/AllPersonalProject";
 import EditProject from "../pages/PersonalProject/ManageProject/EditProject";
 import EditTeamProject from "../pages/Teams/ManageTeamProject/EditTeamProject";
 import AllTask from "../pages/Teams/TeamProjectDetails/AllTask/AllTask";
-import TeamLayout from "../layouts/TeamLayout";
+import TeamTaskLayout from "../layouts/TeamTaskLayout";
 import Task from "../pages/Teams/TeamProjectDetails/AllTask/Task";
 import TaskDetails from "../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails";
 import Members from "../pages/Teams/TeamProjectDetails/Members/Members"
 import GeneralChat from "../pages/Teams/Chat/GeneralChat"
 import Profile from "../pages/UserProfile/Profile";
+import PersonalTaskLayout from "../layouts/PersonalTaskLayout"
+import AllPersonalTask from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/AllPersonalTask";
+import DetailedInfo from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/PersonalTaskDetails/DetailedInfo";
 
 const appRoutes = [
   {
@@ -60,7 +65,7 @@ const appRoutes = [
   },
   {
     path: "/du-an-nhom",
-    element: <TeamLayout />,
+    element: <TeamTaskLayout />,
     children: [
       { path: ALL_TASK, element: <AllTask/> },
       { path: TASK_TODO, element: <Task/> },
@@ -71,6 +76,17 @@ const appRoutes = [
       { path: TASK_DETAILS, element: <TaskDetails/> },
 
       { path: MEMBERS, element: <Members/> },
+
+     
+    ],
+  },
+  {
+    path: "/du-an-ca-nhan",
+    element: <PersonalTaskLayout />,
+    children: [
+      { path: ALL_PERSONAL_TASK, element: <AllPersonalTask/> },
+      { path: PERSONAL_TASK_DETAILS, element: <DetailedInfo/> },
+      
 
      
     ],

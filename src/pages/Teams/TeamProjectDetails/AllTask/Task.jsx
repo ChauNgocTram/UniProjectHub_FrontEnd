@@ -10,8 +10,8 @@ import Button from "../../../../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import Tabs from "../../../../components/Tabs/Tabs";
 
-import BoardViewByStatus from '../../../../components/Tasks/ViewTask/BoardViewByStatus';
-import ListView from '../../../../components/Tasks/ViewTask/ListView';
+import BoardViewByStatus from '../../../../components/Tasks/ViewTask/Team/BoardViewByStatus';
+import ListView from '../../../../components/Tasks/ViewTask/Team/ListView';
 import AddTask from '../../../../components/Tasks/ManageTask/AddTask';
 
 const TABS = [

@@ -7,7 +7,7 @@ import {
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
 //import { useSelector } from "react-redux";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../utils";
+import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../../../utils";
 //import TaskDialog from "./task/TaskDialog";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { FaList } from "react-icons/fa";
@@ -15,11 +15,11 @@ import { BiCalendar } from "react-icons/bi";
 import { RxCounterClockwiseClock } from "react-icons/rx";
 //import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
-import UserInfo from "../UserInfo/UserInfo";
 import { NavLink } from "react-router-dom";
-import { TASK_DETAILS } from "../../routes/constant";
-import AddSubTask from "../Tasks/ManageTask/AddSubTask"
-import TaskDialog from "../Dialog/TaskDialog";
+import { PERSONAL_TASK_DETAILS } from "../../../../routes/constant";
+import AddSubTask from "../../ManageTask/AddSubTask";
+import TaskDialog from "../../../Dialog/TaskDialog";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -27,14 +27,14 @@ const ICONS = {
   low: <MdKeyboardArrowDown />,
 };
 
-const TaskCard = ({ task }) => {
+function PersonalTaskCard({ task }) {
   //const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <div className="w-full h-fit bg-white shadow-md p-2 rounded">
-        <div className="w-full flex justify-between">
+      <div className="w-full h-fit bg-white shadow-md py-2 px-4 rounded">
+        <div className="w-full flex justify-between items-center">
           <div
             className="flex flex-1 gap-1 items-center text-sm font-medium"
             // className={clsx(
@@ -51,7 +51,6 @@ const TaskCard = ({ task }) => {
             <span className="uppercase">High Priority</span>
           </div>
 
-
           {/* {user?.isAdmin && <TaskDialog task={task} />} */}
           <TaskDialog task={task} />
         </div>
@@ -62,41 +61,42 @@ const TaskCard = ({ task }) => {
               className="w-4 h-4 rounded-full"
               // className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
             />
-            <NavLink to={`/du-an-nhom/${TASK_DETAILS}`}>
-            <h4 className="line-clamp-2 text-black font-medium">
-              {/* {task?.title} */}
-              Lên kế hoạch truyền thông marketing tích hợp
-            </h4>
+            <NavLink to={`/du-an-ca-nhan/${PERSONAL_TASK_DETAILS}`}>
+              <h4 className="line-clamp-2 text-black font-medium">
+                {/* {task?.title} */}
+                Lên kế hoạch truyền thông marketing tích hợp
+              </h4>
             </NavLink>
-            
           </div>
-          <div className="flex space-x-2 items-center text-gray-600 my-2">
-          <BiCalendar />
-          <span className="text-sm ">
-            {/* {formatDate(new Date(task?.date))} */}
-             23-05-2024
-          </span>
+          <div className="flex justify-between items-center px-4">
+            <div className="flex  space-x-2 items-center text-gray-600 my-2">
+              <BiCalendar />
+              <span className="text-sm ">
+                {/* {formatDate(new Date(task?.date))} */}
+                23-05-2024
+              </span>
+            </div>
+            <div>
+              <MdOutlineKeyboardDoubleArrowRight />
+            </div>
+            <div className="flex space-x-2 items-center text-gray-600 my-2">
+              <RxCounterClockwiseClock />
+              <span className="text-sm ">
+                {/* {formatDate(new Date(task?.date))} */}
+                28-05-2024
+              </span>
+            </div>
           </div>
-          <div className="flex space-x-2 items-center text-gray-600 mb-2">
-          <RxCounterClockwiseClock />
-          <span className="text-sm ">
-            {/* {formatDate(new Date(task?.date))} */}
-            28-05-2024
-          </span>
-          </div>
-         
-          <p className="text-sm text-gray-600 mt-1">Tạo bởi: Chau Ngoc Tram</p>
-         
         </>
 
         <div className="w-full border-t border-gray-200 my-2" />
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-2 px-4">
           <div className="flex items-center gap-3">
             {/* <div className="flex gap-1 items-center text-sm text-gray-600">
-              <BiMessageAltDetail />
-               <span>{task?.activities?.length}</span>
-              <span>8</span>
-            </div> */}
+            <BiMessageAltDetail />
+             <span>{task?.activities?.length}</span>
+            <span>8</span>
+          </div> */}
             <div className="flex gap-1 items-center text-sm text-gray-600 ">
               <MdAttachFile />
               {/* <span>{task?.assets?.length}</span> */}
@@ -109,18 +109,8 @@ const TaskCard = ({ task }) => {
             </div>
           </div>
 
-          <div className='flex flex-row-reverse'>
-            {task?.team?.map((m, index) => (
-              <div
-                key={index}
-                className={clsx(
-                  "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
-                  BGS[index % BGS?.length]
-                )}
-              >
-                <UserInfo user={m} />
-              </div>
-            ))}
+          <div className="text-[10px] bg-red-200 text-red-600 font-bold rounded-lg flex items-center justify-center px-2 py-1">
+            TO DO
           </div>
         </div>
 
@@ -160,11 +150,13 @@ const TaskCard = ({ task }) => {
         </div>
       </div>
 
-      <AddSubTask open={open} setOpen={setOpen} 
-    //  id={task._id} 
+      <AddSubTask
+        open={open}
+        setOpen={setOpen}
+        //  id={task._id}
       />
     </>
   );
-};
+}
 
-export default TaskCard;
+export default PersonalTaskCard;

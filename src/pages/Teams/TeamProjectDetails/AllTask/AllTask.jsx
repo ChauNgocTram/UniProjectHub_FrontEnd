@@ -5,8 +5,8 @@ import { IoMdAdd } from "react-icons/io";
 import Title from "../../../../components/Title";
 import Tabs from "../../../../components/Tabs/Tabs";
 import Button from "../../../../components/Button";
-import BoardViewAll from "../../../../components/Tasks/ViewTask/BoardViewAll";
-import ListView from "../../../../components/Tasks/ViewTask/ListView";
+import BoardViewAll from "../../../../components/Tasks/ViewTask/Team/BoardViewAll";
+import ListView from "../../../../components/Tasks/ViewTask/Team/ListView";
 import AddTask from "../../../../components/Tasks/ManageTask/AddTask";
 
 const TABS = [

@@ -7,7 +7,7 @@ import { PiClockCounterClockwiseFill } from "react-icons/pi";
 import { LuListTodo } from "react-icons/lu";
 import { GiSandsOfTime } from "react-icons/gi";
 import ProjectAvatar from "../../../components/ProjectAvatar";
-import { EDIT_PERSONAL_PROJECT } from "../../../routes/constant";
+import { ALL_PERSONAL_TASK, EDIT_PERSONAL_PROJECT } from "../../../routes/constant";
 
 function Card() {
   return (
@@ -59,9 +59,9 @@ function Card() {
           /> */}
           <ProjectAvatar />
           <div className="flex w-full flex-col gap-0.5 pr-3">
-            <NavLink>
+            <NavLink to={`/du-an-ca-nhan/${ALL_PERSONAL_TASK}`}>
               <h5 className="line-clamp-2 text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                Mini Project fbwjfuihfdljNWO BFUweahnli huweihlcuh
+                Mini Project 
               </h5>
             </NavLink>
             <div className="mt-2">

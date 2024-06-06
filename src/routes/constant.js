@@ -31,5 +31,7 @@ export const GROUP_CHAT = 'thao-luan'
 export const ALL_PERSONAL_PROJECTS = 'du-an-ca-nhan'
 export const CREATE_PERSONAL_PROJECT = 'tao-du-an-ca-nhan'
 export const EDIT_PERSONAL_PROJECT = 'chinh-sua-du-an-cua-ban'
+export const ALL_PERSONAL_TASK = 'tat-ca-nhiem-vu'
+export const PERSONAL_TASK_DETAILS = 'chi-tiet-nhiem-vu'
 
 // Dự thính lớp học

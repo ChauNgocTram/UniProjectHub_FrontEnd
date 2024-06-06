@@ -1,5 +1,5 @@
 import React from "react";
-import TaskCard from "../TaskCard";
+import TaskCard from "./TaskCard";
 
 const BoardViewByStatus = ({ tasks }) => {
   return (

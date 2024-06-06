@@ -11,7 +11,7 @@ function CreateProject() {
     <>
       <div className="flex">
         <PersonalSidebar/>
-        <div className="w-full mt-8">
+        <div className="mt-12 mx-12 md:mx-48 wrapper-body">
           <div>
             <p className="pb-2 text-xl font-semibold border-b border-neutral-900">
               Hãy xây dựng một Không gian làm việc
@@ -22,7 +22,7 @@ function CreateProject() {
             </p>
           </div>
 
-          <div>
+          <div className="my-4 p-5 md:mx-24">
             <Form layout="vertical" 
             //</div>onFinish={handleSubmit}
             >
@@ -64,6 +64,7 @@ function CreateProject() {
                   },
                 ]}
                // initialValue={userData.type}
+               style={{ width: '300px' }}
               >
                 <Select
                   placeholder="Chọn..."

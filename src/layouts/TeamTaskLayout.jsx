@@ -1,14 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import CommonHeader from "../components/Header/CommonHeader";
-import ProjectSidebarr from "../components/Sidebar/ProjectSidebarr";
+import TeamTaskSidebar from "../components/Sidebar/TeamTaskSidebar";
 
-function TeamLayout() {
+function TeamTaskLayout() {
   return (
     <div>
       <div className="h-screen flex ">
         <div className="w-1/5 h-screen bg-white sticky top-0 hidden md:block">
-          <ProjectSidebarr />
+          <TeamTaskSidebar />
         </div>
 
         <div className="flex-1 overflow-y-auto sticky top-0">
@@ -22,4 +22,4 @@ function TeamLayout() {
   );
 }
 
-export default TeamLayout;
+export default TeamTaskLayout;

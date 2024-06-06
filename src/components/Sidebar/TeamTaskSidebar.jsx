@@ -10,9 +10,6 @@ import { GrDocumentTime } from "react-icons/gr";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 
 import { MdOutlineTaskAlt } from "react-icons/md";
-import { motion } from "framer-motion";
-
-import LeftArrowIcon from "../../assets/icons/leftArrow.svg";
 import {
   ALL_TASK,
   MEMBERS,
@@ -61,7 +58,7 @@ const navLinks = [
 
 ];
 
-function ProjectSidebarr() {
+function TeamTaskSidebar() {
   //const dispatch = useDispatch();
   const location = useLocation();
   // const closeSidebar = () => {
@@ -143,4 +140,4 @@ function ProjectSidebarr() {
   );
 }
 
-export default ProjectSidebarr;
+export default TeamTaskSidebar;

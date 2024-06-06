@@ -7,15 +7,12 @@ import { useForm } from "react-hook-form";
 import SelectList from "../../SelectList";
 import { BiImages } from "react-icons/bi";
 import Button from "../../Button";
-import UserList from "../../UserInfo/UserList";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED", "PENDING"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
-const uploadedFileURLs = [];
-
-function AddTask({ open, setOpen }) {
+function AddPersonalTask({ open, setOpen }) {
   const task = "";
 
   const {
@@ -23,7 +20,6 @@ function AddTask({ open, setOpen }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [team, setTeam] = useState(task?.team || []);
   const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
   const [priority, setPriority] = useState(
     task?.priority?.toUpperCase() || PRIORIRY[2]
@@ -36,7 +32,6 @@ function AddTask({ open, setOpen }) {
   const handleSelect = (e) => {
     setAssets(e.target.files);
   };
-
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
@@ -59,27 +54,25 @@ function AddTask({ open, setOpen }) {
               error={errors.title ? errors.title.message : ""}
             />
 
-            {/* <UserList setTeam={setTeam} team={team} /> */}
-            <UserList />
             <div className="flex gap-4">
-              <SelectList
-                label="Trạng thái"
-                lists={LISTS}
-                selected={stage}
-                setSelected={setStage}
-              />
-
               <div className="w-full">
                 <SelectList
-                  label="Mức độ ưu tiên"
-                  lists={PRIORIRY}
-                  selected={priority}
-                  setSelected={setPriority}
+                  label="Trạng thái"
+                  lists={LISTS}
+                  selected={stage}
+                  setSelected={setStage}
                 />
               </div>
+
+              <SelectList
+                label="Mức độ ưu tiên"
+                lists={PRIORIRY}
+                selected={priority}
+                setSelected={setPriority}
+              />
             </div>
 
-            <div className="flex gap-4 items-center">
+            <div className="flex items-center gap-4">
               <Textbox
                 placeholder="Date"
                 type="date"
@@ -105,23 +98,6 @@ function AddTask({ open, setOpen }) {
                 })}
                 error={errors.date ? errors.date.message : ""}
               />
-              {/* <div className='w-full flex items-center justify-center mt-4'>
-                <label
-                  className='flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4'
-                  htmlFor='imgUpload'
-                >
-                  <input
-                    type='file'
-                    className='hidden'
-                    id='imgUpload'
-                    onChange={(e) => handleSelect(e)}
-                    accept='.jpg, .png, .jpeg'
-                    multiple={true}
-                  />
-                  <BiImages />
-                  <span>Thêm file</span>
-                </label>
-              </div> */}
             </div>
 
             <div className="bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4">
@@ -151,4 +127,4 @@ function AddTask({ open, setOpen }) {
   );
 }
 
-export default AddTask;
+export default AddPersonalTask;

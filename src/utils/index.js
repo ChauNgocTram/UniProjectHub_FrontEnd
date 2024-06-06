@@ -52,3 +52,10 @@ export const formatDate = (date) => {
     "bg-green-600",
   ];
   
+  export const BG_TASK_CARD = {
+    todo: "bg-toDo",
+    inProgress: "bg-inProgress",
+    completed: "bg-completed",
+    pending:"bg-pending"
+  };
+  
