@@ -48,7 +48,7 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 right-0 w-full flex justify-between items-center z-50 font-semibold ${
+        className={`fixed top-0 right-0 w-full flex justify-between items-center z-50 font-semibold pb-2 ${
           header
             ? "bg-white backdrop-blur-sm text-black shadow-md"
             : "bg-transparent text-black"

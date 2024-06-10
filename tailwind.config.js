@@ -25,6 +25,17 @@ export default {
         24: "24px",
         32: "32px",
       },
+      animation: {
+        floating: 'floating 3s ease-in-out infinite',
+      },
+      keyframes: {
+        floating: {
+          '0%': { transform: 'translate(0, 0px)' },
+          '50%': { transform: 'translate(0, 10px)' },
+          '100%': { transform: 'translate(0, -0px)' },
+        },
+      },
+      
     },
   },
   plugins: [
