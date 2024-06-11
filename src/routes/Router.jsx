@@ -21,6 +21,7 @@ import {
   TASK_INPROGRESS,
   TASK_PENDING,
   TASK_TODO,
+  TEACHER_SCHEDULE,
 } from "./constant";
 
 import Home from "../pages/Home/Home";
@@ -44,6 +45,7 @@ import Profile from "../pages/UserProfile/Profile";
 import PersonalTaskLayout from "../layouts/PersonalTaskLayout"
 import AllPersonalTask from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/AllPersonalTask";
 import DetailedInfo from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/PersonalTaskDetails/DetailedInfo";
+import TeacherSchedule from "../pages/TeacherSchedule/TeacherSchedule";
 
 const appRoutes = [
   {
@@ -61,6 +63,8 @@ const appRoutes = [
       { path: ALL_PERSONAL_PROJECTS, element: <AllPersonalProject /> },
       { path: CREATE_PERSONAL_PROJECT, element: <CreateProject /> },
       { path: EDIT_PERSONAL_PROJECT, element: <EditProject /> },
+
+      { path: TEACHER_SCHEDULE, element: <TeacherSchedule /> },
     ],
   },
   {

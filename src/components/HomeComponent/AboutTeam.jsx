@@ -6,7 +6,7 @@ import { IoMdArrowDropright, IoIosArrowUp } from "react-icons/io";
 function AboutTeam() {
   return (
     <>
-      <div className="flex justify-between items-center xl:w-[1200px] mx-auto px-4 gap-2 mb-6">
+      <div className="flex justify-between items-center xl:w-[1200px] mx-auto px-4 gap-2 my-6">
         <div>
           <img
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

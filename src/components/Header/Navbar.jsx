@@ -8,6 +8,7 @@ import {
   ALL_PERSONAL_PROJECTS,
   ALL_TEAM_PROJECTS,
   PROFILE,
+  TEACHER_SCHEDULE,
 } from "../../routes/constant";
 
 const UserDropdownLinks = [
@@ -48,7 +49,7 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 right-0 w-full flex justify-between items-center z-50 font-semibold pb-2 ${
+        className={`fixed top-0 right-0 w-full flex justify-between items-center font-semibold pb-2 ${
           header
             ? "bg-white backdrop-blur-sm text-black shadow-md"
             : "bg-transparent text-black"
@@ -108,15 +109,15 @@ function Navbar() {
                 </li>
                 <li className="py-4  m-1">
                   <NavLink
-                    to="/"
+                    to={`/${TEACHER_SCHEDULE}`}
                     className={` menuItem ${
-                      location.pathname === "/du thinh" ? "activeNavbar" : ""
+                      location.pathname === `/${TEACHER_SCHEDULE}` ? "activeNavbar" : ""
                     }`}
                   >
                     Dự thính lớp học
                   </NavLink>
                 </li>
-                <li className="py-4  m-1">
+                {/* <li className="py-4  m-1">
                   <NavLink
                     to="/"
                     className={` menuItem ${
@@ -125,7 +126,7 @@ function Navbar() {
                   >
                     Tài nguyên
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="py-4  m-1">
                   <NavLink
                     to="/"
@@ -133,7 +134,7 @@ function Navbar() {
                       location.pathname === "/tai nguyen" ? "activeNavbar" : ""
                     }`}
                   >
-                    Blog
+                    Blog Member
                   </NavLink>
                 </li>
               </ul>

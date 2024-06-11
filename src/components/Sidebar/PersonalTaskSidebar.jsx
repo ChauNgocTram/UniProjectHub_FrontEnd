@@ -39,11 +39,11 @@ const navLinks = [
       icon: <GrDocumentTime />,
     //  path: `/du-an-ca-nhan/${TASK_PENDING}`,
     },
-    {
-      title: "Thống kê",
-      icon: <AiOutlinePieChart />,
-   //   path: `/du-an-ca-nhan/${MEMBERS}`,
-    },
+  //   {
+  //     title: "Thống kê",
+  //     icon: <AiOutlinePieChart />,
+  //  //   path: `/du-an-ca-nhan/${MEMBERS}`,
+  //   },
   
   ];
 

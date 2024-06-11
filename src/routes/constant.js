@@ -35,3 +35,4 @@ export const ALL_PERSONAL_TASK = 'tat-ca-nhiem-vu'
 export const PERSONAL_TASK_DETAILS = 'chi-tiet-nhiem-vu'
 
 // Dự thính lớp học
+export const TEACHER_SCHEDULE = 'thoi-khoa-bieu-giao-vien'
