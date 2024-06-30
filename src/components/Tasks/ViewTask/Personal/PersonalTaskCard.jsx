@@ -7,7 +7,7 @@ import {
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
 //import { useSelector } from "react-redux";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../../../utils";
+import { BGS, PRIOTITYSTYELS,  formatDate } from "../../../../utils";
 //import TaskDialog from "./task/TaskDialog";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { FaList } from "react-icons/fa";

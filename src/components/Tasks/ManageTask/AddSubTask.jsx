@@ -3,6 +3,9 @@ import ModalWrapper from "../../Modal/ModalWrapper";
 import { DialogTitle } from "@headlessui/react";
 import Textbox from "../../Textbox";
 import Button from "../../Button";
+import { useState } from "react";
+import api from "../../../config/axios";
+import { alert } from "../../Alert/Alert";
 
 
 function AddSubTask({ open, setOpen, id }) {
@@ -10,21 +13,51 @@ function AddSubTask({ open, setOpen, id }) {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
       } = useForm();
     
       // const [addSbTask] = useCreateSubTaskMutation();
-    
+      const [loading, setLoading] = useState(false);
       const handleOnSubmit = async (data) => {
-        // try {
-        //   const res = await addSbTask({ data, id }).unwrap();
-        //   toast.success(res.message);
-        //   setTimeout(() => {
-        //     setOpen(false);
-        //   }, 500);
-        // } catch (err) {
-        //   console.log(err);
-        //   toast.error(err?.data?.message || err.error);
-        // }
+        setLoading(true)
+    try {
+      const payload = {
+        taskId:id,
+        description: data.description,
+   
+      //  tags: data.tags, 
+        deadline: new Date(data.date).toISOString(),
+     
+      };
+
+      const response = await api.post(`/api/SubTask/CreateSubTaskAsync`, payload);
+      console.log("Create task response:", response.data); 
+
+      if (response.status === 200) {
+      //  onTaskAdded();
+        setOpen(false);
+        alert.alertSuccessWithTime(
+          "Thêm Việc Thành Công",
+          "",
+          2000,
+          "30",
+          () => {}
+        );
+        reset();
+      } else {
+        console.error("Failed to create task", response.data);
+        alert.alertFailed(
+          "Thêm việc không thành công",
+          "Vui lòng thử lại",
+          2000,
+          "30",
+          () => {}
+        );
+      }
+    } catch (error) {
+      console.error("Error creating task", error);
+    }
+    setLoading(false)
       };
     
       return (
@@ -41,13 +74,13 @@ function AddSubTask({ open, setOpen, id }) {
                 <Textbox
                   placeholder='Việc cần làm'
                   type='text'
-                  name='title'
+                  name='description'
                   label='Tiêu đề'
                   className='w-full rounded'
-                  register={register("title", {
+                  register={register("description", {
                     required: "Vui lòng điền việc cần làm!",
                   })}
-                  error={errors.title ? errors.title.message : ""}
+                  error={errors.description ? errors.description.message : ""}
                 />
     
                 <div className='flex items-center gap-4'>
@@ -55,7 +88,7 @@ function AddSubTask({ open, setOpen, id }) {
                     placeholder='dd-mm-yyyy'
                     type='date'
                     name='date'
-                    label='Ngày'
+                    label='Deadline'
                     className='w-full rounded'
                     register={register("date", {
                       required: "Vui lòng chọn ngày tháng!",
@@ -68,10 +101,10 @@ function AddSubTask({ open, setOpen, id }) {
                     name='tag'
                     label='Tag'
                     className='w-full rounded'
-                    register={register("tag", {
-                      required: "Tag is required!",
-                    })}
-                    error={errors.tag ? errors.tag.message : ""}
+                    // register={register("tag", {
+                    //   required: "Tag is required!",
+                    // })}
+                    // error={errors.tag ? errors.tag.message : ""}
                   />
                 </div>
               </div>

@@ -9,7 +9,7 @@ import { RxActivityLog } from "react-icons/rx";
 import { useParams } from "react-router-dom";
 //import { toast } from "sonner";
 import Tabs from "../../../../../components/Tabs/Tabs";
-import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../../../../../utils";
+import { PRIOTITYSTYELS,  getInitials } from "../../../../../utils";
 //import Loading from "../components/Loader";
 import Button from "../../../../../components/Button";
 

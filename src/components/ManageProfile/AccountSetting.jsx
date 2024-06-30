@@ -25,6 +25,7 @@ function AccountSetting() {
                 </label>
                 <div className="mt-2">
                   <input
+                  value="Châu Ngọc"
                     type="text"
                     name="first-name"
                     id="first-name"
@@ -42,6 +43,7 @@ function AccountSetting() {
                 </label>
                 <div className="mt-2">
                   <input
+                  value="Trâm"
                     type="text"
                     name="last-name"
                     id="last-name"

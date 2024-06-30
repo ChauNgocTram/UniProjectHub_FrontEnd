@@ -4,15 +4,61 @@ import { FaAsterisk } from "react-icons/fa";
 const { Search } = Input;
 
 import { multiStepContext } from "../StepperContext";
+import api from "../../../../../../config/axios";
+import { alert } from "../../../../../../components/Alert/Alert"
+import { useState } from "react";
+
+import Loading from "../../../../../../components/Loading/Loading"
 
 function SecondStep() {
   const { setCurrentStep, userData, setUserData, submitData } =
     useContext(multiStepContext);
+    const [loading, setLoading] = useState(false);
+  // const handleBtnClick = () => {
+  //   submitData();
+  //   setCurrentStep(3);
+  // };
 
-  const handleBtnClick = () => {
-    submitData();
+  const handleBtnClick = async () => {
+    setLoading(true);
+    try {
+      const payload = {
+        name: userData.name,
+        description: userData.description,
+        typeOfSpace:userData.typeOfSpace,
+        nameLeader: userData.nameLeader,
+        status: 1,
+        isGroup: true,
+      };
+
+      const response = await api.post(`/api/Project/CreateProject/cc405639-40d4-4094-b403-70422d74ca95`, payload);
+
+      if (response.status === 200) {
+        // alert.alertSuccessWithTime(
+        //   "Tạo Task Thành Công",
+        //   "",
+        //   2000,
+        //   "30",
+        //   () => {}
+        // );
+        console.log("Create task response:", response.data);
+      } else {
+        console.error("Failed to create task", response.data);
+        alert.alertFailed(
+          "Tạo Task Thất Bại",
+          "Vui lòng thử lại",
+          2000,
+          "30",
+          () => {}
+        );
+      }
+    } catch (error) {
+      console.error("Error creating task", error);
+    }
+    setLoading(false);
     setCurrentStep(3);
   };
+
 
   const handleInputChange = (e, key) => {
     setUserData({ ...userData, [key]: e.target.value });
@@ -23,7 +69,11 @@ function SecondStep() {
   };
 
   return (
-    <Form layout="vertical" onFinish={handleBtnClick}>
+    <>
+    {loading ? (
+      <Loading />
+    ) : (
+      <Form layout="vertical" onFinish={handleBtnClick}>
       <Form.Item
         label={
           <span className="flex items-center">
@@ -31,17 +81,17 @@ function SecondStep() {
             Tên leader của dự án
           </span>
         }
-        name="username"
-        rules={[
-          { required: true, message: "Vui lòng nhập tên leader của dự án" },
-        ]}
-        initialValue={userData.username}
+        name="nameLeader"
+        // rules={[
+        //   { required: true, message: "Vui lòng nhập tên leader của dự án" },
+        // ]}
+        initialValue={userData.nameLeader}
         className="w-[500px]"
       >
         <Input
           placeholder="Họ và tên của bạn"
-          value={userData.username}
-          onChange={(e) => handleInputChange(e, "username")}
+          value={userData.nameLeader}
+          onChange={(e) => handleInputChange(e, "nameLeader")}
         />
       </Form.Item>
 
@@ -53,12 +103,12 @@ function SecondStep() {
           </span>
         }
         name="members"
-        rules={[
-          {
-            required: true,
-            message: "Vui lòng nhập tên thành viên tham gia dự án",
-          },
-        ]}
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: "Vui lòng nhập tên thành viên tham gia dự án",
+        //   },
+        // ]}
         style={{ width: '300px' }}
       >
         <Search
@@ -87,6 +137,10 @@ function SecondStep() {
         </div>
       </Form.Item>
     </Form>
+    )}
+    </>
+    
+   
   );
 }
 

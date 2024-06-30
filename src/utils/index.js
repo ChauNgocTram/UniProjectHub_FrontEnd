@@ -31,19 +31,21 @@ export const formatDate = (date) => {
     const initialsStr = initials.join("");
   
     return initialsStr;
-  }
+  };
+
+
   
   export const PRIOTITYSTYELS = {
-    high: "text-red-600",
-    medium: "text-yellow-600",
-    low: "text-blue-600",
+    3: "text-red-600",
+    2: "text-yellow-600",
+    1: "text-blue-600",
   };
   
-  export const TASK_TYPE = {
-    todo: "bg-blue-600",
-    "in progress": "bg-yellow-600",
-    completed: "bg-green-600",
-  };
+  // export const TASK_TYPE = {
+  //   1: "bg-blue-600",
+  //   2: "bg-yellow-600",
+  //   3: "bg-green-600",
+  // };
   
   export const BGS = [
     "bg-blue-600",

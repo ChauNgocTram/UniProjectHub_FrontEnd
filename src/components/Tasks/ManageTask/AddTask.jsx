@@ -3,38 +3,67 @@ import ModalWrapper from "../../Modal/ModalWrapper";
 import { DialogTitle } from "@headlessui/react";
 import Textbox from "../../Textbox";
 import { useForm } from "react-hook-form";
-//import UserList from "./UserList";
 import SelectList from "../../SelectList";
-import { BiImages } from "react-icons/bi";
 import Button from "../../Button";
-import UserList from "../../UserInfo/UserList";
-import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import api from "../../../config/axios";
+import { alert } from "../../../components/Alert/Alert"
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED", "PENDING"];
-const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
+const PRIORITY = ["LOW", "MEDIUM", "HIGH"];
 
-const uploadedFileURLs = [];
-
-function AddTask({ open, setOpen }) {
-  const task = "";
-
+function AddTask({ open, setOpen, projectId, onTaskAdded  }) { 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
-  const [team, setTeam] = useState(task?.team || []);
-  const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
-  const [priority, setPriority] = useState(
-    task?.priority?.toUpperCase() || PRIORIRY[2]
-  );
-  const [assets, setAssets] = useState([]);
+  const [stage, setStage] = useState(LISTS[0]);
+  const [priority, setPriority] = useState(PRIORITY[2]);
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const submitHandler = async (data) => {
+    setLoading(true)
+    try {
+      const payload = {
+        taskName: data.taskName,
+        description: data.description,
+        status: LISTS.indexOf(stage) + 1,
+        category: data.category, 
+        tags: data.tags, 
+        deadline: new Date(data.date).toISOString(),
+        rate: PRIORITY.indexOf(priority) + 1,
+        comment: data.comment, 
+      };
 
-  const submitHandler = () => {};
+      const response = await api.post(`/api/Task/CreateTask/${projectId}`, payload);
+      console.log("Create task response:", response.data); 
 
-  const handleSelect = (e) => {
-    setAssets(e.target.files);
+      if (response.status === 200) {
+        onTaskAdded();
+        setOpen(false);
+        alert.alertSuccessWithTime(
+          "Tạo Task Thành Công",
+          "",
+          2000,
+          "30",
+          () => {}
+        );
+        reset();
+      } else {
+        console.error("Failed to create task", response.data);
+        alert.alertFailed(
+          "Tạo Task Thất Bại",
+          "Vui lòng thử lại",
+          2000,
+          "30",
+          () => {}
+        );
+      }
+    } catch (error) {
+      console.error("Error creating task", error);
+    }
+    setLoading(false)
   };
 
   return (
@@ -45,22 +74,21 @@ function AddTask({ open, setOpen }) {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {task ? "CẬP NHẬT TASK" : "TẠO TASK"}
+            TẠO TASK
           </DialogTitle>
 
           <div className="mt-2 flex flex-col gap-6">
             <Textbox
               placeholder="Nhập tiêu đề"
               type="text"
-              name="title"
+              name="taskName"
               label="Tiêu đề"
               className="w-full rounded"
-              register={register("title", { required: "Title is required" })}
-              error={errors.title ? errors.title.message : ""}
+              register={register("taskName", { required: "Vui lòng nhập tiêu đề" })}
+              error={errors.taskName ? errors.taskName.message : ""}
             />
+         
 
-            {/* <UserList setTeam={setTeam} team={team} /> */}
-            <UserList />
             <div className="flex gap-4">
               <SelectList
                 label="Trạng thái"
@@ -72,57 +100,24 @@ function AddTask({ open, setOpen }) {
               <div className="w-full">
                 <SelectList
                   label="Mức độ ưu tiên"
-                  lists={PRIORIRY}
+                  lists={PRIORITY}
                   selected={priority}
                   setSelected={setPriority}
                 />
               </div>
             </div>
 
-            <div className="flex gap-4 items-center">
-              <Textbox
-                placeholder="Date"
-                type="date"
-                name="date"
-                label="Ngày bắt đầu"
-                className="w-full rounded"
-                register={register("date", {
-                  required: "Vui lòng chọn ngày!",
-                })}
-                error={errors.date ? errors.date.message : ""}
-              />
-              <div className="text-blue-500 font-semibold">
-                <MdOutlineKeyboardDoubleArrowRight size={20} />
-              </div>
-              <Textbox
-                placeholder="Date"
-                type="date"
-                name="date"
-                label="Ngày hoàn thành"
-                className="w-full rounded"
-                register={register("date", {
-                  required: "Vui lòng chọn ngày!",
-                })}
-                error={errors.date ? errors.date.message : ""}
-              />
-              {/* <div className='w-full flex items-center justify-center mt-4'>
-                <label
-                  className='flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4'
-                  htmlFor='imgUpload'
-                >
-                  <input
-                    type='file'
-                    className='hidden'
-                    id='imgUpload'
-                    onChange={(e) => handleSelect(e)}
-                    accept='.jpg, .png, .jpeg'
-                    multiple={true}
-                  />
-                  <BiImages />
-                  <span>Thêm file</span>
-                </label>
-              </div> */}
-            </div>
+            <Textbox
+              placeholder="Ngày hoàn thành"
+              type="date"
+              name="date"
+              label="Ngày hoàn thành"
+              className="w-full rounded"
+              register={register("date", {
+                required: "Vui lòng chọn ngày!",
+              })}
+              error={errors.date ? errors.date.message : ""}
+            />
 
             <div className="bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4">
               {uploading ? (

@@ -7,7 +7,7 @@ import {
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
 import { toast } from "sonner";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../../../utils";
+import { BGS, PRIOTITYSTYELS,  formatDate } from "../../../../utils";
 import clsx from "clsx";
 import { FaList } from "react-icons/fa";
 import Button from "../../../Button";
@@ -15,11 +15,30 @@ import ConfirmatioDialog from "../../../Dialog/Dialogs";
 import TaskStatusBadge from "../../../Status/TaskStatusBadge";
 
 const ICONS = {
-  high: <MdKeyboardDoubleArrowUp />,
-  medium: <MdKeyboardArrowUp />,
-  low: <MdKeyboardArrowDown />,
+  3: <MdKeyboardDoubleArrowUp />,
+  2: <MdKeyboardArrowUp />,
+  1: <MdKeyboardArrowDown />,
 };
 
+const TASK_TYPE = {
+  1: "bg-toDo",
+  2: "bg-inProgress",
+  3: "bg-completed",
+  4: "bg-pending",
+};
+
+const getPriorityLabel = (rate) => {
+  switch (rate) {
+    case 1:
+      return "Low";
+    case 2:
+      return "Medium";
+    case 3:
+      return "High";
+    default:
+      return "";
+  }
+};
 
 function ListView({ tasks }) {
     const [openDialog, setOpenDialog] = useState(false);
@@ -37,7 +56,7 @@ function ListView({ tasks }) {
         <tr className='w-full text-left'>
           <th className='py-2'>Tiêu đề</th>
           <th className='py-2'>Độ ưu tiên</th>
-          <th className='py-2'>Ngày tạo</th>
+          {/* <th className='py-2'>Ngày tạo</th> */}
           <th className='py-2 line-clamp-1'>Deadline</th>
           <th className='py-2'>File</th>
           <th className='py-2'>Tạo bởi</th>
@@ -49,43 +68,39 @@ function ListView({ tasks }) {
   
     const TableRow = ({ task }) => (
       <tr className='border-b border-gray-200 text-gray-600 hover:bg-gray-300/10'>
-        <td className='py-2'>
+        <td className='py-2 w-64'>
           <div className='flex items-center gap-2'>
             <div
-              //className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
-              className="w-4 h-4 rounded-full"
+              className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.status])}
+             
             />
             <p className='w-full line-clamp-2 text-base text-black'>
-              {/* {task?.title} */}
-              Mini Project
+            {task.taskName}
+              
             </p>
           </div>
         </td>
   
         <td className='py-2'>
           <div className={"flex gap-1 items-center"}>
-            {/* <span className={clsx("text-lg", PRIOTITYSTYELS[task?.priority])}>
-              {ICONS[task?.priority]}
-            </span> */}
-            <span className="text-lg"><MdKeyboardDoubleArrowUp /></span>
-            {/* <span className='capitalize line-clamp-1'>
-              {task?.priority} Priority
-            </span> */}
-            <span className='capitalize line-clamp-1'>High Priority</span>
+            <span className={clsx("text-lg", PRIOTITYSTYELS[task.rate])}>
+              {ICONS[task.rate]}
+            </span>
+            <span className='capitalize line-clamp-1'>
+            {getPriorityLabel(task.rate)} Priority
+            </span>
           </div>
         </td>
 
-        <td className='py-2'>
+        {/* <td className='py-2'>
           <div className={"flex gap-1 items-center"}>
           23-04-2024
           </div>
-        </td>
+        </td> */}
   
         <td className='py-2'>
-          {/* <span className='text-sm text-gray-600'>
-            {formatDate(new Date(task?.date))}
-          </span> */}
-          <span>28-04-2024</span>
+          
+          <span>{task.deadline}</span>
         </td>
   
         <td className='py-2'>
@@ -94,12 +109,12 @@ function ListView({ tasks }) {
             <div className='flex gap-1 items-center text-sm text-gray-600 dark:text-gray-400'>
               <MdAttachFile />
               {/* <span>{task?.assets?.length}</span> */}
-              <span>8</span>
+              <span>0</span>
             </div>
             <div className='flex gap-1 items-center text-sm text-gray-600 dark:text-gray-400'>
               <FaList />
               {/* <span>0/{task?.subTasks?.length}</span> */}
-              <span>2</span>
+              <span>0</span>
             </div>
           </div>
         </td>
@@ -109,7 +124,7 @@ function ListView({ tasks }) {
         </td>
 
         <td className='py-2'>
-        <div className='flex'>
+        {/* <div className='flex'>
           {task?.team?.map((m, index) => (
             <div
               key={m._id}
@@ -121,7 +136,7 @@ function ListView({ tasks }) {
               <UserInfo user={m} />
             </div>
           ))}
-        </div>
+        </div> */}
       </td>
 
   
@@ -148,10 +163,9 @@ function ListView({ tasks }) {
             <table className='w-full '>
               <TableHeader />
               <tbody>
-                {/* {tasks.map((task, index) => (
+                {tasks.map((task, index) => (
                   <TableRow key={index} task={task} />
-                ))} */}
-                 <TableRow  />
+                ))}
               </tbody>
             </table>
           </div>

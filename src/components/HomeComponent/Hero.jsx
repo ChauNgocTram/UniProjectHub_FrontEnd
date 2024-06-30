@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
-import hero from "../../assets/images/hero.jpg";
+import mainHero from "../../assets/images/mainHero.jpg";
 import { AiOutlineCaretRight } from "react-icons/ai";
 
 function Hero() {
@@ -21,7 +21,7 @@ function Hero() {
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left justify-center flex-1 lg:pl-24 ml-8">
           <h1 className="lg:text-5xl text-3xl leading-3 mb-6 font-semibold space-y-4">
             <p className="text-mainColor tracking-wide mb-8 md:mb-1">
-              UniProjectHub{" "}
+             UniProjectHub {" "}
               <span className="underline italic decoration-mainColor text-black">
                 APN
               </span>
@@ -49,11 +49,9 @@ function Hero() {
           </h1>
           <p className="max-w-[700px] mb-8 mt-4 text-justify tracking-normal">
             {" "}
-            Nền tảng blockchain dựa trên Ethereum được thiết kế để cung cấp giải
-            pháp đa dạng cho các ứng dụng tài chính phi tập trung (DeFi) và ứng
-            dụng phi tập trung (DApps).
+            Nền tảng quản lý dự án dành cho người mới bắt đầu. Với các tính năng được tinh chỉnh để tối ưu trải nghiệm, APN chính là giải pháp giúp bạn quản lý dự án thật dễ dàng và hiệu quả.
           </p>
-          <div className="flex items-center gap-x-2">
+          <div className="flex items-center gap-x-2 -z-30">
             <button
               onClick={handleConstructionQuotesClick}
               className="flex items-center justify-center space-x-1 rounded-full px-3 py-2 text-sm text-white font-semibold bg-[#286A8E] hover:bg-base4 transition ease-out duration-300 transform hover:scale-110"
@@ -71,9 +69,9 @@ function Hero() {
           </div>
         </div>
 
-        <div className="hidden flex-1 lg:flex justify-center items-end">
+        <div className="hidden flex-1 -z-30 lg:flex justify-center items-end">
           <img
-            src={hero}
+            src={mainHero}
             alt=""
             className="w-1/2  animate-floating rounded-full"
           />

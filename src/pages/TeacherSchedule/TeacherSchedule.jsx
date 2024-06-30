@@ -67,7 +67,7 @@ function TeacherSchedule() {
   const [open, setOpen] = useState(false);
   return (
     <>
-    <div className="flex justify-end mt-24 mb-4 mr-36 pr-4">
+    <div className="flex justify-end mt-24 mb-1 mr-36 pr-4">
     <Button
           onClick={() => setOpen(true)}
           label="Tạo Lịch"
@@ -75,6 +75,7 @@ function TeacherSchedule() {
           className="flex flex-row-reverse gap-1 items-center bg-mainColor font-semibold text-white rounded-md py-2 2xl:py-2.5"
         />
     </div>
+    <div className="text-center text-lg font-semibold text-blueLevel5 uppercase">Quản lý thời khoá biểu của tôi</div>
       <div className="flex justify-center items-center min-h-screen -mt-24">
         <ScheduleComponent
         width={1200}
@@ -84,7 +85,7 @@ function TeacherSchedule() {
           }}
          // selectedDate={new Date(2024,1,11)}
           currentView="Month"
-          readonly={true} 
+         // readonly={true} 
         >
           <ViewsDirective>
             <ViewDirective option="Day" />

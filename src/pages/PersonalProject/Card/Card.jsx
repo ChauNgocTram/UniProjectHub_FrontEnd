@@ -52,12 +52,12 @@ function Card() {
         </div>
 
         <div className="relative flex items-center gap-0 mx-0 my-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-          {/* <img
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
+          <img
+            src="https://images.unsplash.com/photo-1522383225653-ed111181a951?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
-            className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
-          /> */}
-          <ProjectAvatar />
+            className="group flex items-center justify-center outline-none w-16 h-16 rounded-xl text-white bg-mainColor font-medium mx-3"
+          />
+          {/* <ProjectAvatar /> */}
           <div className="flex w-full flex-col gap-0.5 pr-3">
             <NavLink to={`/du-an-ca-nhan/${ALL_PERSONAL_TASK}`}>
               <h5 className="line-clamp-2 text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">

@@ -15,13 +15,13 @@ export const EDIT_TEAM_PROJECT = 'chinh-sua-du-an-nhom'
 // export const TASK_INPROGRESS = 'in-progress/:id'
 // export const TASK_COMPLETED = 'completed/:id'
 // export const TASK_PENDING = 'pending/:id'
-export const ALL_TASK = 'tat-ca-nhiem-vu'
+export const ALL_TASK = 'tat-ca-nhiem-vu/:id'
 export const TASK_TODO = 'to-do'
 export const TASK_INPROGRESS = 'in-progress'
 export const TASK_COMPLETED = 'completed'
 export const TASK_PENDING = 'pending'
 
-export const TASK_DETAILS = 'nhiem-vu/chi-tiet'
+export const TASK_DETAILS = 'nhiem-vu/chi-tiet/:id'
 
 export const MEMBERS = 'thanh-vien'
 
@@ -31,8 +31,12 @@ export const GROUP_CHAT = 'thao-luan'
 export const ALL_PERSONAL_PROJECTS = 'du-an-ca-nhan'
 export const CREATE_PERSONAL_PROJECT = 'tao-du-an-ca-nhan'
 export const EDIT_PERSONAL_PROJECT = 'chinh-sua-du-an-cua-ban'
-export const ALL_PERSONAL_TASK = 'tat-ca-nhiem-vu'
+export const ALL_PERSONAL_TASK = 'tat-ca-nhiem-vu/:id'
 export const PERSONAL_TASK_DETAILS = 'chi-tiet-nhiem-vu'
 
 // Dự thính lớp học
 export const TEACHER_SCHEDULE = 'thoi-khoa-bieu-giao-vien'
+
+
+// Blog
+export const BLOG_MEMBER_TUTORIAL = 'blog-member-tutorial'

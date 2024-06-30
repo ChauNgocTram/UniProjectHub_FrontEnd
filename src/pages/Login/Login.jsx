@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import intro from "../../assets/video/intro.mp4";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useNavigationType } from "react-router-dom";
 import { Button, Checkbox, Form, Input } from "antd";
 import { FaAsterisk } from "react-icons/fa";
 import Swal from "sweetalert2";
+import api from "../../config/axios";
+import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import { REGISTER_PAGE } from "../../routes/constant";
 import logo from "../../assets/images/logo.png";
+import googleIcon from "../../assets/images/googleIcon.png"
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectUser } from "../../redux/features/userSlice";
+import { auth } from "../../config/firebase"
+import { alert } from "../../components/Alert/Alert";
+const provider = new GoogleAuthProvider();
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -15,6 +23,73 @@ const onFinishFailed = (errorInfo) => {
 };
 
 function Login() {
+
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLoginGoogle = async () => {
+    const auth = getAuth();
+    const result = await signInWithPopup(auth, provider);
+    console.log(result);
+    const token = result.user.accessToken;
+    console.log(token);
+
+    const res = await api.post("/api/account/login-google", { token });
+  //  const role = res.data.role;
+
+    console.log(res.data.role);
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("accountId", res.id);
+    //save redux
+    dispatch(login(res.data));
+    navigate("/");
+    // if (role === "ADMIN") {
+    //   navigate("/dashboard");
+    // }
+    // if (role === "MOD") {
+    //   navigate("/dashboard");
+    // }
+    // if (role === "CREATOR") {
+    //   navigate("/creator-manage/artworks");
+    // }
+    // if (role === "AUDIENCE") {
+    //   navigate("/profile");
+    // }
+  };
+
+  const onFinish = async (value) => {
+    try{
+      const response = await api.post("/api/account/login", value);
+      console.log(response.data)
+      if (response.status === 200) {
+        const user = response.data;
+        console.log(user);
+  
+        localStorage.setItem("token", user.token);
+        localStorage.setItem("userId", user.userId);
+  
+        dispatch(login(user));
+  
+        alert.alertSuccessWithTime(
+          "Đăng nhập thành công",
+          "",
+          2000,
+          "30",
+          () => {}
+        );
+  
+        navigate("/");
+      }
+    }catch (e) {
+      console.log(e);
+    }
+  }
+
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
+
   const formItemLayout = {
     labelCol: { xs: { span: 10 }, sm: { span: 9 } },
     wrapperCol: { xs: { span: 10 }, sm: { span: 8 } },
@@ -35,6 +110,17 @@ function Login() {
       allowOutsideClick: false,
     });
   };
+
+  const handleClick = () => {
+    alert.alertSuccessWithTime(
+      "Chào mừng bạn trở lại",
+      "",
+      2000,
+      "30",
+      () => {}
+    );
+    navigate("/");
+  }
 
   return (
     <>
@@ -85,9 +171,6 @@ function Login() {
                     </div>
                     <Form
                       {...formItemLayout}
-                      initialValues={{
-                        remember: true,
-                      }}
                       onFinish={onFinish}
                       onFinishFailed={onFinishFailed}
                       size="large"
@@ -97,32 +180,32 @@ function Login() {
                       }}
                     >
                       <div className="flex flex-col md:flex-row items-start justify-between">
-                        <p className="w-full md:w-5/12 p-0 m-0 px-2 pt-2 flex items-center">
+                        <p className="w-full md:w-6/12 p-0 m-0 px-2 pt-2 flex items-center">
                           <span className="text-red-600 px-1">
                             <FaAsterisk size={6} />
                           </span>
-                          <span>Email:</span>
+                          <span>Tên người dùng:</span>
                         </p>
                         <Form.Item
                           // label="Email"
                           className="mx-0 px-0 w-full"
-                          name="email"
+                          name="username"
                           rules={[
                             {
                               required: true,
-                              message: "Vui lòng nhập email!",
+                              message: "Vui lòng nhập tên!",
                             },
                           ]}
                         >
                           <Input
                             style={{ width: "100%" }}
-                            placeholder="Nhập email"
+                            placeholder="Nhập tên"
                           />
                         </Form.Item>
                       </div>
 
                       <div className="flex flex-col md:flex-row items-start justify-between">
-                        <p className="w-full md:w-5/12 p-0 m-0 px-2 pt-2 flex items-center">
+                        <p className="w-full md:w-6/12 p-0 m-0 px-2 pt-2 flex items-center">
                           <span className="text-red-600 px-1">
                             <FaAsterisk size={6} />
                           </span>
@@ -151,11 +234,19 @@ function Login() {
                       </div>
 
                       <button
-                        className="bg-black text-white text-xl p-2 mx-4 w-[430px] rounded-lg tracking-wide
+                      type="submit"
+                    //  onClick={handleClick}
+                        className="bg-black text-white text-lg px-3 py-2 mx-4 w-[430px] rounded-lg tracking-wider
                           font-bold focus:outline-none focus:shadow-outline hover:bg-hoverBtn hover:text-black
-                          shadow-lg mt-3 pt-1"
+                          shadow-lg mt-3 "
                       >
                         Đăng nhập
+                      </button>
+                      <button onClick={handleLoginGoogle}
+                        className="flex justify-center items-center p-3 mx-4 my-4 w-[430px] shadow-lg border-neutral-300 border-2 focus:shadow-outline rounded-lg"
+                      >
+                        <img src={googleIcon} className="h-[20px] px-2"/>
+                        Sign in with Google
                       </button>
 
                       <div className="text-center mt-3">

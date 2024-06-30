@@ -22,7 +22,7 @@ function CommonHeader() {
             <MdArrowBackIosNew />
           </div>
         </NavLink>
-        <span className="font-semibold">Mini Project</span>
+        <span className="font-semibold">Nhiệm vụ</span>
       </div>
       <div className="flex items-center space-x-3">
         <div className="w-64 2xl:w-[400px] flex items-center py-2 px-3 gap-2 rounded-full bg-[#f3f4f6]">

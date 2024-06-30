@@ -36,16 +36,9 @@ function Group() {
               </div>
               <div className="overflow-y-auto h-[408px] scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent pr-2">
               <ChatElement/>
-              <ChatElement/>
+              
 
             
-              <ChatElement/>
-              <ChatElement/>
-              <ChatElement/>
-              <ChatElement/>
-              <ChatElement/>
-              <ChatElement/>
-              <ChatElement/>
               </div>
              
 

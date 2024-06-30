@@ -6,6 +6,7 @@ import {
   ALL_PERSONAL_TASK,
   ALL_TASK,
   ALL_TEAM_PROJECTS,
+  BLOG_MEMBER_TUTORIAL,
   CREATE_PERSONAL_PROJECT,
   CREATE_TEAM_PROJECT,
   EDIT_PERSONAL_PROJECT,
@@ -46,6 +47,7 @@ import PersonalTaskLayout from "../layouts/PersonalTaskLayout"
 import AllPersonalTask from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/AllPersonalTask";
 import DetailedInfo from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/PersonalTaskDetails/DetailedInfo";
 import TeacherSchedule from "../pages/TeacherSchedule/TeacherSchedule";
+import Tutorial from "../pages/BlogMember/Tutorial";
 
 const appRoutes = [
   {
@@ -65,6 +67,8 @@ const appRoutes = [
       { path: EDIT_PERSONAL_PROJECT, element: <EditProject /> },
 
       { path: TEACHER_SCHEDULE, element: <TeacherSchedule /> },
+
+      { path: BLOG_MEMBER_TUTORIAL, element: <Tutorial /> },
     ],
   },
   {

@@ -4,13 +4,13 @@ import { AiTwotoneFolderOpen } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
 import { HiDuplicate } from "react-icons/hi";
 import { MdAdd, MdOutlineEdit } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { Menu, Transition,MenuButton ,MenuItems,MenuItem} from "@headlessui/react";
 import AddTask from "../Tasks/ManageTask/AddTask";
 import AddSubTask from "../Tasks/ManageTask/AddSubTask";
 import ConfirmatioDialog from "../Dialog/Dialogs";
+import DeleteTask from "../Tasks/ManageTask/DeleteTask";
 
-const TaskDialog = ({ task }) => {
+const TaskDialog = ({ task , onDelete, handleReloadContent}) => {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -40,7 +40,7 @@ const TaskDialog = ({ task }) => {
     <>
       <div>
         <Menu as='div' className='relative inline-block text-left'>
-          <MenuButton className='inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 '>
+          <MenuButton className='inline-flex w-full justify-center rounded-md pl-4 py-2 text-sm font-medium text-gray-600 '>
             <BsThreeDots />
           </MenuButton>
 
@@ -61,7 +61,7 @@ const TaskDialog = ({ task }) => {
                       <button
                         onClick={el?.onClick}
                         className={`${
-                          active ? "bg-blue-500 text-white" : "text-gray-900"
+                          active ? "bg-blueLevel1 " : "text-gray-900"
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                       >
                         {el.icon}
@@ -74,20 +74,21 @@ const TaskDialog = ({ task }) => {
 
               <div className='px-1 py-1'>
                 <MenuItem>
-                  {({ active }) => (
+                  {/* {({ active }) => (
                     <button
                       onClick={() => deleteClicks()}
                       className={`${
-                        active ? "bg-blue-500 text-white" : "text-red-900"
+                        active ? "bg-blueLevel1" : "text-red-900"
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
                       <RiDeleteBin6Line
                         className='mr-2 h-5 w-5 text-red-400'
                         aria-hidden='true'
                       />
-                      Delete
+                      Xoá
                     </button>
-                  )}
+                  )} */}
+                  <DeleteTask task={task} onDelete={onDelete}/>
                 </MenuItem>
               </div>
             </MenuItems>

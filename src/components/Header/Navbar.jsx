@@ -7,6 +7,7 @@ import logo from "../../assets/images/logo.png";
 import {
   ALL_PERSONAL_PROJECTS,
   ALL_TEAM_PROJECTS,
+  BLOG_MEMBER_TUTORIAL,
   PROFILE,
   TEACHER_SCHEDULE,
 } from "../../routes/constant";
@@ -20,7 +21,6 @@ const UserDropdownLinks = [
 
 function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
-  //const { isLoggedIn, username, logout } = useAuth();
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -45,11 +45,10 @@ function Navbar() {
   }, []);
 
   const location = useLocation();
-  // console.log('isLoggedIn', isLoggedIn);
   return (
     <>
       <nav
-        className={`fixed top-0 right-0 w-full flex justify-between items-center font-semibold pb-2 ${
+        className={`fixed top-0 right-0 w-full flex justify-between items-center  font-semibold pb-2 ${
           header
             ? "bg-white backdrop-blur-sm text-black shadow-md"
             : "bg-transparent text-black"
@@ -59,7 +58,6 @@ function Navbar() {
         <div className="container py-[2px] sm:block hidden font-semibold">
           <div className="flex flex-row justify-between items-center w-full">
             <div className="flex items-center justify-end mx-6 gap-4 font-bold text-2xl basis-1/6">
-              {/* <MainLogo /> */}
               <NavLink to="/">
                 <img
                   src={logo}
@@ -129,9 +127,9 @@ function Navbar() {
                 </li> */}
                 <li className="py-4  m-1">
                   <NavLink
-                    to="/"
+                    to={`/${BLOG_MEMBER_TUTORIAL}`}
                     className={` menuItem ${
-                      location.pathname === "/tai nguyen" ? "activeNavbar" : ""
+                      location.pathname === `/${BLOG_MEMBER_TUTORIAL}` ? "activeNavbar" : ""
                     }`}
                   >
                     Blog Member
@@ -140,7 +138,7 @@ function Navbar() {
               </ul>
             </div>
 
-            <div className="hidden lg:block w-full basis-1/6 mx-4 justify-center">
+            <div className="hidden lg:block w-full basis-1/6 mx-4 justify-center z-20">
               {/* {
               isLoggedIn ? ( */}
               <div className="group relative cursor-pointer ">
@@ -149,12 +147,12 @@ function Navbar() {
                   className="flex h-[72px] items-center gap-[2px] "
                 >
                   <FaUserCircle size={30} className="mr-3" />
-                  <span className="font-semibold">User </span>
+                  <span className="font-semibold">user</span>
                   <span>
                     <FaCaretDown className="ml-2 transition-all duration-200 group-hover:rotate-180" />
                   </span>
                 </a>
-                <div className="absolute -left-9 z-[9999] hidden font-normal rounded-md bg-white p-2 text-black group-hover:block shadow-md w-48 cursor-pointer">
+                <div className="absolute -left-9 z-20 hidden font-normal rounded-md bg-white p-2 text-black group-hover:block shadow-md w-48 cursor-pointer">
                   <ul className="space-y-3">
                     {UserDropdownLinks.map((link) => (
                       <li key={link.name}>

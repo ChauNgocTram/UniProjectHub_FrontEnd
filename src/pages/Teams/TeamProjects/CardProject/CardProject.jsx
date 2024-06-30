@@ -6,13 +6,15 @@ import { NavLink } from "react-router-dom";
 import { PiClockCounterClockwiseFill } from "react-icons/pi";
 import { ALL_TASK, EDIT_TEAM_PROJECT } from "../../../../routes/constant";
 import ProjectAvatar from "../../../../components/ProjectAvatar";
+import DeleteTeamProject from "../../ManageTeamProject/DeleteTeamProject";
 
-function CardProject() {
+function CardProject({project , onDelete, handleReloadContent}) {
   return (
     <>
-      <div className="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none border-2 border-neutral-200 pt-3 px-2">
+    {project.map((item) => (
+      <div key={item.id} className="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-lg border-2 border-neutral-200 pt-3 px-2">
         <div className="flex justify-between border-b-2 border-neutral-200 px-3">
-          <div className="text-sm text-neutral-400">19/05/2024</div>
+          <div className="text-sm text-neutral-400">{item.createdAt}</div>
           <div className="flex items-center space-x-3 pb-3">
             <button>
               <FaRegBookmark />
@@ -36,12 +38,7 @@ function CardProject() {
                   </li>
 
                   <li>
-                    <button
-                      // onClick={logout}
-                      className="font-semibold inline-block w-full rounded-md py-2 hover:bg-mainBg/20 text-red-500"
-                    >
-                      Xoá dự án
-                    </button>
+                    <DeleteTeamProject project={item} onDelete={onDelete} handleReloadContent={handleReloadContent}/>
                   </li>
                 </ul>
               </div>
@@ -50,21 +47,16 @@ function CardProject() {
         </div>
 
         <div className="relative flex items-center gap-0 mx-0 my-4 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-          {/* <img
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
-            alt=""
-            className="relative inline-block h-[58px] w-[58px] !rounded-full  object-cover object-center"
-          /> */}
-          <ProjectAvatar/>
+          <ProjectAvatar cardName={item}/>
           <div className="flex w-full flex-col gap-0.5 pr-3">
-            <NavLink to={`/du-an-nhom/${ALL_TASK}`}>
-              <h5 className="line-clamp-2 text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                Mini Project
+            <NavLink to={`/du-an-nhom/${ALL_TASK.replace(":id", item.id)}`}>
+              <h5 className="line-clamp-1 text-xl antialiased font-semibold leading-snug tracking-normal text-blueLevel5 hover:text-blueLevel4">
+                {item.name}
               </h5>
             </NavLink>
 
             <p className="block text-base antialiased font-light leading-relaxed text-blue-gray-900">
-              Frontend Lead @ Google
+            {item.nameLeader}
             </p>
           </div>
         </div>
@@ -76,6 +68,7 @@ function CardProject() {
           </p>
         </div>
       </div>
+        ))}
     </>
   );
 }

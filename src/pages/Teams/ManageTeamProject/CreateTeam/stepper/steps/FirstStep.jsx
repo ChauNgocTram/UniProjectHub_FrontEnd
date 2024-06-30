@@ -48,15 +48,15 @@ function FirstStep() {
             Loại không gian làm việc
           </span>
         }
-        name="type"
+        name="typeOfSpace"
         rules={[{ required: true, message: "Vui lòng chọn loại không gian làm việc" }]}
-        initialValue={userData.type}
+        initialValue={userData.typeOfSpace}
         style={{ width: '300px' }}
       >
         <Select
           placeholder="Chọn..."
-          value={userData.type}
-          onChange={(value) => handleSelectChange(value, "type")}
+          value={userData.typeOfSpace}
+          onChange={(value) => handleSelectChange(value, "typeOfSpace")}
         >
           <Option value={0}>Nhân sự</Option>
           <Option value={1}>Marketing</Option>

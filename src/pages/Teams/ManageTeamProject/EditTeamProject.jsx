@@ -69,7 +69,7 @@ function EditTeamProject() {
                     message: "Vui lòng nhập tên không gian làm việc",
                   },
                 ]}
-                //initialValue={userData.name}
+                initialValue="SWD Project"
               >
                 <Input
                   placeholder="Dự án của bạn"
@@ -92,12 +92,13 @@ function EditTeamProject() {
                     message: "Vui lòng chọn loại không gian làm việc",
                   },
                 ]}
-                // initialValue={userData.type}
+                 initialValue={2}
                 style={{ width: "300px" }}
               >
                 <Select
-                  placeholder="Chọn..."
+                //  placeholder="Chọn..."
                   // value={userData.type}
+                  value={2}
                   //  onChange={(value) => handleSelectChange(value, "type")}
                 >
                   <Option value={0}>Nhân sự</Option>
@@ -120,7 +121,7 @@ function EditTeamProject() {
                     message: "Vui lòng nhập tên leader của dự án",
                   },
                 ]}
-                // initialValue={userData.username}
+                 initialValue="Châu Ngọc Trâm"
                 className="w-[500px]"
               >
                 <Input
@@ -134,6 +135,7 @@ function EditTeamProject() {
                 label="Mô tả không gian làm việc"
                 name="description"
                 // initialValue={userData.description}
+                initialValue="Tổng hợp tài liệu môn học, tài liệu nghiên cứu môn SWD"
               >
                 <TextArea
                   rows={4}

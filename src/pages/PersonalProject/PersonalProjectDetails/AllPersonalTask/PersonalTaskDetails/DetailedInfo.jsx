@@ -16,7 +16,7 @@ import {
 } from "react-icons/md";
 //import { toast } from "sonner";
 import TabsFilter from "../../../../../components/Tabs/TabsFilter";
-import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../../../../../utils";
+import { PRIOTITYSTYELS,  getInitials } from "../../../../../utils";
 //import Loading from "../components/Loader";
 import Button from "../../../../../components/Button";
 import { IoMdAdd } from "react-icons/io";
