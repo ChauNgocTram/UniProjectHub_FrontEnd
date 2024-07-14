@@ -6,7 +6,9 @@ import {
   ALL_PERSONAL_TASK,
   ALL_TASK,
   ALL_TEAM_PROJECTS,
+  BLOG_MEMBER,
   BLOG_MEMBER_TUTORIAL,
+  CREATE_BLOG,
   CREATE_PERSONAL_PROJECT,
   CREATE_TEAM_PROJECT,
   EDIT_PERSONAL_PROJECT,
@@ -38,7 +40,6 @@ import EditProject from "../pages/PersonalProject/ManageProject/EditProject";
 import EditTeamProject from "../pages/Teams/ManageTeamProject/EditTeamProject";
 import AllTask from "../pages/Teams/TeamProjectDetails/AllTask/AllTask";
 import TeamTaskLayout from "../layouts/TeamTaskLayout";
-import Task from "../pages/Teams/TeamProjectDetails/AllTask/Task";
 import TaskDetails from "../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails";
 import Members from "../pages/Teams/TeamProjectDetails/Members/Members"
 import GeneralChat from "../pages/Teams/Chat/GeneralChat"
@@ -48,6 +49,8 @@ import AllPersonalTask from "../pages/PersonalProject/PersonalProjectDetails/All
 import DetailedInfo from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/PersonalTaskDetails/DetailedInfo";
 import TeacherSchedule from "../pages/TeacherSchedule/TeacherSchedule";
 import Tutorial from "../pages/BlogMember/Tutorial";
+import BlogMember from "../pages/BlogMember/BlogMember";
+import CreateBlog from "../pages/BlogMember/CreateBlog";
 
 const appRoutes = [
   {
@@ -69,6 +72,8 @@ const appRoutes = [
       { path: TEACHER_SCHEDULE, element: <TeacherSchedule /> },
 
       { path: BLOG_MEMBER_TUTORIAL, element: <Tutorial /> },
+      { path: BLOG_MEMBER, element: <BlogMember /> },
+      { path: CREATE_BLOG, element: <CreateBlog /> },
     ],
   },
   {
@@ -76,10 +81,10 @@ const appRoutes = [
     element: <TeamTaskLayout />,
     children: [
       { path: ALL_TASK, element: <AllTask/> },
-      { path: TASK_TODO, element: <Task/> },
-      { path: TASK_INPROGRESS, element: <Task/> },
-      { path: TASK_COMPLETED, element: <Task/> },
-      { path: TASK_PENDING, element: <Task/> },
+      { path: TASK_TODO, element: <AllTask/> },
+      { path: TASK_INPROGRESS, element: <AllTask/> },
+      { path: TASK_COMPLETED, element: <AllTask/> },
+      { path: TASK_PENDING, element: <AllTask/> },
 
       { path: TASK_DETAILS, element: <TaskDetails/> },
 

@@ -9,6 +9,7 @@ import AddTask from "../Tasks/ManageTask/AddTask";
 import AddSubTask from "../Tasks/ManageTask/AddSubTask";
 import ConfirmatioDialog from "../Dialog/Dialogs";
 import DeleteTask from "../Tasks/ManageTask/DeleteTask";
+import UpdateTask from "../Tasks/ManageTask/UpdateTask";
 
 const TaskDialog = ({ task , onDelete, handleReloadContent}) => {
   const [open, setOpen] = useState(false);
@@ -96,11 +97,13 @@ const TaskDialog = ({ task , onDelete, handleReloadContent}) => {
         </Menu>
       </div>
 
-      <AddTask
+      <UpdateTask
         open={openEdit}
         setOpen={setOpenEdit}
-        task={task}
-        key={new Date().getTime()}
+        // task={task}
+        // key={new Date().getTime()}
+        taskId={task.id}
+        onTaskAdded={handleReloadContent}
       />
 
       <AddSubTask open={open} setOpen={setOpen} />

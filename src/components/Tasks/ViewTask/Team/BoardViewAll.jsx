@@ -17,7 +17,6 @@ const BoardViewAll = ({ tasks }) => {
           key={task.id}
           className={clsx("rounded-lg h-fit p-4", BG_TASK_CARD[task.status])}
         >
-          {/* <p className="font-semibold border-b-2 border-neutral-400 mb-4 pb-2">TO DO</p> */}
 
           <TaskCard task={task} />
         </div>

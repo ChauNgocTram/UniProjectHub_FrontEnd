@@ -8,13 +8,16 @@ import { LuListTodo } from "react-icons/lu";
 import { GiSandsOfTime } from "react-icons/gi";
 import ProjectAvatar from "../../../components/ProjectAvatar";
 import { ALL_PERSONAL_TASK, EDIT_PERSONAL_PROJECT } from "../../../routes/constant";
+import DeleteTeamProject from "../../Teams/ManageTeamProject/DeleteTeamProject";
 
-function Card() {
+function Card({project , onDelete, handleReloadContent}) {
   return (
     <>
-      <div className="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none border-2 border-neutral-200 pt-3 px-2">
+    {project.map((item) => (
+      <div key={item.id} className="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none border-2 border-neutral-200 pt-3 px-2">
         <div className="flex justify-between border-b-2 border-neutral-200 px-3">
-          <div className="text-sm text-neutral-400">19/05/2024</div>
+          <div className="text-sm text-neutral-400">{item.createdAt} </div>
+         
           <div className="flex items-center space-x-3 pb-3">
             <button>
               <FaRegBookmark />
@@ -31,19 +34,14 @@ function Card() {
                   <li>
                     <NavLink
                       className="inline-block w-full rounded-md p-2 hover:bg-mainBg/20 text-center"
-                      to={`/${EDIT_PERSONAL_PROJECT}`}
+                      to={`/${EDIT_PERSONAL_PROJECT.replace(":id", item.id)}`}
                     >
                       Chỉnh sửa
                     </NavLink>
                   </li>
 
                   <li>
-                    <button
-                      // onClick={logout}
-                      className="font-semibold inline-block w-full rounded-md py-2 hover:bg-mainBg/20 text-red-500"
-                    >
-                      Xoá dự án
-                    </button>
+                  <DeleteTeamProject project={item} onDelete={onDelete} handleReloadContent={handleReloadContent}/>
                   </li>
                 </ul>
               </div>
@@ -59,9 +57,9 @@ function Card() {
           />
           {/* <ProjectAvatar /> */}
           <div className="flex w-full flex-col gap-0.5 pr-3">
-            <NavLink to={`/du-an-ca-nhan/${ALL_PERSONAL_TASK}`}>
+            <NavLink to={`/du-an-ca-nhan/${ALL_PERSONAL_TASK.replace(":id", item.id)}`}>
               <h5 className="line-clamp-2 text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                Mini Project 
+              {item.name}
               </h5>
             </NavLink>
             <div className="mt-2">
@@ -85,6 +83,7 @@ function Card() {
           </p>
         </div>
       </div>
+      ))}
     </>
   );
 }

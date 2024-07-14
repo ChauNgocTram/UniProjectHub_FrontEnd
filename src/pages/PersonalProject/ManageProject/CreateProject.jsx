@@ -2,15 +2,79 @@ import React from "react";
 import { FaAsterisk } from "react-icons/fa";
 import { Button, Form, Input, Select } from "antd";
 import PersonalSidebar from "../../../components/Sidebar/PersonalSidebar";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/features/userSlice";
+import { alert } from "../../../components/Alert/Alert";
+import { ALL_PERSONAL_PROJECTS } from "../../../routes/constant";
+import api from "../../../config/axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 function CreateProject() {
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    nameLeader: "",
+    typeOfSpace: "",
+    status: 1,
+    isGroup: false,
+  });
+  const handleInputChange = (e, name) => {
+    setFormData((prev) => ({ ...prev, [name]: e.target.value }));
+  };
+
+  const handleSelectChange = (value, name) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const payload = {
+        ...formData,
+      };
+
+      const response = await api.post(
+        `/api/Project/CreateProject/${user.userId}`,
+        payload
+      );
+      console.log("Create task response:", response);
+      if (response.status === 200) {
+        console.log("Create task response:", response.data);
+        alert.alertSuccessWithTime(
+          "Tạo dự án thành công!",
+          "",
+          2000,
+          "25",
+          () => {}
+        );
+        navigate(`/${ALL_PERSONAL_PROJECTS}`);
+      } else {
+        console.error("Failed to create task", response.data);
+        alert.alertFailed(
+          "Tạo Dự Án Thất Bại",
+          "Vui lòng thử lại",
+          2000,
+          "30",
+          () => {}
+        );
+      }
+    } catch (error) {
+      console.error("Error creating task", error);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       <div className="flex">
-        <PersonalSidebar/>
+        <PersonalSidebar />
         <div className="mt-12 mx-12 md:mx-48 wrapper-body">
           <div>
             <p className="pb-2 text-xl font-semibold border-b border-neutral-900">
@@ -23,9 +87,7 @@ function CreateProject() {
           </div>
 
           <div className="my-4 p-5 md:mx-24">
-            <Form layout="vertical" 
-            //</div>onFinish={handleSubmit}
-            >
+            <Form layout="vertical" onFinish={handleSubmit}>
               <Form.Item
                 label={
                   <span className="flex items-center">
@@ -40,12 +102,11 @@ function CreateProject() {
                     message: "Vui lòng nhập tên không gian làm việc",
                   },
                 ]}
-                //initialValue={userData.name}
               >
                 <Input
                   placeholder="Dự án của bạn"
-                //  value={userData.name}
-                //  onChange={(e) => handleInputChange(e, "name")}
+                  value={formData.name}
+                  onChange={(e) => handleInputChange(e, "name")}
                 />
               </Form.Item>
 
@@ -56,20 +117,19 @@ function CreateProject() {
                     Loại không gian làm việc
                   </span>
                 }
-                name="type"
+                name="typeOfSpace"
                 rules={[
                   {
                     required: true,
                     message: "Vui lòng chọn loại không gian làm việc",
                   },
                 ]}
-               // initialValue={userData.type}
-               style={{ width: '300px' }}
+                style={{ width: "300px" }}
               >
                 <Select
                   placeholder="Chọn..."
-                 // value={userData.type}
-                //  onChange={(value) => handleSelectChange(value, "type")}
+                  value={formData.typeOfSpace}
+                  onChange={(value) => handleSelectChange(value, "typeOfSpace")}
                 >
                   <Option value={0}>Nhân sự</Option>
                   <Option value={1}>Marketing</Option>
@@ -77,16 +137,12 @@ function CreateProject() {
                 </Select>
               </Form.Item>
 
-              <Form.Item
-                label="Mô tả không gian làm việc"
-                name="description"
-               // initialValue={userData.description}
-              >
+              <Form.Item label="Mô tả không gian làm việc" name="description">
                 <TextArea
                   rows={4}
                   placeholder="Nhóm của chúng tôi tổ chức mọi thứ ở đây..."
-                //  value={userData.description}
-               //   onChange={(e) => handleInputChange(e, "description")}
+                  value={formData.description}
+                  onChange={(e) => handleInputChange(e, "description")}
                 />
               </Form.Item>
 
@@ -95,6 +151,7 @@ function CreateProject() {
                   <Button
                     type="primary"
                     htmlType="submit"
+                    loading={loading}
                     className="bg-mainColor px-2 mx-4 rounded-lg tracking-wide focus:outline-none focus:shadow-outline shadow-lg"
                   >
                     Tạo dự án

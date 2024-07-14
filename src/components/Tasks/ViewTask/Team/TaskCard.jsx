@@ -24,6 +24,7 @@ import TaskStatusBadge from "../../../Status/TaskStatusBadge";
 import { format } from "date-fns";
 import api from "../../../../config/axios";
 import { BsDot } from "react-icons/bs";
+import UpdateTask from "../../ManageTask/UpdateTask";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -44,32 +45,32 @@ const getPriorityLabel = (rate) => {
   }
 };
 
-
 const TaskCard = ({ task }) => {
   //const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const subTaskId = task.id;
 
-  const [subTask, setSubTask] = useState([])
+  const [subTask, setSubTask] = useState([]);
   const [reloadContent, setReloadContent] = useState(false);
   const handleReloadContent = () => {
     setReloadContent((prev) => !prev);
   };
 
-
   //const [selectedStatus, setSelectedStatus] = useState(0);
 
   const getAllSubTaskByTaskId = async () => {
     try {
-      const response = await api.get(`/api/SubTask/GetSubTasksByTaskId/${subTaskId}`);
+      const response = await api.get(
+        `/api/SubTask/GetSubTasksByTaskId/${subTaskId}`
+      );
       if (response.data && response.data.length > 0) {
         const formattedTasks = response.data.map((subtask) => ({
           ...subtask,
           created: format(new Date(subtask.created), "dd/MM/yyyy"),
           deadline: format(new Date(subtask.deadline), "dd/MM/yyyy"),
         }));
-        setSubTask(formattedTasks); 
+        setSubTask(formattedTasks);
         setLoading(false);
       }
     } catch (error) {
@@ -77,7 +78,7 @@ const TaskCard = ({ task }) => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
     getAllSubTaskByTaskId();
@@ -114,7 +115,9 @@ const TaskCard = ({ task }) => {
               //   TASK_TYPE[task.status]
               // )}
               />
-              <NavLink to={`/du-an-nhom/${TASK_DETAILS.replace(":id", task.id)}`}>
+              <NavLink
+                to={`/du-an-nhom/${TASK_DETAILS.replace(":id", task.id)}`}
+              >
                 <h4 className="line-clamp-2 text-black font-medium">
                   {task.taskName}
                 </h4>
@@ -155,7 +158,6 @@ const TaskCard = ({ task }) => {
               <div className="flex gap-1 items-center text-sm text-gray-600 ">
                 <FaList />
                 <span>{subTask.length}</span>
-                
               </div>
             </div>
 
@@ -176,20 +178,25 @@ const TaskCard = ({ task }) => {
 
           {/* sub tasks */}
           {subTask.length > 0 && (
-          <div className="py-2 border-t border-gray-200">
-          {subTask.slice(0, 2).map((item) => (
-            <div key={item.id} className="py-2 flex">
-              <BsDot size={20} />
-              <h5 className="text-sm line-clamp-1 text-textPrimary">{item.description}</h5>
+            <div className="py-2 border-t border-gray-200">
+              {subTask.slice(0, 1).map((item) => (
+                <div key={item.id} className="py-2 flex">
+                  <BsDot size={20} />
+                  <h5 className="text-sm line-clamp-1 text-textPrimary">
+                    {item.description}
+                  </h5>
+                </div>
+              ))}
+              {subTask.length > 1 && (
+                <NavLink
+                  to={`/du-an-nhom/${TASK_DETAILS.replace(":id", task.id)}`}
+                  className="text-blueLevel4 hover:text-blueLevel5 text-sm flex justify-center italic py-2"
+                >
+                  Xem thêm...
+                </NavLink>
+              )}
             </div>
-          ))}
-          {subTask.length > 2 && (
-            <NavLink to={`/du-an-nhom/${TASK_DETAILS.replace(":id", task.id)}`} className="text-blueLevel4 hover:text-blueLevel5 text-sm flex justify-center italic py-2">
-              Xem thêm...
-            </NavLink>
           )}
-        </div>
-        ) }
           <div className="w-full pb-2">
             <button
               onClick={() => setOpen(true)}

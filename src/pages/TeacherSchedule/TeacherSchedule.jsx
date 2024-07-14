@@ -14,7 +14,7 @@ import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import AddSchedule from "../../components/ManageSchedule/Teacher/AddSchedule";
 
-registerLicense("Ngo9BigBOggjHTQxAR8/V1NBaF1cXmhOYVJ2WmFZfVpgdl9FZFZTRGY/P1ZhSXxXdkNiWX5ac3FXQGFVWE0=")
+registerLicense("Ngo9BigBOggjHTQxAR8/V1NCaF5cXmZCdkx3Rnxbf1x0ZFRGal5ZTnVaUiweQnxTdEFjXn5acXFWQWRaVkB0Ww==")
 
 const data = [
   {
