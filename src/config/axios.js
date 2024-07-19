@@ -23,7 +23,8 @@
 //===========================
 
 import axios from "axios";
-const baseURL = "http://localhost:5275";
+//const baseURL = "http://localhost:5275";
+const baseURL = "http://14.225.220.108:32795";
 
  const api = axios.create();
 

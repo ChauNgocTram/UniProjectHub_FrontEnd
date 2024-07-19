@@ -30,7 +30,7 @@ function TeamSidebar() {
                 key={index}
                 className={`flex justify-center my-2 rounded-md p-4 cursor-pointer hover:bg-mainBg/20 text-black items-center gap-x-4 
            ${
-                  index == 1 && "bg-mainBg text-neutral-700"
+                  index == 0 && "bg-mainBg text-neutral-700"
                 } `}
               >
                 <span style={{ fontSize: "28px" }}>{Menu.icon}</span>

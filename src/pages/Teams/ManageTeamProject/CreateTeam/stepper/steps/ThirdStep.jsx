@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import {ALL_TEAM_PROJECTS} from "../../../../../../routes/constant"
 import Lottie from "lottie-react"
 import Completed from "../../../../../../assets/Completed.json"
+import { multiStepContext } from '../StepperContext'
 
 function ThirdStep() {
+  const { setCurrentStep, setUserData, setFinalData } = useContext(multiStepContext);
+
+  const handleNavigateToProjects = () => {
+    setUserData({});
+    setFinalData([]);
+    setCurrentStep(1);
+  };
   return (
     <div className="container md:mt-2">
     <div className="flex flex-col items-center">     
@@ -21,7 +29,7 @@ function ThirdStep() {
       </div>
 
       <NavLink to={`/${ALL_TEAM_PROJECTS}`} className="mt-10">
-        <button className="h-10 px-5 text-blueLevel5 transition-colors duration-150 border border-gray-300 rounded-lg focus:shadow-outline hover:bg-blueLevel3">
+        <button onClick={handleNavigateToProjects} className="h-10 px-5 text-blueLevel5 transition-colors duration-150 border border-gray-300 rounded-lg focus:shadow-outline hover:bg-blueLevel3">
           Đến dự án
         </button>
       </NavLink>

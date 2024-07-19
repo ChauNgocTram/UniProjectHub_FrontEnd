@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaAsterisk } from "react-icons/fa";
 import { Button, Form, Input, Select } from "antd";
 import PersonalSidebar from "../../../components/Sidebar/PersonalSidebar";
@@ -6,25 +6,22 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 import { alert } from "../../../components/Alert/Alert";
 import { ALL_PERSONAL_PROJECTS } from "../../../routes/constant";
-import api from "../../../config/axios";
-import { useState } from "react";
+import { useCreateGroupProject } from "../../../api/projectApi"; 
 import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 function CreateProject() {
-  const user = useSelector(selectUser);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const user = useSelector(selectUser);
+  const { mutate: createProject, isLoading } = useCreateGroupProject();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    nameLeader: "",
     typeOfSpace: "",
-    status: 1,
-    isGroup: false,
   });
+
   const handleInputChange = (e, name) => {
     setFormData((prev) => ({ ...prev, [name]: e.target.value }));
   };
@@ -34,41 +31,34 @@ function CreateProject() {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
     try {
       const payload = {
         ...formData,
+        ownerId: user.userId,
+        status: 1,
+        isGroup: false,
       };
 
-      const response = await api.post(
-        `/api/Project/CreateProject/${user.userId}`,
-        payload
+      await createProject({ ownerId: user.userId, payload });
+
+      alert.alertSuccessWithTime(
+        "Tạo dự án thành công!",
+        "",
+        2000,
+        "25",
+        () => {}
       );
-      console.log("Create task response:", response);
-      if (response.status === 200) {
-        console.log("Create task response:", response.data);
-        alert.alertSuccessWithTime(
-          "Tạo dự án thành công!",
-          "",
-          2000,
-          "25",
-          () => {}
-        );
-        navigate(`/${ALL_PERSONAL_PROJECTS}`);
-      } else {
-        console.error("Failed to create task", response.data);
-        alert.alertFailed(
-          "Tạo Dự Án Thất Bại",
-          "Vui lòng thử lại",
-          2000,
-          "30",
-          () => {}
-        );
-      }
+      navigate(`/${ALL_PERSONAL_PROJECTS}`);
     } catch (error) {
-      console.error("Error creating task", error);
+      console.error("Error creating project", error);
+      alert.alertFailed(
+        "Tạo Dự Án Thất Bại",
+        "Vui lòng thử lại",
+        2000,
+        "30",
+        () => {}
+      );
     }
-    setLoading(false);
   };
 
   return (
@@ -151,7 +141,7 @@ function CreateProject() {
                   <Button
                     type="primary"
                     htmlType="submit"
-                    loading={loading}
+                    loading={isLoading}
                     className="bg-mainColor px-2 mx-4 rounded-lg tracking-wide focus:outline-none focus:shadow-outline shadow-lg"
                   >
                     Tạo dự án

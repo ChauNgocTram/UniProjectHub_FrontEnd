@@ -4,6 +4,7 @@ import { selectUser } from '../../redux/features/userSlice';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { BLOG_MEMBER } from '../../routes/constant';
+import api from '../../config/axios';
 
 function CreateBlog() {
   const user = useSelector(selectUser);
@@ -28,7 +29,7 @@ function CreateBlog() {
     };
 
     try {
-      const response = await axios.post('/api/Blog/CreateBlogAsync', newBlog);
+      const response = await api.post(`/api/Blog/CreateBlogAsync`, newBlog);
       console.log('Blog created successfully:', response.data);
     } catch (error) {
       console.error('Error creating blog:', error);
@@ -64,7 +65,7 @@ function CreateBlog() {
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
           />
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="status" className="block text-sm font-medium text-gray-700">
             Status
           </label>
@@ -77,8 +78,8 @@ function CreateBlog() {
             <option value={0}>Draft</option>
             <option value={1}>Published</option>
           </select>
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <label htmlFor="categoryID" className="block text-sm font-medium text-gray-700">
             Category ID
           </label>
@@ -90,7 +91,7 @@ function CreateBlog() {
             required
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
           />
-        </div>
+        </div> */}
         <button
 //    type="submit"
           className="mt-4 bg-neutral-300 text-black p-2 rounded-md mr-2"

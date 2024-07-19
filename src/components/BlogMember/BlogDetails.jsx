@@ -2,7 +2,7 @@ import React from "react";
 import { BiRepost } from "react-icons/bi";
 import { MdBookmarkBorder } from "react-icons/md";
 
-function BlogDetails() {
+function BlogDetails({blog}) {
   return (
     <div className="w-full px-4 py-4">
       <div className="flex items-center justify-between mb-3">
@@ -20,14 +20,9 @@ function BlogDetails() {
       </div>
 
       <div className="border-2 border-neutral-300 py-5 px-6 text-justify rounded-xl">
-        <p className="font-semibold text-lg text-blueLevel4 mb-2">Tiêu đề</p>
+        <p className="font-semibold text-lg text-blueLevel4 mb-2">{blog.name}</p>
         <p className="text-sm" style={{ lineHeight: '1.6' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, vero
-          facilis. Quaerat sint cumque soluta deleniti eos iure, velit expedita.
-          Consequatur cumque modi obcaecati tempore tenetur excepturi, officia
-          provident nisi qui incidunt facere, placeat ratione! Reiciendis
-          distinctio quasi nulla molestiae tempore saepe, iure soluta libero
-          sequi nobis quod. Eum, cupiditate!
+        {blog.description}
         </p>
       </div>
     </div>

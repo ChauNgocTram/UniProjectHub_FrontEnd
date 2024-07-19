@@ -7,8 +7,14 @@ import AddComment from "../../components/BlogMember/AddComment";
 import { GrAdd } from "react-icons/gr";
 import { NavLink } from "react-router-dom";
 import { CREATE_BLOG } from "../../routes/constant";
+import { useGetBlogs, useGetCommentOfBlog } from "../../api/blogApi";
 
 function BlogMember() {
+  const { data: blogs, isLoading: isLoadingBlogs, error: errorBlogs } = useGetBlogs();
+
+  if (isLoadingBlogs) return <div>Loading...</div>;
+  if (errorBlogs) return <div>Error: {errorBlogs.message}</div>;
+
   return (
     <>
       <div className="flex w-full">
@@ -25,30 +31,44 @@ function BlogMember() {
                 Blog Member
               </span>
               <span>|</span>
-              <NavLink  to={`/${CREATE_BLOG}`} className="bg-blueLevel5 text-white font-medium p-2 rounded-lg flex items-center">
-                <GrAdd size={15} className="mr-2"/>
+              <NavLink
+                to={`/${CREATE_BLOG}`}
+                className="bg-blueLevel5 text-white font-medium p-2 rounded-lg flex items-center"
+              >
+                <GrAdd size={15} className="mr-2" />
                 Tạo blog
               </NavLink>
             </div>
           </div>
 
-          {/* bắt đầu duyệt mảng từ khúc này trở xuống để get all blog nha anh Phi !!!*/}
+          {blogs.map((blog) => (
+            <div
+              key={blog.id}
+              className="flex items-center justify-start border-2 rounded-lg border-neutral-200 mb-5"
+            >
+              <BlogUserInfo />
+              <div className="flex flex-col w-full">
+                <BlogDetails blog={blog} />
 
-          <div className="flex items-center justify-start border-2 rounded-lg border-neutral-200">
-            <BlogUserInfo />
-
-            <div className="flex flex-col w-full">
-              <BlogDetails />
-
-              <Comment />
-              {/* ô input comment */}
-              <AddComment />
+                <CommentsSection blogId={blog.id} />
+                
+                <AddComment blogId={blog.id} />
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </>
   );
+}
+
+function CommentsSection({ blogId }) {
+  const { data: comments, isLoading, error } = useGetCommentOfBlog(blogId);
+
+  if (isLoading) return <div>Loading comments...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return <Comment comments={comments} />;
 }
 
 export default BlogMember;

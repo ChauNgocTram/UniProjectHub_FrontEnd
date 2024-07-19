@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { IconButton, TextField } from "@mui/material";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import SendIcon from "@mui/icons-material/Send"; // Import icon Send
+import SendIcon from "@mui/icons-material/Send";
+import { useCreateComment } from "../../api/blogApi"; // Adjust path as necessary
 
-function AddComment() {
+function AddComment({ blogId }) {
   const [comment, setComment] = useState("");
+  const { mutate: createComment, isLoading } = useCreateComment();
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -20,10 +22,18 @@ function AddComment() {
   };
 
   const handleSendClick = () => {
-    // Implement submit logic here, e.g., send comment to server
-    console.log("Comment submitted:", comment);
-    // Reset comment input
-    setComment("");
+    if (!comment.trim()) {
+      return; 
+    }
+
+    createComment({ blogId, description: comment }, {
+      onSuccess: () => {
+        setComment("");
+      },
+      onError: (error) => {
+        console.error("Error submitting comment:", error);
+      }
+    });
   };
 
   return (
@@ -37,6 +47,7 @@ function AddComment() {
         rows={1}
         value={comment}
         onChange={handleCommentChange}
+        disabled={isLoading} 
       />
       <IconButton onClick={handleEmojiClick}>
         <EmojiEmotionsIcon />
@@ -44,8 +55,8 @@ function AddComment() {
       <IconButton onClick={handleFileUpload}>
         <AttachFileIcon />
       </IconButton>
-      <IconButton onClick={handleSendClick} >
-        <SendIcon className=" text-blueLevel5 "/>
+      <IconButton onClick={handleSendClick} disabled={isLoading}>
+        <SendIcon className="text-blueLevel5" />
       </IconButton>
     </div>
   );
