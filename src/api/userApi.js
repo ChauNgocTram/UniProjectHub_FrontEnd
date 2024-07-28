@@ -10,3 +10,13 @@ const getAllUser = async () => {
   export const useGetAllUser = () => {
     return useQuery("users", getAllUser);
   };
+
+
+  const getUserById = async (userId) => {
+    const  { data } = await api.get(`/api/admin/${userId}`);
+    return data;
+  };
+  
+  export const useUserById = (userId) => {
+    return useQuery(["user", userId], () => getUserById(userId));
+  };

@@ -24,6 +24,7 @@ import {
   TASK_INPROGRESS,
   TASK_PENDING,
   TASK_TODO,
+  SCHEDULE,
   TEACHER_SCHEDULE,
 } from "./constant";
 
@@ -47,10 +48,12 @@ import Profile from "../pages/UserProfile/Profile";
 import PersonalTaskLayout from "../layouts/PersonalTaskLayout"
 import AllPersonalTask from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/AllPersonalTask";
 import DetailedInfo from "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/PersonalTaskDetails/DetailedInfo";
-import TeacherSchedule from "../pages/TeacherSchedule/TeacherSchedule";
+
 import Tutorial from "../pages/BlogMember/Tutorial";
 import BlogMember from "../pages/BlogMember/BlogMember";
 import CreateBlog from "../pages/BlogMember/CreateBlog";
+import Schedule from "../pages/TeacherSchedule/Schedule";
+import TeacherSchedule from "../pages/TeacherSchedule/TeacherSchedule";
 
 const appRoutes = [
   {
@@ -69,6 +72,7 @@ const appRoutes = [
       { path: CREATE_PERSONAL_PROJECT, element: <CreateProject /> },
       { path: EDIT_PERSONAL_PROJECT, element: <EditProject /> },
 
+      { path: SCHEDULE, element: <Schedule /> },
       { path: TEACHER_SCHEDULE, element: <TeacherSchedule /> },
 
       { path: BLOG_MEMBER_TUTORIAL, element: <Tutorial /> },

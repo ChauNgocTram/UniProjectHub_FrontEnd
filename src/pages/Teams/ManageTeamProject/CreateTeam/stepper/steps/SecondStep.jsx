@@ -21,7 +21,7 @@ function SecondStep() {
   const ownerId = user.userId;
   const { mutate: createGroupProject, isLoading: isCreating } =
     useCreateGroupProject();
-    const { data: users, isLoading: isUsersLoading } = useGetAllUser();
+  const { data: users, isLoading: isUsersLoading } = useGetAllUser();
 
   const handleBtnClick = async () => {
     setLoading(true);
@@ -50,7 +50,6 @@ function SecondStep() {
   if (isUsersLoading || loading || isCreating) {
     return <Loading />;
   }
-
 
   const handleUserSelect = (selectedOptions) => {
     setSelectedUsers(selectedOptions);
@@ -93,38 +92,7 @@ function SecondStep() {
             name="members"
             style={{ width: "300px" }}
           >
-
-            {/* get all user */}
-             {/* {users.map((user) => (
-                 <div key={user.id} value={user.id}>
-                   {user.userName}
-                 </div>
-               ))} */}
-                <Select
-          options={users.map((user) => ({
-            value: user.id,
-            label: user.userName,
-          }))}
-          onChange={handleUserSelect}
-          value={selectedUsers}
-          placeholder="Tìm kiếm thành viên"
-          isMulti
-        />
-            {/* <Select
-               mode="multiple"
-               placeholder="Tìm kiếm thành viên..."
-               onSearch={handleSearch}
-               onChange={handleUserSelect}
-               style={{ width: "100%" }}
-               filterOption={false}
-             >
-               {filteredUsers.map((user) => (
-                 <Option key={user.id} value={user.id}>
-                   {user.userName}
-                 </Option>
-               ))}
-             </Select> */}
-            {/* <Select
+            <Select
               options={users.map((user) => ({
                 value: user.id,
                 label: user.userName,
@@ -132,7 +100,18 @@ function SecondStep() {
               onChange={handleUserSelect}
               value={selectedUsers}
               placeholder="Tìm kiếm thành viên"
-            /> */}
+              isMulti
+            /> <Select
+              options={users.map((user) => ({
+                value: user.id,
+                label: user.userName,
+              }))}
+              onChange={handleUserSelect}
+              value={selectedUsers}
+              placeholder="Tìm kiếm thành viên"
+              isMulti
+            />
+            
           </Form.Item>
           <Form.Item>
             <div className="flex justify-center">

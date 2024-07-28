@@ -61,6 +61,8 @@ function FirstStep() {
           <Option value={0}>Nhân sự</Option>
           <Option value={1}>Marketing</Option>
           <Option value={2}>Giáo dục</Option>
+          <Option value={3}>Công nghệ</Option>
+          <Option value={4}>Tài chính</Option>
         </Select>
       </Form.Item>
 

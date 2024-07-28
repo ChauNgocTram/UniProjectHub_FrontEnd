@@ -14,6 +14,7 @@ import { selectUser } from "../../../redux/features/userSlice";
 import Lottie from "lottie-react";
 import Empty from "../../../assets/Empty.json";
 import { useGetGroupProjectsByUser } from "../../../api/projectApi";
+import NoDataPlaceholder from "../../../components/NoDataPlaceholder";
 
 const items = [
   {
@@ -30,16 +31,13 @@ const CATEGORY = ["Nhân sự", "Giáo dục", "Marketing"];
 
 function AllTeamProject() {
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
-
   const [category, setCategory] = useState(CATEGORY[2]);
 
-  const { data: projects, isLoading, error, refetch } = useGetGroupProjectsByUser(user.userId);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    refetch();
-  }, [refetch]);
+  const {
+    data: projects,
+    isLoading,
+    error,
+  } = useGetGroupProjectsByUser(user.userId);
 
   if (isLoading) {
     return <Loading loading={isLoading} />;
@@ -50,17 +48,23 @@ function AllTeamProject() {
     return <div>Error loading projects</div>;
   }
 
-  const formattedProjects = projects?.map((project) => ({
-    ...project,
-    createdAt: format(new Date(project.createdAt), "dd/MM/yyyy"),
-  })) || [];
+  // const formattedProjects =
+  //   projects?.map((project) => ({
+  //     ...project,
+  //     createdAt: format(new Date(project.createdAt), "dd/MM/yyyy"),
+  //   })) || [];
+
+  const messageLines = [
+    "Chiếc hộp này đang chờ đợi nội dung từ bạn.",
+    "Hãy tạo dữ liệu mới ngay thôi!",
+  ];
 
   return (
     <div className="flex ">
       <TeamSidebar />
       <div className="wrapper-body w-full mt-8">
         <SearchBar />
-        {formattedProjects.length > 0 ? (
+        {projects.length > 0 ? (
           <>
             <div className="flex items-center justify-between mx-6">
               <div className="flex justify-between my-6 w-[200px]">
@@ -80,26 +84,23 @@ function AllTeamProject() {
               </div>
             </div>
             <div className="grid md:grid-cols-4 grid-cols-2 gap-4 mx-4 justify-items-center items-center ">
-              <CardProject
-                project={formattedProjects}
-                handleReloadContent={refetch}
-              />
+              <CardProject project={projects} />
             </div>
           </>
         ) : (
-          <div className="flex items-center flex-col justify-center  mx-auto">
-            <Lottie animationData={Empty} className="w-80 h-80" />
-            <div className="mt-2 mb-3 flex flex-col items-center">
-              <p>Chiếc hộp này đang chờ đợi nội dung từ bạn.</p>
-              <p>Hãy tạo dữ liệu mới ngay thôi!</p>
+          <>
+            <div className="flex items-center flex-col justify-center mx-auto">
+              <NoDataPlaceholder
+                animationData={Empty}
+                messageLines={messageLines}
+              />
+              <NavLink to={`/${CREATE_TEAM_PROJECT}`} className="py-2">
+                <span className="rounded-lg my-3 py-2 px-2 font-medium bg-mainBg text-black hover:bg-hoverBtn">
+                  + Tạo mới
+                </span>
+              </NavLink>
             </div>
-
-            <NavLink to={`/${CREATE_TEAM_PROJECT}`} className="py-2">
-              <span className="rounded-lg my-3 py-2 px-2 font-medium bg-mainBg text-black hover:bg-hoverBtn">
-                + Tạo mới
-              </span>
-            </NavLink>
-          </div>
+          </>
         )}
       </div>
     </div>

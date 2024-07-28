@@ -1,66 +1,30 @@
 import React from "react";
-
 import { RiDeleteBin6Line } from "react-icons/ri";
-import api from "../../../config/axios";
+import Swal from "sweetalert2";
+import { useDeleteTask } from "../../../api/taskApi";
 import { alert } from "../../Alert/Alert";
-function DeleteTask({task, onDelete,handleReloadContent }) {
-  const handleDeleteTask = async () => {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton:
-          "bg-blueLevel5 hover:bg-blueLevel3 text-white hover:text-textPrimary mx-3 px-4 py-2 rounded",
-        cancelButton:
-          "bg-red-500 hover:bg-red-600 text-white mx-3 px-4 py-2 rounded",
-      },
-      buttonsStyling: false,
-    });
+import { showConfirmationDialog } from "../../Alert/showConfirmationDialog";
 
-    const result = await swalWithBootstrapButtons.fire({
+function DeleteTask({ task, onDelete }) {
+  const mutation = useDeleteTask();
+
+  const handleDeleteTask = async () => {
+    const result = await showConfirmationDialog({
       title: "Bạn muốn xoá task này?",
       text: "Task sẽ được xoá khỏi dự án của bạn",
-      icon: "warning",
-      showCancelButton: true,
       confirmButtonText: "Xác nhận",
       cancelButtonText: "Huỷ",
-      reverseButtons: true,
-      focusConfirm: false,
     });
 
+
     if (result.isConfirmed) {
-      try {
-        const res = await api.delete(
-          `/api/Task/DeleteTask/${task.id}`
-        );
-        if (res.status === 200) {
-          alert.alertSuccessWithTime(
-            "Xoá task thành công!",
-            "",
-            2000,
-            "25",
-            () => {}
-          );
-          handleReloadContent;
+      mutation.mutate(task.id, {
+        onSuccess: () => {
           if (onDelete) onDelete(task.id);
-        } else {
-          alert.alertFailedWithTime(
-            "Failed to delete",
-            "",
-            2000,
-            "25",
-            () => {}
-          );
         }
-      } catch (error) {
-        alert.alertFailedWithTime(
-          "Failed to delete",
-          error.message,
-          2000,
-          "25",
-          () => {}
-        );
-      }
+      });
     } else if (result.dismiss === Swal.DismissReason.cancel) {
-      alert.alertFailedWithTime("Failed to delete", "", 2000, "25", () => {});
+      alert.alertFailedWithTime("Xoá task thất bại", "", 2000, "25", () => {});
     }
   };
 

@@ -1,106 +1,137 @@
-import React, { useEffect, useState } from "react";
-import {
-  ScheduleComponent,
-  ViewsDirective,
-  ViewDirective,
-  Inject,
-  Day,
-  Week,
-  Month,
-  Agenda,
-} from "@syncfusion/ej2-react-schedule";
-import { registerLicense } from "@syncfusion/ej2-base"
-import Button from "../../components/Button";
-import { IoMdAdd } from "react-icons/io";
-import AddSchedule from "../../components/ManageSchedule/Teacher/AddSchedule";
+import React, { useState } from "react";
+import { format, startOfWeek, addDays, subDays, eachDayOfInterval, isToday, isSameDay } from "date-fns";
+import { vi } from "date-fns/locale";
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { useGetScheduleByUserId } from "../../api/scheduleApi";
+import { useParams } from "react-router-dom";
 
-registerLicense("GTIlMmhhZX1ifWBmaGJgfGNrfGFjYWdzYmNpYWtpYGZoJyEyPjAnPSA2YmRiYmRnEzUjJ302NyZ9JT0=")
+const TeacherSchedule = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const { userId } = useParams();
 
-const data = [
-  {
-    Id: 1,
-    Subject: "Kinh tế chính trị",
-    StartTime: new Date(2024, 5, 15, 14, 30),
-    EndTime: new Date(2024, 5, 15, 17, 0),
-    IsAllDay: false,
-    Location:"P.410 - Nhà văn hoá sinh viên",
-  },
-  {
-    Id: 2,
-    Subject: "Xác suất thống kê",
-    StartTime: new Date(2024, 5, 13, 12, 30),
-    EndTime: new Date(2024, 5, 13, 14, 15),
-    IsAllDay: false,
-    Status: "Completed",
-    Priority: "High",
-    Location:"P.614 - Nhà văn hoá sinh viên",
-  },
-];
+  const { data: scheduleData = [], isLoading, isError } = useGetScheduleByUserId(userId);
 
+  const startOfWeekDate = startOfWeek(currentDate, { weekStartsOn: 1 });
+  const endOfWeekDate = addDays(startOfWeekDate, 6);
+  const weekDays = eachDayOfInterval({
+    start: startOfWeekDate,
+    end: endOfWeekDate,
+  });
 
+  const formatDate = (date) => format(date, "EEEE", { locale: vi });
+  const formatDay = (date) => format(date, "dd/MM", { locale: vi });
+  const formatMonthYear = (date) => format(date, "MMMM yyyy", { locale: vi });
+  const formatWeekRange = (start, end) =>
+    `${format(start, "dd/MM")} -> ${format(end, "dd/MM")}`;
 
-function TeacherSchedule() {
-  // const [data, setData] = useState([]);
+  const timeSlots = [];
+  for (let hour = 7; hour <= 22; hour++) {
+    timeSlots.push(`${hour < 10 ? '0' : ''}${hour}:00`);
+  }
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get("/getAllSchedule");
-  //       const formattedData = response.data.map(item => ({
-  //         Id: item.id,
-  //         Subject: item.subject,
-  //         StartTime: new Date(item.startTime),
-  //         EndTime: new Date(item.endTime),
-  //         IsAllDay: item.isAllDay,
-  //         Status: item.status,
-  //         Priority: item.priority,
-  //       }));
-  //       setData(formattedData);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error fetching schedule data.</p>;
 
-  //   fetchData();
-  // }, []);
+  const getSpan = (startTime, endTime) => {
+    const startMinutes = new Date(startTime).getHours() * 60 + new Date(startTime).getMinutes();
+    const endMinutes = new Date(endTime).getHours() * 60 + new Date(endTime).getMinutes();
+    return (endMinutes - startMinutes) / 60;
+  };
 
-  const [open, setOpen] = useState(false);
+  const today = format(new Date(), 'yyyy-MM-dd');
+
   return (
     <>
-    <div className="flex justify-end mt-24 mb-1 mr-36 pr-4">
-    <Button
-          onClick={() => setOpen(true)}
-          label="Tạo Lịch"
-          icon={<IoMdAdd className="text-lg" />}
-          className="flex flex-row-reverse gap-1 items-center bg-mainColor font-semibold text-white rounded-md py-2 2xl:py-2.5"
-        />
-    </div>
-    <div className="text-center text-lg font-semibold text-blueLevel5 uppercase">Quản lý thời khoá biểu của tôi</div>
-      <div className="flex justify-center items-center min-h-screen -mt-24">
-        <ScheduleComponent
-        width={1200}
-        height={500}
-          eventSettings={{
-            dataSource: data,
-          }}
-         // selectedDate={new Date(2024,1,11)}
-          currentView="Month"
-         // readonly={true} 
-        >
-          <ViewsDirective>
-            <ViewDirective option="Day" />
-            <ViewDirective option="Week" />
-            <ViewDirective option="Month" />
-            <ViewDirective option="Agenda" />
-          </ViewsDirective>
+      <div className="flex flex-col justify-center items-center mb-6 mt-24">
+        <div className="px-12 uppercase font-semibold mb-2">
+          <h1>{formatMonthYear(currentDate)}</h1>
+        </div>
 
-          <Inject services={[Day, Week, Month, Agenda]} />
-        </ScheduleComponent>
+        <div className="flex items-center gap-5 justify-center">
+          <IoIosArrowDropleft
+            size={25}
+            color="#4E93B2"
+            onClick={() => setCurrentDate(subDays(currentDate, 7))}
+            className="cursor-pointer"
+          />
+          <span>{formatWeekRange(startOfWeekDate, endOfWeekDate)}</span>
+          <IoIosArrowDropright
+            size={25}
+            color="#4E93B2"
+            onClick={() => setCurrentDate(addDays(currentDate, 7))}
+            className="cursor-pointer"
+          />
+        </div>
       </div>
 
-      <AddSchedule open={open} setOpen={setOpen}/>
+      <div className="overflow-x-auto px-8 pb-6">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr className="border-b border-gray-300">
+              <th className="py-2 px-4 text-left text-sm bg-slate-200">Thời gian</th>
+              {weekDays.map(day => (
+                <th
+                  key={day.toString()}
+                  className={`py-2 px-4 text-sm text-center border-l border-gray-300 bg-blueLevel5 text-white ${
+                    isSameDay(day, new Date()) ? 'bg-blueLevel4' : ''
+                  }`}
+                >
+                  {formatDate(day)}<br/>
+                  {formatDay(day)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {timeSlots.map((time, index) => (
+              <tr key={index} className="border-b border-gray-200">
+                <td className="py-2 px-4 text-sm">{time}</td>
+                {weekDays.map(day => {
+                  const dayString = format(day, 'yyyy-MM-dd');
+                  const events = scheduleData.filter(row => {
+                    const eventDay = format(new Date(row.startTime), 'yyyy-MM-dd');
+                    return eventDay === dayString && format(new Date(row.startTime), 'HH:mm') <= time && format(new Date(row.endTime), 'HH:mm') > time;
+                  });
+
+                  const hasTodayEvents = dayString === today && events.length > 0;
+
+                  return (
+                    <td
+                      key={day.toString()}
+                      className={`text-sm py-2 border-l border-gray-300 relative w-[200px] ${
+                        hasTodayEvents ? 'bg-green-100' : ''
+                      }`}
+                    >
+                      {events.map((event, i) => {
+                        const span = getSpan(event.startTime, event.endTime);
+                        const topOffset = i * 20; 
+                        return (
+                          <div
+                            key={event.id}
+                            className="absolute bg-blueLevel1 font-medium p-1 rounded border border-blue-300"
+                            style={{
+                              top: `${topOffset}px`,
+                              height: `${span * 20}px`,
+                              width: '100%',
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
+                          >
+                            {event.courseName}
+                          </div>
+                        );
+                      })}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
-}
+};
 
 export default TeacherSchedule;

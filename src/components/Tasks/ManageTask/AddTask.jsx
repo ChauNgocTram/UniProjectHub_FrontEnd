@@ -5,66 +5,79 @@ import Textbox from "../../Textbox";
 import { useForm } from "react-hook-form";
 import SelectList from "../../SelectList";
 import Button from "../../Button";
-import api from "../../../config/axios";
-import { alert } from "../../../components/Alert/Alert"
+import { alert } from "../../../components/Alert/Alert";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
+import { useCreateTask } from "../../../api/taskApi";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED", "PENDING"];
 const PRIORITY = ["LOW", "MEDIUM", "HIGH"];
 
-function AddTask({ open, setOpen, projectId, onTaskAdded  }) { 
+function AddTask({ open, setOpen, projectId }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm();
   const [stage, setStage] = useState(LISTS[0]);
   const [priority, setPriority] = useState(PRIORITY[2]);
-  const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const mutation = useCreateTask();
+
   const submitHandler = async (data) => {
-    setLoading(true)
+    setLoading(true);
+    const payload = {
+      taskName: data.taskName,
+      status: LISTS.indexOf(stage) + 1,
+      category: data.category,
+      tags: data.tags,
+      startDate: new Date(data.startDate).toISOString(),
+      deadline: new Date(data.deadline).toISOString(),
+      rate: PRIORITY.indexOf(priority) + 1,
+      comment: data.comment,
+    };
     try {
-      const payload = {
-        taskName: data.taskName,
-        description: data.description,
-        status: LISTS.indexOf(stage) + 1,
-        category: data.category, 
-        tags: data.tags, 
-        deadline: new Date(data.date).toISOString(),
-        rate: PRIORITY.indexOf(priority) + 1,
-        comment: data.comment, 
-      };
-
-      const response = await api.post(`/api/Task/CreateTask/${projectId}`, payload);
-      console.log("Create task response:", response.data); 
-
-      if (response.status === 200) {
-        onTaskAdded();
-        setOpen(false);
-        alert.alertSuccessWithTime(
-          "Tạo Task Thành Công",
-          "",
-          2000,
-          "30",
-          () => {}
-        );
-        reset();
-      } else {
-        console.error("Failed to create task", response.data);
-        alert.alertFailed(
-          "Tạo Task Thất Bại",
-          "Vui lòng thử lại",
-          2000,
-          "30",
-          () => {}
-        );
-      }
+      mutation.mutate(
+        { projectId, payload },
+        {
+          onSuccess: () => {
+            setOpen(false);
+            alert.alertSuccessWithTime(
+              "Tạo Task Thành Công",
+              "",
+              2000,
+              "30",
+              () => {}
+            );
+            reset();
+          },
+          onError: () => {
+            alert.alertFailed(
+              "Tạo Task Thất Bại",
+              "Vui lòng thử lại",
+              2000,
+              "30",
+              () => {}
+            );
+          },
+        }
+      );
     } catch (error) {
       console.error("Error creating task", error);
+      alert.alertFailed(
+        "Tạo Task Thất Bại",
+        error.message,
+        2000,
+        "30",
+        () => {}
+      );
     }
-    setLoading(false)
+    setLoading(false);
   };
+
+  const startDate = watch("startDate");
 
   return (
     <>
@@ -84,10 +97,11 @@ function AddTask({ open, setOpen, projectId, onTaskAdded  }) {
               name="taskName"
               label="Tiêu đề"
               className="w-full rounded"
-              register={register("taskName", { required: "Vui lòng nhập tiêu đề" })}
+              register={register("taskName", {
+                required: "Vui lòng nhập tiêu đề",
+              })}
               error={errors.taskName ? errors.taskName.message : ""}
             />
-         
 
             <div className="flex gap-4">
               <SelectList
@@ -107,30 +121,44 @@ function AddTask({ open, setOpen, projectId, onTaskAdded  }) {
               </div>
             </div>
 
-            <Textbox
-              placeholder="Ngày hoàn thành"
-              type="date"
-              name="date"
-              label="Ngày hoàn thành"
-              className="w-full rounded"
-              register={register("date", {
-                required: "Vui lòng chọn ngày!",
-              })}
-              error={errors.date ? errors.date.message : ""}
-            />
+            <div className="flex items-start gap-4">
+              <Textbox
+                placeholder="Date"
+                type="date"
+                name="startDate"
+                label="Ngày bắt đầu"
+                className="w-full rounded"
+                register={register("startDate", {
+                  required: "Vui lòng chọn ngày!",
+                })}
+                error={errors.startDate ? errors.startDate.message : ""}
+              />
+              <div className="text-blue-500 font-semibold">
+                <MdOutlineKeyboardDoubleArrowRight size={20} />
+              </div>
+              <Textbox
+                placeholder="Date"
+                type="date"
+                name="deadline"
+                label="Ngày hoàn thành"
+                className="w-full rounded"
+                register={register("deadline", {
+                  required: "Vui lòng chọn ngày!",
+                  validate: (value) =>
+                    !startDate || new Date(value) >= new Date(startDate)
+                      ? true
+                      : "Ngày hoàn thành phải lớn hơn ngày bắt đầu",
+                })}
+                error={errors.deadline ? errors.deadline.message : ""}
+              />
+            </div>
 
             <div className="bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4">
-              {uploading ? (
-                <span className="text-sm py-2 text-red-500">
-                  Uploading assets
-                </span>
-              ) : (
-                <Button
-                  label="Tạo"
-                  type="submit"
-                  className="bg-mainColor text-sm font-semibold text-neutral-800 hover:bg-mainBg sm:ml-3 sm:w-auto rounded-lg"
-                />
-              )}
+              <Button
+                label="Tạo"
+                type="submit"
+                className="bg-mainColor text-sm font-semibold text-neutral-800 hover:bg-mainBg sm:ml-3 sm:w-auto rounded-lg"
+              />
 
               <Button
                 type="button"

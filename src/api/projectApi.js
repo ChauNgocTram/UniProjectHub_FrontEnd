@@ -18,7 +18,9 @@ export const useGetGroupProjectsByUser = (userId) => {
 
 // ======= project ca nhan
 const getPersonalProjectsByUser = async (userId) => {
-  const { data } = await api.get(`${API_ENDPOINTS.PROJECT}/GetProjectsByUserOwner/${userId}`);
+  const { data } = await api.get(
+    `${API_ENDPOINTS.PROJECT}/GetProjectsByUserOwner/${userId}`
+  );
   return data;
 };
 
@@ -67,26 +69,41 @@ export const useCreateGroupProject = () => {
 
 // ======== update
 const updateProject = async ({ projectId, payload }) => {
-    const { data } = await api.put(`${API_ENDPOINTS.PROJECT}/UpdateProject/${projectId}`, payload);
-    return data;
-  };
-  
-  export const useUpdateProject = () => {
-    const queryClient = useQueryClient();
-  
-    return useMutation(
-      ({ projectId, payload }) => updateProject({ projectId, payload }),
-      {
-        onSuccess: ({ projectId }) => {
-          alert.alertSuccessWithTime('Cập nhật dự án thành công!', '', 2000, '25', () => {});
-          queryClient.invalidateQueries(['projectDetail', projectId]);
-        },
-        onError: (error) => {
-          alert.alertFailedWithTime('Failed to update', error.message, 2000, '25', () => {});
-        },
-      }
-    );
-  };
+  const { data } = await api.put(
+    `${API_ENDPOINTS.PROJECT}/UpdateProject/${projectId}`,
+    payload
+  );
+  return data;
+};
+
+export const useUpdateProject = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ projectId, payload }) => updateProject({ projectId, payload }),
+    {
+      onSuccess: ({ projectId }) => {
+        alert.alertSuccessWithTime(
+          "Cập nhật dự án thành công!",
+          "",
+          2000,
+          "25",
+          () => {}
+        );
+        queryClient.invalidateQueries(["projectDetail", projectId]);
+      },
+      onError: (error) => {
+        alert.alertFailedWithTime(
+          "Xoá dự án thất bại",
+          error.message,
+          2000,
+          "25",
+          () => {}
+        );
+      },
+    }
+  );
+};
 
 // ========= delete
 

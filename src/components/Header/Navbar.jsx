@@ -12,7 +12,7 @@ import {
   LOGIN_PAGE,
   PROFILE,
   REGISTER_PAGE,
-  TEACHER_SCHEDULE,
+  SCHEDULE,
 } from "../../routes/constant";
 import { logout, selectUser } from "../../redux/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -114,9 +114,9 @@ function Navbar() {
                 </li>
                 <li className="py-4  m-1">
                   <NavLink
-                    to={`/${TEACHER_SCHEDULE}`}
+                    to={`/${SCHEDULE}`}
                     className={` menuItem ${
-                      location.pathname === `/${TEACHER_SCHEDULE}`
+                      location.pathname === `/${SCHEDULE}`
                         ? "activeNavbar"
                         : ""
                     }`}

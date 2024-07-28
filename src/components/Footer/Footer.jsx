@@ -60,7 +60,7 @@ function Footer() {
                   href=""
                   className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
-                  Điện thoại liên hệ: 0365322245
+                  Điện thoại liên hệ: 035 763 2752
                 </p>
               </li>
               <li>
@@ -68,7 +68,7 @@ function Footer() {
                   href=""
                   className="hover:text-baseOrange transition-all duration-500 ease-in-out"
                 >
-                  Email:
+                  Email: lienheapnsp@gmail.com
                 </p>
               </li>
             </ul>

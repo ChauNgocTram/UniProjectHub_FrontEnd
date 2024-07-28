@@ -58,7 +58,7 @@ function TeamTaskSidebar({ taskId, onSelectStatus }) {
     {
       title: "Thành viên",
       icon: <HiOutlineUserGroup />,
-      path: `/du-an-nhom/${MEMBERS}`,
+      path: `/du-an-nhom/${MEMBERS.replace(":id", taskId)}`,
       status: null,
     },
   ];

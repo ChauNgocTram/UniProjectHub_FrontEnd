@@ -7,21 +7,22 @@ import { MdOutlineSearch } from "react-icons/md";
 
 import UserAvatar from "../UserAvatar";
 import NotificationPanel from "../Notification";
+import { ALL_TEAM_PROJECTS } from "../../routes/constant";
 
 function CommonHeader() {
   //const user = useSelector((state) => state?.user?.user);
   return (
     <div className="flex items-center justify-between w-full bg-white p-4 shadow sticky top-0 ">
       <div className="flex items-center justify-center ">
-        <NavLink
-          to=""
+        <div
+         // to={`/${ALL_TEAM_PROJECTS}`}
           onClick={() => window.history.back()}
           className="mx-4 p-3 rounded-lg hover:bg-slate-200"
         >
           <div className="">
             <MdArrowBackIosNew />
           </div>
-        </NavLink>
+        </div>
         <span className="font-semibold">Nhiệm vụ</span>
       </div>
       <div className="flex items-center space-x-3">

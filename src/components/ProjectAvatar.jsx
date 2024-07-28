@@ -13,17 +13,17 @@ function ProjectAvatar({ cardName }) {
       <Popover className="relative">
         <>
           <PopoverButton className="group flex items-center justify-center outline-none w-16 h-16 rounded-xl text-white bg-mainColor font-medium">
-            {/* {cardName.img && cardName.img !== "" ? (
+            {cardName.img && cardName.img !== "null" ? (
               <img
                 src={cardName.img}
                 alt=""
                 className="relative inline-block h-[58px] w-[58px] !rounded-full object-cover object-center"
               />
-            ) : ( */}
+            ) : (
               <span className="text-2xl font-semibold">
                 {getInitials(cardName.name)}
               </span>
-            {/* )} */}
+         )} 
           </PopoverButton>
         </>
       </Popover>

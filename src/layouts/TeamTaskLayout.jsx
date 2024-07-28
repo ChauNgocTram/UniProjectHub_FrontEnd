@@ -5,44 +5,28 @@ import TeamTaskSidebar from "../components/Sidebar/TeamTaskSidebar";
 import api from "../config/axios";
 import Loading from "../components/Loading/Loading";
 import { format } from "date-fns";
-
-
+import { useTasksByProjectId } from "../api/taskApi";
 
 function TeamTaskLayout() {
   const { id: projectId } = useParams();
-  const [allTask, setAllTask] = useState([]);
+
+ // const [allTask, setAllTask] = useState([]);
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusFilter, setStatusFilter] = useState(null);
-  const [reloadContent, setReloadContent] = useState(false);
 
-  const handleReloadContent = () => {
-    setReloadContent((prev) => !prev);
-  };
+const { data: allTask , isLoading, error } = useTasksByProjectId(projectId);
 
-  const getAllTaskByProjectId = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get(`/api/Task/GetTasksForProjectAsync/${projectId}`);
-      if (response.data && response.data.length > 0) {
-        const formattedTasks = response.data.map((task) => ({
-          ...task,
-          deadline: format(new Date(task.deadline), "dd/MM/yyyy"),
-        }));
-        setAllTask(formattedTasks);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching request:", error);
-      setLoading(false);
-    }
-  };
+if (isLoading) {
+  return <Loading loading={isLoading} />;
+}
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    getAllTaskByProjectId();
-  }, [projectId, reloadContent]);
+if (error) {
+  return <div>Error fetching tasks: {error.message}</div>;
+}
+
+
 
   const filteredTasks = statusFilter !== null
     ? allTask.filter((task) => task.status === statusFilter)
@@ -66,7 +50,6 @@ function TeamTaskLayout() {
               open,
               setOpen,
               projectId,
-              handleReloadContent,
             }} 
           />
         </div>

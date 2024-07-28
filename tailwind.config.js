@@ -14,6 +14,7 @@ export default {
         pending: "#FFFCB5",
         tagMemberBg: "#FFD6E8",
         tagMemberText: "#B94B7B",
+        bookMark: "#FFD700",
 
         blueLevel1: "#E9F7FA",
         blueLevel2: "#CCEBF3", 

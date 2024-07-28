@@ -19,7 +19,7 @@ export const TASK_PENDING = 'pending/:id'
 
 export const TASK_DETAILS = 'nhiem-vu/chi-tiet/:id'
 
-export const MEMBERS = 'thanh-vien'
+export const MEMBERS = 'thanh-vien/:id'
 
 export const GROUP_CHAT = 'thao-luan'
 
@@ -31,7 +31,8 @@ export const ALL_PERSONAL_TASK = 'tat-ca-nhiem-vu/:id'
 export const PERSONAL_TASK_DETAILS = 'chi-tiet-nhiem-vu'
 
 // Dự thính lớp học
-export const TEACHER_SCHEDULE = 'thoi-khoa-bieu-giao-vien'
+export const SCHEDULE = 'schedule'
+export const TEACHER_SCHEDULE = 'thoi-khoa-bieu-giang-vien/:userId'
 
 
 // Blog
