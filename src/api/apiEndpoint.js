@@ -3,4 +3,5 @@ export const API_ENDPOINTS = {
   BLOG: "/api/Blog",
   COMMENT: "/api/Comments",
   SCHEDULE: "/api/Schedules",
+  GROUPCHAT: "/api/GroupChats",
 };
