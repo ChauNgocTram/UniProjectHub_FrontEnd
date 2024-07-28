@@ -1,44 +1,70 @@
-import { Badge, Calendar } from "antd"; // Import Calendar and Badge from antd
-import { useEffect, useState } from "react";
+import { registerLicense } from "@syncfusion/ej2-base";
+import {
+  Agenda,
+  Day,
+  Inject,
+  Month,
+  ScheduleComponent,
+  ViewDirective,
+  ViewsDirective,
+  Week,
+} from "@syncfusion/ej2-react-schedule";
+import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { fetchSchedules } from "../../api/scheduleApi"; // Adjust the import path as needed
 import Button from "../../components/Button";
 import AddSchedule from "../../components/ManageSchedule/Teacher/AddSchedule";
 
-const TeacherSchedule = () => {
+registerLicense(
+  "GTIlMmhhZX1ifWBmaGJgfGNrfGFjYWdzYmNpYWtpYGZoJyEyPjAnPSA2YmRiYmRnEzUjJ302NyZ9JT0="
+);
+
+const data = [
+  {
+    Id: 1,
+    Subject: "Kinh tế chính trị",
+    StartTime: new Date(2024, 5, 15, 14, 30),
+    EndTime: new Date(2024, 5, 15, 17, 0),
+    IsAllDay: false,
+    Location: "P.410 - Nhà văn hoá sinh viên",
+  },
+  {
+    Id: 2,
+    Subject: "Xác suất thống kê",
+    StartTime: new Date(2024, 5, 13, 12, 30),
+    EndTime: new Date(2024, 5, 13, 14, 15),
+    IsAllDay: false,
+    Status: "Completed",
+    Priority: "High",
+    Location: "P.614 - Nhà văn hoá sinh viên",
+  },
+];
+
+function TeacherSchedule() {
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("/getAllSchedule");
+  //       const formattedData = response.data.map(item => ({
+  //         Id: item.id,
+  //         Subject: item.subject,
+  //         StartTime: new Date(item.startTime),
+  //         EndTime: new Date(item.endTime),
+  //         IsAllDay: item.isAllDay,
+  //         Status: item.status,
+  //         Priority: item.priority,
+  //       }));
+  //       setData(formattedData);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   const [open, setOpen] = useState(false);
-  const [scheduleData, setScheduleData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchSchedules();
-        setScheduleData(data);
-      } catch (error) {
-        console.error("Error fetching schedules:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Updated to use cellRender
-  const cellRender = (value) => {
-    const events = scheduleData.filter((event) =>
-      value.isSame(new Date(event.StartTime), "day")
-    );
-
-    return (
-      <ul className="events">
-        {events.map((event) => (
-          <li key={event.Id}>
-            <Badge color="blue" text={event.Subject} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
   return (
     <>
       <div className="flex justify-end mt-24 mb-1 mr-36 pr-4">
@@ -53,15 +79,30 @@ const TeacherSchedule = () => {
         Quản lý thời khoá biểu của tôi
       </div>
       <div className="flex justify-center items-center min-h-screen -mt-24">
-        <Calendar
-          cellRender={cellRender} // Updated prop
-          fullscreen={false}
-        />
+        <ScheduleComponent
+          width={1200}
+          height={500}
+          eventSettings={{
+            dataSource: data,
+          }}
+          // selectedDate={new Date(2024,1,11)}
+          currentView="Month"
+          // readonly={true}
+        >
+          <ViewsDirective>
+            <ViewDirective option="Day" />
+            <ViewDirective option="Week" />
+            <ViewDirective option="Month" />
+            <ViewDirective option="Agenda" />
+          </ViewsDirective>
+
+          <Inject services={[Day, Week, Month, Agenda]} />
+        </ScheduleComponent>
       </div>
 
       <AddSchedule open={open} setOpen={setOpen} />
     </>
   );
-};
+}
 
 export default TeacherSchedule;
