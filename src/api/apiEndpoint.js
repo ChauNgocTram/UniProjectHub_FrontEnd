@@ -1,5 +1,6 @@
 export const API_ENDPOINTS = {
-    PROJECT: "/api/Project",
-    BLOG: "/api/Blog",
-    COMMENT: "/api/Comments",
-  };
+  PROJECT: "/api/Project",
+  BLOG: "/api/Blog",
+  COMMENT: "/api/Comments",
+  SCHEDULE: "/api/Schedules",
+};
