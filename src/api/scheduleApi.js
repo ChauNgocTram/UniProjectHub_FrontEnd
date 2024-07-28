@@ -4,8 +4,7 @@ import { API_ENDPOINTS } from "./apiEndpoint";
 // Fetch all schedules
 export const fetchSchedules = async () => {
   try {
-    const { data } = await api.get(`${API_ENDPOINTS.SCHEDULE}/GetAllSchedules`);
-
+    const { data } = await api.get(`${API_ENDPOINTS.SCHEDULE}/all-schedules`);
     return data;
   } catch (error) {
     console.error(
@@ -22,7 +21,6 @@ export const fetchScheduleById = async (scheduleId) => {
     const { data } = await api.get(
       `${API_ENDPOINTS.SCHEDULE}/GetScheduleById/${scheduleId}`
     );
-
     return data;
   } catch (error) {
     console.error(
@@ -40,7 +38,6 @@ export const createSchedule = async (scheduleData) => {
       `${API_ENDPOINTS.SCHEDULE}/CreateSchedule`,
       scheduleData
     );
-
     return data;
   } catch (error) {
     console.error(
@@ -58,7 +55,6 @@ export const updateSchedule = async ({ scheduleId, scheduleData }) => {
       `${API_ENDPOINTS.SCHEDULE}/UpdateSchedule/${scheduleId}`,
       scheduleData
     );
-
     return data;
   } catch (error) {
     console.error(
@@ -75,7 +71,6 @@ export const deleteSchedule = async (scheduleId) => {
     const { data } = await api.delete(
       `${API_ENDPOINTS.SCHEDULE}/DeleteSchedule/${scheduleId}`
     );
-
     return data;
   } catch (error) {
     console.error(
