@@ -16,6 +16,7 @@ function App() {
   const queryClient = new QueryClient();
   return (
     <>
+      CICD OK ROI NHA
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
