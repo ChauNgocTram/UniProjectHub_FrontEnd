@@ -1,11 +1,11 @@
-import { Popover,PopoverButton, PopoverPanel,Transition } from "@headlessui/react";
-import moment from "moment";
+import { Popover, PopoverButton, PopoverPanel, Transition } from "@headlessui/react";
+import { formatDistanceToNow, parseISO } from "date-fns"; // Cập nhật import
 import { Fragment, useState } from "react";
 import { BiSolidMessageRounded } from "react-icons/bi";
 import { HiBellAlert } from "react-icons/hi2";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
-
+import React from "react";
 const data = [
   {
     _id: "65c5bbf3787832cf99f28e6d",
@@ -41,6 +41,7 @@ const data = [
     __v: 0,
   },
 ];
+
 const ICONS = {
   alert: (
     <HiBellAlert className='h-5 w-5 text-gray-600 group-hover:text-indigo-600' />
@@ -114,7 +115,7 @@ const NotificationPanel = () => {
                           <div className='flex items-center gap-3 font-semibold text-gray-900 capitalize'>
                             <p> {item.notiType}</p>
                             <span className='text-xs font-normal lowercase'>
-                              {moment(item.createdAt).fromNow()}
+                              {formatDistanceToNow(parseISO(item.createdAt), { addSuffix: true })}
                             </span>
                           </div>
                           <p className='line-clamp-1 mt-1 text-gray-600'>

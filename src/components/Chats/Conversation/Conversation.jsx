@@ -1,6 +1,6 @@
 import React from 'react'
 import ChatHeader from './ChatHeader'
-import ChatFooter from './ChatFooter'
+//import ChatFooter from './ChatFooter'
 
 function Conversation() {
   return (
@@ -9,7 +9,7 @@ function Conversation() {
         <div className='h-[500px]'>
 
         </div>
-        <ChatFooter/>
+        {/* <ChatFooter/> */}
     </div>
   )
 }

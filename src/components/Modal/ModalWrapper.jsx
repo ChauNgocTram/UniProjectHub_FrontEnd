@@ -5,6 +5,7 @@ import {
   DialogPanel,
 } from "@headlessui/react";
 import { Fragment, useRef } from "react";
+import React from "react";
 
 const ModalWrapper = ({ open, setOpen, children }) => {
   const cancelButtonRef = useRef(null);
@@ -13,7 +14,7 @@ const ModalWrapper = ({ open, setOpen, children }) => {
     <Transition show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10 w-full"
+        className="relative z-10 w-full h-[500px]"
         initialFocus={cancelButtonRef}
         onClose={() => setOpen(false)}
       >

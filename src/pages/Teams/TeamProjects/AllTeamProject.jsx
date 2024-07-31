@@ -11,21 +11,10 @@ import Loading from "../../../components/Loading/Loading";
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
-import Lottie from "lottie-react";
 import Empty from "../../../assets/Empty.json";
 import { useGetGroupProjectsByUser } from "../../../api/projectApi";
 import NoDataPlaceholder from "../../../components/NoDataPlaceholder";
 
-const items = [
-  {
-    label: <a href="https://www.antgroup.com">Nhân sự</a>,
-    key: "0",
-  },
-  {
-    label: <a href="https://www.aliyun.com">Giáo dục</a>,
-    key: "1",
-  },
-];
 
 const CATEGORY = ["Nhân sự", "Giáo dục", "Marketing"];
 

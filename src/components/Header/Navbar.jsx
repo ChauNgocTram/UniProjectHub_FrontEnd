@@ -55,16 +55,16 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 right-0 w-full flex justify-between items-center  font-semibold pb-2 ${
+        className={`fixed top-0 w-full flex justify-between items-center font-semibold pb-2 ${
           header
             ? "bg-white backdrop-blur-sm text-black shadow-md"
             : "bg-transparent text-black"
         }`}
       >
         <div className="bg-gradient-to-r from-primary to-secondary text-white font-semibold"></div>
-        <div className="container py-[2px] sm:block hidden font-semibold">
+        <div className="w-full mx-auto py-[2px] sm:block hidden font-semibold">
           <div className="flex flex-row justify-between items-center w-full">
-            <div className="flex items-center justify-end mx-6 gap-4 font-bold text-2xl basis-1/6">
+            <div className="flex items-center justify-center mx-6 gap-4 font-bold text-2xl basis-1/6">
               <NavLink to="/">
                 <img
                   src={logo}
@@ -149,12 +149,12 @@ function Navbar() {
               </ul>
             </div>
 
-            <div className="hidden lg:block w-full basis-1/6 mx-4 justify-center z-20">
+            <div className="hidden lg:block w-full basis-1/6 justify-center items-center z-20">
               {user ? (
-                <div className="group relative cursor-pointer ">
+                <div className="group w-full mx-auto relative cursor-pointer ">
                   <a
                     href="/#home"
-                    className="flex h-[72px] items-center gap-[2px] "
+                    className="flex h-[72px] justify-center items-center gap-[2px] "
                   >
                     <FaUserCircle size={30} className="mr-3" />
                     <span className="font-semibold">{user.userName}</span>

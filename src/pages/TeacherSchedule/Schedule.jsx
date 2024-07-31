@@ -18,7 +18,6 @@ function Schedule() {
   const navigate = useNavigate();
 
   const filteredUsers = useMemo(() => {
-    if (!Array.isArray(users)) return [];
     if (!searchQuery.trim()) return [];
     return users.filter(
       (user) =>
@@ -82,7 +81,7 @@ function Schedule() {
           <Button
             type="submit"
             label="Tìm kiếm"
-            className="bg-mainColor text-white rounded-md px-4 py-2"
+            className="bg-blueLevel5 text-white rounded-md px-4 py-2"
           />
         </form>
 
@@ -100,7 +99,7 @@ function Schedule() {
           </ul>
         )}
 
-        <EventCard events={scheduleData || []} />
+        <EventCard events={scheduleData} />
       </div>
       <Footer />
 

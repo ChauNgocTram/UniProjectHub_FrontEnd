@@ -3,114 +3,124 @@ import { useForm } from "react-hook-form";
 import ModalWrapper from "../../Modal/ModalWrapper";
 import { DialogTitle } from "@headlessui/react";
 import Textbox from "../../Textbox";
-import SelectList from "../../SelectList";
-import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import Button from "../../Button";
+import { useAddSchedule } from "../../../api/scheduleApi";
 
 function AddSchedule({ open, setOpen }) {
-  const task = "";
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { mutate: addSchedule, isLoading } = useAddSchedule();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const submitHandler = (data) => {
+    const scheduleData = {
+      userId: data.userId, // Add userId from form data
+      dateOfWeek: data.dateOfWeek,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      slotStartTime: data.slotStartTime,
+      slotEndTime: data.slotEndTime,
+      courseName: data.courseName,
+    };
 
-  const submitHandler = () => {};
-
-  const handleSelect = (e) => {
-    setAssets(e.target.files);
+    addSchedule(scheduleData);
+    setOpen(false); // Close modal after submission
   };
+
   return (
-    <>
-      <div className="my-12">
-        <ModalWrapper open={open} setOpen={setOpen}>
-          <form onSubmit={handleSubmit(submitHandler)}>
-            <DialogTitle
-              as="h2"
-              className="text-base font-bold leading-6 text-gray-900 mb-4"
-            >
-              {task ? "CẬP NHẬT TASK" : "TẠO LỊCH"}
-            </DialogTitle>
+    <ModalWrapper open={open} setOpen={setOpen}>
+      <form onSubmit={handleSubmit(submitHandler)}>
+        <DialogTitle as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+          TẠO LỊCH
+        </DialogTitle>
 
-            <div className="mt-2 flex flex-col gap-6">
-              <Textbox
-                placeholder="Nhập tiêu đề"
-                type="text"
-                name="title"
-                label="Tiêu đề"
-                className="w-full rounded"
-                register={register("title", { required: "Title is required" })}
-                error={errors.title ? errors.title.message : ""}
-              />
-              <Textbox
-                placeholder="Nhập vị trí"
-                type="text"
-                name="location"
-                label="Vị trí"
-                className="w-full rounded"
-                register={register("location", {
-                  required: "location is required",
-                })}
-                error={errors.location ? errors.location.message : ""}
-              />
+        <div className="mt-2 flex flex-col gap-6">
+          <Textbox
+            placeholder="Nhập userId"
+            type="text"
+            name="userId"
+            label="User ID"
+            className="w-full rounded"
+            register={register("userId", { required: "User ID is required" })}
+            error={errors.userId ? errors.userId.message : ""}
+          />
+          
+          <Textbox
+            placeholder="Nhập ngày trong tuần"
+            type="text"
+            name="dateOfWeek"
+            label="Ngày trong tuần"
+            className="w-full rounded"
+            register={register("dateOfWeek", { required: "Date of Week is required" })}
+            error={errors.dateOfWeek ? errors.dateOfWeek.message : ""}
+          />
 
-              <Textbox
-                placeholder="Date"
-                type="datetime-local"
-                name="date"
-                label="Bắt đầu"
-                className="w-full rounded"
-                register={register("date", {
-                  required: "Vui lòng chọn ngày!",
-                })}
-                error={errors.date ? errors.date.message : ""}
-              />
+          <Textbox
+            placeholder="Bắt đầu (ISO 8601)"
+            type="datetime-local"
+            name="startTime"
+            label="Bắt đầu"
+            className="w-full rounded"
+            register={register("startTime", { required: "Start Time is required" })}
+            error={errors.startTime ? errors.startTime.message : ""}
+          />
 
-              <Textbox
-                placeholder="Date"
-                type="datetime-local"
-                name="date"
-                label="Kết thúc"
-                className="w-full rounded"
-                register={register("date", {
-                  required: "Vui lòng chọn ngày!",
-                })}
-                error={errors.date ? errors.date.message : ""}
-              />
+          <Textbox
+            placeholder="Kết thúc (ISO 8601)"
+            type="datetime-local"
+            name="endTime"
+            label="Kết thúc"
+            className="w-full rounded"
+            register={register("endTime", { required: "End Time is required" })}
+            error={errors.endTime ? errors.endTime.message : ""}
+          />
 
-              <Textbox
-                placeholder="Nhập mô tả"
-                type="textarea"
-                rows={2}
-                name="description"
-                label="Mô tả"
-                className="w-full rounded"
-                register={register("description", {
-                  required: "description is required",
-                })}
-                error={errors.description ? errors.description.message : ""}
-              />
+          <Textbox
+            placeholder="Bắt đầu slot (ISO 8601)"
+            type="datetime-local"
+            name="slotStartTime"
+            label="Bắt đầu Slot"
+            className="w-full rounded"
+            register={register("slotStartTime", { required: "Slot Start Time is required" })}
+            error={errors.slotStartTime ? errors.slotStartTime.message : ""}
+          />
 
-              <div className="bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4">
-                <Button
-                  label="Tạo"
-                  type="submit"
-                  className="bg-mainColor text-sm font-semibold text-neutral-800 hover:bg-mainBg sm:ml-3 sm:w-auto rounded-lg"
-                />
+          <Textbox
+            placeholder="Kết thúc slot (ISO 8601)"
+            type="datetime-local"
+            name="slotEndTime"
+            label="Kết thúc Slot"
+            className="w-full rounded"
+            register={register("slotEndTime", { required: "Slot End Time is required" })}
+            error={errors.slotEndTime ? errors.slotEndTime.message : ""}
+          />
 
-                <Button
-                  type="button"
-                  className="bg-white hover:bg-neutral-200 border text-sm font-semibold text-gray-700 sm:w-auto rounded-lg"
-                  onClick={() => setOpen(false)}
-                  label="Huỷ"
-                />
-              </div>
-            </div>
-          </form>
-        </ModalWrapper>
-      </div>
-    </>
+          <Textbox
+            placeholder="Nhập tên khóa học"
+            type="text"
+            name="courseName"
+            label="Tên khóa học"
+            className="w-full rounded"
+            register={register("courseName", { required: "Course Name is required" })}
+            error={errors.courseName ? errors.courseName.message : ""}
+          />
+
+          <div className="bg-gray-50 py-6 sm:flex sm:flex-row-reverse gap-4">
+            <Button
+              label={isLoading ? "Đang tạo..." : "Tạo"}
+              type="submit"
+              className="bg-mainColor text-sm font-semibold text-neutral-800 hover:bg-mainBg sm:ml-3 sm:w-auto rounded-lg"
+              disabled={isLoading}
+            />
+
+            <Button
+              type="button"
+              className="bg-white hover:bg-neutral-200 border text-sm font-semibold text-gray-700 sm:w-auto rounded-lg"
+              onClick={() => setOpen(false)}
+              label="Huỷ"
+            />
+          </div>
+        </div>
+      </form>
+    </ModalWrapper>
   );
 }
 
