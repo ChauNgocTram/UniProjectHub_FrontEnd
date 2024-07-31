@@ -32,3 +32,4 @@ jobs:
           npm ci
           npm run build
           echo "ci,cd done"
+          curl -X POST "https://discord.com/api/v9/channels/1268245483260743802/messages" -H "Authorization: ${{ secrets.DISCORD }}"  -H "Content-Type: application/json" -d '{"content": "React Deploy Success"}'
