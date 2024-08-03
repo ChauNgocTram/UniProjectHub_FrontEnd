@@ -49,6 +49,15 @@ export const useGetProjectById = (projectId) => {
   });
 };
 
+export const useGetProjectsByIds = (ids) => {
+  return useQuery({
+    queryKey: ["projects", ids],
+    queryFn: () => {
+      return Promise.all(ids.map((id) => getProjectById(id)));
+    },
+    enabled: ids.length > 0, // Fetch data only if there are IDs
+  });
+};
 
 // ========== create
 const createGroupProject = async (ownerId, payload) => {

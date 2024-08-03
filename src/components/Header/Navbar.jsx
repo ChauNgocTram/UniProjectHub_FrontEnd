@@ -36,7 +36,7 @@ function Navbar() {
   const [header, setHeader] = useState(false);
 
   const scrollHeader = () => {
-    if (window.scrollY >= 50) {
+    if (window.scrollY >= 10) {
       setHeader(true);
     } else {
       setHeader(false);
@@ -55,7 +55,7 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 w-full flex justify-between items-center font-semibold pb-2 ${
+        className={`fixed top-0 w-full flex justify-between items-center font-semibold pb-2 z-20 ${
           header
             ? "bg-white backdrop-blur-sm text-black shadow-md"
             : "bg-transparent text-black"

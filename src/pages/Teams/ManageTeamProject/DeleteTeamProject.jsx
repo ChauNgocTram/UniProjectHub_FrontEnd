@@ -1,7 +1,5 @@
 import React from 'react';
-import Swal from 'sweetalert2';
 import { useDeleteGroupProject } from '../../../api/projectApi';
-import { alert } from '../../../components/Alert/Alert';
 import { showConfirmationDialog } from '../../../components/Alert/showConfirmationDialog';
 
 function DeleteTeamProject({ project, onDelete }) {
@@ -10,7 +8,7 @@ function DeleteTeamProject({ project, onDelete }) {
   const handleDeleteProject = async () => {
     const result = await showConfirmationDialog({
       title: "Bạn muốn xoá dự án?",
-      text: "Dự án sẽ bị xoá khỏi không gian làm việc của bạn",
+      text: `"${project.name}" sẽ bị xoá khỏi không gian làm việc của bạn`,
       confirmButtonText: "Xác nhận",
       cancelButtonText: "Huỷ",
     });
@@ -19,12 +17,15 @@ function DeleteTeamProject({ project, onDelete }) {
     if (result.isConfirmed) {
       try {
         await deleteProject(project.id);
+
+        let storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        storedFavorites = storedFavorites.filter(fav => fav !== project.id);
+        localStorage.setItem("favorites", JSON.stringify(storedFavorites));
+
         if (onDelete) onDelete(project.id);
       } catch (error) {
         console.error('Delete project error:', error);
       }
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      alert.alertFailedWithTime('Xoá dự án thất bại', '', 2000, '25', () => {});
     }
   };
 

@@ -8,6 +8,7 @@ import { useOutletContext } from "react-router-dom";
 import { useMemberByProjectId } from "../../../../api/memberOfProjectApi";
 import { useUserById } from "../../../../api/userApi";
 import { getInitials } from "../../../../utils";
+import { useGetProjectById } from "../../../../api/projectApi";
 
 const colors = ["bg-blue-700", "bg-red-700", "bg-green-700", "bg-yellow-700"];
 const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
@@ -15,6 +16,7 @@ const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
 function Members() {
   const { projectId } = useOutletContext();
   const { data: members, isLoading: membersLoading, isError: membersError } = useMemberByProjectId(projectId);
+  const { data: project, isLoading: projectLoading, isError: projectError } = useGetProjectById(projectId);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
@@ -59,6 +61,9 @@ function Members() {
     if (userError) return <tr><td colSpan="3">Error loading user details</td></tr>;
     if (!userDetail) return null;
 
+  //  const fullName = `${userDetail.userName} ${userDetail.firstName}`;
+    const displayRole  = project?.nameLeader === userDetail.userName ? 'LEADER' : role;
+
     return (
       <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-400/10">
         <td className="p-2">
@@ -78,7 +83,7 @@ function Members() {
         <td className="p-2">
           {userDetail.lastName} {userDetail.firstName}
         </td>
-        <td className="p-2">{role}</td>
+        <td className="p-2">{displayRole}</td>
         <td className="p-2">{userDetail.email}</td>
         <td className="p-2 flex gap-4 justify-end">
           <Button

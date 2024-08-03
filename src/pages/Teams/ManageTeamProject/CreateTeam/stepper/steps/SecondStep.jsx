@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Input, Form } from "antd";
+import { Button, Form } from "antd";
 import { FaAsterisk } from "react-icons/fa";
 import Loading from "../../../../../../components/Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,13 +11,11 @@ import { useGetAllUser } from "../../../../../../api/userApi";
 
 function SecondStep() {
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
   const { setCurrentStep, userData, setUserData } =
     useContext(multiStepContext);
   const [loading, setLoading] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-
+ 
   const ownerId = user.userId;
   const { mutate: createGroupProject, isLoading: isCreating } =
     useCreateGroupProject();
@@ -44,16 +42,31 @@ function SecondStep() {
     setCurrentStep(3);
   };
 
-  const handleInputChange = (e, key) => {
-    setUserData({ ...userData, [key]: e.target.value });
+  const handleNameLeaderChange = (selectedOption) => {
+    if (selectedOption) {
+      setUserData({ ...userData, nameLeader: selectedOption.value });
+    }
   };
-  if (isUsersLoading || loading || isCreating) {
-    return <Loading />;
-  }
 
   const handleUserSelect = (selectedOptions) => {
     setSelectedUsers(selectedOptions);
   };
+
+  const validateMembers = (_, value) => {
+    const leaderUsername = userData.nameLeader;
+    if (!value || !leaderUsername) {
+      return Promise.resolve();
+    }
+    const selectedUsernames = value.map((user) => user.label);
+    if (selectedUsernames.includes(leaderUsername)) {
+      return Promise.resolve();
+    }
+    return Promise.reject(new Error("Danh sách thành viên phải bao gồm tên leader."));
+  };
+
+  if (isUsersLoading || loading || isCreating) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -75,10 +88,17 @@ function SecondStep() {
             initialValue={userData.nameLeader}
             className="w-[500px]"
           >
-            <Input
-              placeholder="Họ và tên của bạn"
-              value={userData.nameLeader}
-              onChange={(e) => handleInputChange(e, "nameLeader")}
+            <Select
+              options={users.map((user) => ({
+                value: user.userName,
+                label: user.userName,
+              }))}
+              onChange={handleNameLeaderChange}
+              value={
+                users.find((user) => user.userName === userData.nameLeader) ||
+                null
+              }
+              placeholder="Nhập tên leader"
             />
           </Form.Item>
 
@@ -90,7 +110,8 @@ function SecondStep() {
               </span>
             }
             name="members"
-            style={{ width: "300px" }}
+            style={{ width: "500px" }}
+            rules={[{ validator: validateMembers }]}
           >
             <Select
               options={users.map((user) => ({
@@ -101,17 +122,7 @@ function SecondStep() {
               value={selectedUsers}
               placeholder="Tìm kiếm thành viên"
               isMulti
-            /> <Select
-              options={users.map((user) => ({
-                value: user.id,
-                label: user.userName,
-              }))}
-              onChange={handleUserSelect}
-              value={selectedUsers}
-              placeholder="Tìm kiếm thành viên"
-              isMulti
             />
-            
           </Form.Item>
           <Form.Item>
             <div className="flex justify-center">

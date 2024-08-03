@@ -3,18 +3,23 @@ import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
-import { PiClockCounterClockwiseFill } from "react-icons/pi";
 import { ALL_TASK, EDIT_TEAM_PROJECT } from "../../../../routes/constant";
 import ProjectAvatar from "../../../../components/ProjectAvatar";
 import DeleteTeamProject from "../../ManageTeamProject/DeleteTeamProject";
-import { Dialog,DialogTitle,DialogPanel, Transition,TransitionChild } from "@headlessui/react";
-import { Fragment } from "react";
+import { format } from "date-fns";
+import ShareModal from "../../../../components/Modal/ShareModal";
+import { BsTags } from "react-icons/bs";
+import { PiMedal } from "react-icons/pi";
+import { useMemberByProjectId } from "../../../../api/memberOfProjectApi";
+import UserInfo from "../../../../components/UserInfo/UserInfo";
 
 const CardProject = ({ project, onDelete }) => {
   const [favorites, setFavorites] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [urlToShare, setUrlToShare] = useState("");
   const [copied, setCopied] = useState(false);
+
+  //const { data: members, isLoading, error } = useMemberByProjectId(project.id);
 
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -40,7 +45,7 @@ const CardProject = ({ project, onDelete }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(urlToShare).then(() => {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000); 
+      setTimeout(() => setCopied(false), 2000);
     });
   };
 
@@ -48,6 +53,12 @@ const CardProject = ({ project, onDelete }) => {
     setShowModal(false);
     setCopied(false);
   };
+
+  const isValidDate = (dateString) => {
+    const date = new Date(dateString);
+    return !isNaN(date.getTime());
+  };
+
 
   return (
     <>
@@ -57,12 +68,29 @@ const CardProject = ({ project, onDelete }) => {
           className="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-lg border-2 border-neutral-200 pt-3 px-2"
         >
           <div className="flex justify-between border-b-2 border-neutral-200 px-3">
-            <div className="text-sm text-neutral-400">{item.createdAt}</div>
+            <div className="text-sm text-neutral-400">
+            {isValidDate(item.createdAt) ? (
+                format(new Date(item.createdAt), "dd-MM-yyyy")
+              ) : (
+                "Invalid Date"
+              )}
+            </div>
             <div className="flex items-center space-x-3 pb-3">
               <button onClick={() => handleFavorite(item.id)}>
-                {favorites.includes(item.id) ? <FaBookmark color="#FFD700" /> : <FaRegBookmark />}
+                {favorites.includes(item.id) ? (
+                  <FaBookmark color="#FFD700" />
+                ) : (
+                  <FaRegBookmark />
+                )}
               </button>
-              <button onClick={() => handleShare(window.location.origin + `/du-an-nhom/${ALL_TASK.replace(":id", item.id)}`)}>
+              <button
+                onClick={() =>
+                  handleShare(
+                    window.location.origin +
+                      `/du-an-nhom/${ALL_TASK.replace(":id", item.id)}`
+                  )
+                }
+              >
                 <FiShare2 />
               </button>
 
@@ -83,10 +111,7 @@ const CardProject = ({ project, onDelete }) => {
                       </li>
 
                       <li>
-                        <DeleteTeamProject
-                          project={item}
-                          onDelete={onDelete}
-                        />
+                        <DeleteTeamProject project={item} onDelete={onDelete} />
                       </li>
                     </ul>
                   </div>
@@ -95,83 +120,45 @@ const CardProject = ({ project, onDelete }) => {
             </div>
           </div>
 
-          <div className="relative flex items-start gap-0 mx-0 mt-4 mb-2 min-h-20 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
-            <ProjectAvatar cardName={item} />
+          <div className="relative flex  gap-0 mx-0 mt-4 mb-1 min-h-20 overflow-hidden text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
             <div className="flex w-full flex-col gap-0.5 pr-3">
-              <NavLink to={`/du-an-nhom/${ALL_TASK.replace(":id", item.id)}`}>
-                <h5 className="line-clamp-2 text-lg antialiased font-semibold leading-snug tracking-normal text-blueLevel5 hover:text-blueLevel4">
-                  {item.name}
-                </h5>
-              </NavLink>
+              <div className="flex items-center ">
+                <ProjectAvatar cardName={item} />
+                <NavLink to={`/du-an-nhom/${ALL_TASK.replace(":id", item.id)}`}>
+                  <h5 className="line-clamp-2 text-lg antialiased font-semibold leading-snug tracking-normal text-blueLevel5 hover:text-blueLevel4">
+                    {item.name}
+                  </h5>
+                </NavLink>
+              </div>
 
-              <p className="block text-base antialiased font-light leading-relaxed text-blue-gray-900">
-                {item.nameLeader}
-                {/* {item.typeOfSpace} */}
-              </p>
+              <div className="flex flex-col px-3 py-2 gap-1">
+                <p className="flex items-center text-sm antialiased font-light leading-relaxed text-blue-gray-900">
+                  <PiMedal size={15} className="mr-1" />
+                  Leader:{" "}
+                  <span className="font-medium ml-2">{item.nameLeader}</span>
+                </p>
+
+                <p className="text-sm flex items-center font-light text-blue-gray-900">
+                  <BsTags size={15} className="mr-1" />
+                  Danh mục:{" "}
+                  <span className="font-medium ml-2">
+                    {item.typeOfSpace}
+                  </span>{" "}
+                </p>
+
+              </div>
             </div>
           </div>
-
-          <div className="px-3 line-clamp-1 text-sm mb-2 italic">
-            {item.description}
-          </div>
-
-          
         </div>
       ))}
 
-      <Transition show={showModal} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={handleCloseModal}>
-          <TransitionChild
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </TransitionChild>
-
-          <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-              <TransitionChild
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              >
-                <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                  <div>
-                    <div className="mt-3 text-center sm:mt-5">
-                      <DialogTitle as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                        Share Project URL
-                      </DialogTitle>
-                      <div className="mt-2 space-y-3">
-                        <input
-                          type="text"
-                          className="w-full border border-gray-300 rounded-md p-2"
-                          value={urlToShare}
-                          readOnly
-                        />
-                        <button
-                          className="mt-12 inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                          onClick={handleCopy}
-                        >
-                          {copied ? "Copied!" : "Copy"}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </DialogPanel>
-              </TransitionChild>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+      <ShareModal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+        urlToShare={urlToShare}
+        handleCopy={handleCopy}
+        copied={copied}
+      />
     </>
   );
 };

@@ -6,52 +6,11 @@ import Stepper from "./stepper/Stepper";
 import ThirdStep from "./stepper/steps/ThirdStep";
 import { multiStepContext } from "./stepper/StepperContext";
 import api from "../../../../config/axios";
-import { alert } from "../../../../components/Alert/Alert"
+import { alert } from "../../../../components/Alert/Alert";
 
 function CreateTeam() {
   const { currentStep, finalData } = useContext(multiStepContext);
 
-  // const submitHandler = async (data) => {
-  //   setLoading(true)
-  //   try {
-  //     const payload = {
-  //       name: data.name,
-  //       description: data.description,
-  //       status: 1,
-  //       isGroup: true,
-  //     };
-
-  //     const response = await api.post(`/api/Project/CreateProject`, payload);
-  //     console.log("Create task response:", response.data); 
-
-  //     if (response.status === 200) {
-        
-  //       setOpen(false);
-  //       alert.alertSuccessWithTime(
-  //         "Tạo Task Thành Công",
-  //         "",
-  //         2000,
-  //         "30",
-  //         () => {}
-  //       );
-        
-  //     } else {
-  //       console.error("Failed to create task", response.data);
-  //       alert.alertFailed(
-  //         "Tạo Task Thất Bại",
-  //         "Vui lòng thử lại",
-  //         2000,
-  //         "30",
-  //         () => {}
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating task", error);
-  //   }
-  //   setLoading(false)
-  // };
-  
-  
   const steps = ["Thông tin dự án", "Thành viên", "Hoàn tất"];
 
   const displaySteps = (step) => {
@@ -67,12 +26,11 @@ function CreateTeam() {
     }
   };
 
-
   return (
     <>
       <div className="flex">
         <TeamSidebar />
-        <div className=" mt-12 mx-12 md:mx-48 wrapper-body">
+        <div className=" mt-12 mx-12 md:mx-24 md:px-24 wrapper-body">
           <div>
             <p className="pb-2 text-xl font-semibold border-b border-neutral-900">
               Hãy xây dựng một Không gian làm việc

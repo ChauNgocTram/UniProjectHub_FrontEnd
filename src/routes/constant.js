@@ -8,6 +8,7 @@ export const PROFILE = 'quan-ly-ho-so/:activepage'
 
 // Dự án Teams
 export const ALL_TEAM_PROJECTS = 'du-an-nhom'
+export const SAVED_TEAM_PROJECT = 'du-an-da-luu'
 export const CREATE_TEAM_PROJECT = 'tao-du-an-nhom'
 export const EDIT_TEAM_PROJECT = 'chinh-sua-du-an-nhom/:id'
 
