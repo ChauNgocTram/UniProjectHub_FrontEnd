@@ -63,9 +63,9 @@ function Register() {
             <div className="h-[75%] w-full m-auto flex justify-between rounded-xl p-0">
               <div className="w-1/2 flex items-center justify-center">
                 <div className="w-full px-4">
-                  <div className="flex justify-center mb-6">
+                  <NavLink className="flex justify-center mb-6">
                     <img src={logo} alt="" width={100} />
-                  </div>
+                  </NavLink>
 
                   <Form
                     {...formItemLayout}
