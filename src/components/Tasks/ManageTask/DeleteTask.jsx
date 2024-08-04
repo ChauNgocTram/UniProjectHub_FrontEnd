@@ -11,22 +11,20 @@ function DeleteTask({ task, onDelete }) {
   const handleDeleteTask = async () => {
     const result = await showConfirmationDialog({
       title: "Bạn muốn xoá task này?",
-      text: "Task sẽ được xoá khỏi dự án của bạn",
+      html: `<strong>${task.taskName}</strong> sẽ được xoá khỏi dự án của bạn`,
       confirmButtonText: "Xác nhận",
       cancelButtonText: "Huỷ",
     });
-
-
+  
     if (result.isConfirmed) {
       mutation.mutate(task.id, {
         onSuccess: () => {
           if (onDelete) onDelete(task.id);
         }
       });
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      alert.alertFailedWithTime("Xoá task thất bại", "", 2000, "25", () => {});
     }
   };
+  
 
   return (
     <button

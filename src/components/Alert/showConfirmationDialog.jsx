@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 export const showConfirmationDialog = async ({
   title = "Are you sure?",
-  text = "",
+  html  = "",
   confirmButtonText = "Yes, delete it!",
   cancelButtonText = "Cancel",
   confirmButtonColor = "#3085d6",
@@ -18,7 +18,7 @@ export const showConfirmationDialog = async ({
 
   const result = await swalWithBootstrapButtons.fire({
     title,
-    text,
+    html ,
     icon: "warning",
     showCancelButton: true,
     confirmButtonText,

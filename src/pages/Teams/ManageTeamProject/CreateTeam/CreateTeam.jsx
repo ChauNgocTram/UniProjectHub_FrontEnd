@@ -5,8 +5,6 @@ import SecondStep from "./stepper/steps/SecondStep";
 import Stepper from "./stepper/Stepper";
 import ThirdStep from "./stepper/steps/ThirdStep";
 import { multiStepContext } from "./stepper/StepperContext";
-import api from "../../../../config/axios";
-import { alert } from "../../../../components/Alert/Alert";
 
 function CreateTeam() {
   const { currentStep, finalData } = useContext(multiStepContext);
@@ -30,7 +28,7 @@ function CreateTeam() {
     <>
       <div className="flex">
         <TeamSidebar />
-        <div className=" mt-12 mx-12 md:mx-24 md:px-24 wrapper-body">
+        <div className=" mt-4 mx-12 md:mx-24 md:px-24 wrapper-body">
           <div>
             <p className="pb-2 text-xl font-semibold border-b border-neutral-900">
               Hãy xây dựng một Không gian làm việc

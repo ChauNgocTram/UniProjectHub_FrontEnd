@@ -17,6 +17,21 @@ export const useTasksByProjectId = (projectId) => {
   });
 };
 
+// ======get by id
+const getTaskById = async (taskId) => {
+  const { data } = await api.get(
+    `${API_ENDPOINTS.TASK}/GetTaskAsync/${taskId}`
+  );
+  return data;
+};
+
+export const useTaskById = (taskId) => {
+  return useQuery({
+    queryKey: ["task", taskId],
+    queryFn: () => getTaskById(taskId),
+  });
+};
+
 // ============== create
 const createTask = async (projectId, payload) => {
   const { data } = await api.post(
@@ -32,10 +47,60 @@ export const useCreateTask = () => {
   return useMutation({
     mutationFn: ({ projectId, payload }) => createTask(projectId, payload),
     onSuccess: () => {
+      alert.alertSuccessWithTime(
+        "Tạo Task Thành Công",
+        "",
+        2000,
+        "30",
+        () => {}
+      );
       queryClient.invalidateQueries(["tasks"]);
     },
     onError: (error) => {
+      alert.alertFailed(
+        "Tạo Task Thất Bại",
+        "Vui lòng thử lại",
+        2000,
+        "30",
+        () => {}
+      );
       console.error("Error creating task:", error);
+    },
+  });
+};
+
+// ================ update
+const updateTask = async (taskId, payload) => {
+  const { data } = await api.put(
+    `${API_ENDPOINTS.TASK}/UpdateTask/${taskId}`,
+    payload
+  );
+  return data;
+};
+
+export const useUpdateTask = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ taskId, payload }) => updateTask(taskId, payload),
+    onSuccess: () => {
+      alert.alertSuccessWithTime(
+        "Cập nhật task thành công!",
+        "",
+        2000,
+        "25",
+        () => {}
+      );
+      queryClient.invalidateQueries(["tasks"]);
+    },
+    onError: (error) => {
+      alert.alertFailedWithTime(
+        "Failed to update",
+        error.message,
+        2000,
+        "25",
+        () => {}
+      );
     },
   });
 };

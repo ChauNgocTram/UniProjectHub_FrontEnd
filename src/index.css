@@ -58,11 +58,23 @@
 .inner-box {
   position: absolute;
   width: calc(100% - 4.1rem);
-  height: auto !important;
+  height: calc(100% - 4.1rem);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media (max-width: 600px) {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 }
+
+.inner-log-in {
+  @media (max-width: 1024px) {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+}
+
 
 .videoDiv {
   position: relative;

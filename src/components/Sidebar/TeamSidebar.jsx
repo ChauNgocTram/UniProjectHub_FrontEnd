@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { IoFileTrayStackedOutline } from "react-icons/io5";
-import { BsBookmarks } from "react-icons/bs";
-import { ALL_TEAM_PROJECTS, GROUP_CHAT, SAVED_TEAM_PROJECT } from "../../routes/constant";
+import { BsBookmarks, BsChatDots } from "react-icons/bs";
+import { IoAdd } from "react-icons/io5";
+import { ALL_TEAM_PROJECTS, CREATE_TEAM_PROJECT, GROUP_CHAT, SAVED_TEAM_PROJECT } from "../../routes/constant";
 
 function TeamSidebar() {
   const location = useLocation();
@@ -19,11 +20,11 @@ function TeamSidebar() {
       path: `/${SAVED_TEAM_PROJECT}`,
       title: "Dự án đã lưu",
     },
-    // {
-    //   icon: <BsChatDots />,
-    //   path: `/${GROUP_CHAT}`,
-    //   title: "Chat",
-    // },
+    {
+      icon: <IoAdd />,
+      path: `/${CREATE_TEAM_PROJECT}`,
+      title: "Tạo dự án",
+    },
   ];
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function TeamSidebar() {
   }, [location.pathname, Menus]);
 
   return (
-    <div className="flex bg-white w-[250px] h-screen border-r-2 border-neutral-200 -z-10">
+    <div className="flex bg-white w-[250px] h-screen border-r-2 border-neutral-200 pt-2">
       <div className="px-4">
         <ul className="">
           {Menus.map((Menu, index) => (
@@ -48,7 +49,7 @@ function TeamSidebar() {
               }
               onClick={() => setActiveIndex(index)}
             >
-              <span style={{ fontSize: "25px" }}>{Menu.icon}</span>
+              <span style={{ fontSize: "22px" }}>{Menu.icon}</span>
               <span className="">{Menu.title}</span>
             </NavLink>
           ))}

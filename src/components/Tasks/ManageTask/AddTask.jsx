@@ -44,23 +44,7 @@ function AddTask({ open, setOpen, projectId }) {
         {
           onSuccess: () => {
             setOpen(false);
-            alert.alertSuccessWithTime(
-              "Tạo Task Thành Công",
-              "",
-              2000,
-              "30",
-              () => {}
-            );
             reset();
-          },
-          onError: () => {
-            alert.alertFailed(
-              "Tạo Task Thất Bại",
-              "Vui lòng thử lại",
-              2000,
-              "30",
-              () => {}
-            );
           },
         }
       );

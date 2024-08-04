@@ -18,13 +18,12 @@ import { PRIOTITYSTYELS, getInitials } from "../../../../../utils";
 import Button from "../../../../../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "../../../../../components/Tasks/ManageTask/AddSubTask";
-// import Activities from "./Activities";
 import UploadFile from "../../../../../components/FileUpload/UploadFile";
 import FileUpload from "../../../../../components/FileUpload/FileUpload";
 import ManageFile from "./ManageFile";
 import api from "../../../../../config/axios";
 import Loading from "../../../../../components/Loading/Loading";
-import { format, parseISO } from "date-fns"; // Cập nhật import từ date-fns
+import { format, parseISO } from "date-fns"; 
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -40,7 +39,6 @@ const bgColor = {
 
 const TABS = [
   { title: "Chi tiết nhiệm vụ ", icon: <FaTasks /> },
-  { title: "Bình luận", icon: <MdOutlineInsertComment /> },
   { title: "File", icon: <MdAttachFile /> },
 ];
 
@@ -272,8 +270,7 @@ const TaskDetails = () => {
               </div>
             </>
           )}
-          {/* {selected === 1 && <Activities />} */}
-          {selected === 2 && <ManageFile />}
+          {selected === 1 && <ManageFile />}
         </TabsFilter>
         <AddSubTask open={open} setOpen={setOpen} />
       </div>

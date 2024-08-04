@@ -115,15 +115,14 @@ export const alert = {
       html: `${html}`,
     });
   },
-  alertInfoNotiForTrainee: function (title, html, callback) {
+  alertInfoNotiForTrainee: function (title, html,time, width) {
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
-      width: "35rem",
-      padding: "2rem",
+      width: `${width.toString()}rem`,
       background: "#e8ffff",
       showConfirmButton: false,
-      timer: 5000,
+      timer: time,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);

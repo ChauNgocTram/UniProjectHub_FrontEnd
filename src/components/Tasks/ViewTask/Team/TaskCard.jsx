@@ -11,8 +11,7 @@ import { BiMessageAltDetail, BiCalendar } from "react-icons/bi";
 import { FaList } from "react-icons/fa";
 import { RxCounterClockwiseClock } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
-import { BsDot } from "react-icons/bs";
-import { format } from "date-fns";
+import { FiUser } from "react-icons/fi";
 import { useSubTasksByTaskId } from "../../../../api/subTaskApi";
 import UserInfo from "../../../UserInfo/UserInfo";
 import TaskDialog from "../../../Dialog/TaskDialog";
@@ -21,6 +20,7 @@ import TaskStatusBadge from "../../../Status/TaskStatusBadge";
 import FormattedDate from "../../../FormattedDate";
 import { PRIOTITYSTYELS } from "../../../../utils";
 import { TASK_DETAILS } from "../../../../routes/constant";
+import { useUserById } from "../../../../api/userApi";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -44,6 +44,7 @@ const getPriorityLabel = (rate) => {
 const TaskCard = ({ task }) => {
   const [open, setOpen] = useState(false);
   const { data: subTasks, isLoading, isError } = useSubTasksByTaskId(task.id);
+  const { data: userDetail } = useUserById(task.ownerId);
 
   return (
     <>
@@ -53,7 +54,12 @@ const TaskCard = ({ task }) => {
           <TaskDialog task={task} />
         </div>
 
-        <div className={clsx("flex flex-1 gap-1 items-center text-sm font-medium px-2", PRIOTITYSTYELS[task.rate])}>
+        <div
+          className={clsx(
+            "flex flex-1 gap-1 items-center text-sm font-medium px-2",
+            PRIOTITYSTYELS[task.rate]
+          )}
+        >
           <span className="text-md font-semibold">{ICONS[task.rate]}</span>
           <span className="uppercase">
             {getPriorityLabel(task.rate)} Priority
@@ -69,13 +75,26 @@ const TaskCard = ({ task }) => {
         </div>
 
         <div className="px-3">
-          <div className="flex space-x-2 items-center text-gray-600 my-2">
+          <div className="flex space-x-1 items-center text-gray-600 my-2">
             <BiCalendar />
-            <span className="text-sm"><FormattedDate date={task.startDate} /></span>
+            <span className="text-sm">
+              <FormattedDate date={task.startDate} />
+            </span>
           </div>
-          <div className="flex space-x-2 items-center text-gray-600 mb-2">
+          <div className="flex space-x-1 items-center text-gray-600 mb-2">
             <RxCounterClockwiseClock />
-            <span className="text-sm"><FormattedDate date={task.deadline} /></span>
+            <span className="text-sm">
+              <FormattedDate date={task.deadline} />
+            </span>
+          </div>
+          <div className="flex space-x-1 items-center text-gray-600 mb-2">
+            <FiUser />
+            <span className="text-sm">
+              Tạo bởi:{" "}
+              <span className="text-blueLevel5 font-medium italic">
+                {userDetail?.userName}
+              </span>
+            </span>
           </div>
         </div>
 
@@ -88,13 +107,7 @@ const TaskCard = ({ task }) => {
             </div>
             <div className="flex gap-1 items-center text-sm text-gray-600">
               <FaList />
-              {isLoading ? (
-                <span>Loading...</span>
-              ) : isError ? (
-                <span>Error</span>
-              ) : (
-                <span>{subTasks.length}</span>
-              )}
+              {<span>{subTasks?.length}</span>}
             </div>
           </div>
         </div>

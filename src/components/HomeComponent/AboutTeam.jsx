@@ -1,5 +1,4 @@
 import React from "react";
-import intro from "../../assets/images/intro.jpg";
 
 import { IoMdArrowDropright, IoIosArrowUp } from "react-icons/io";
 

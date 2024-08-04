@@ -76,15 +76,7 @@ function UpdateTask({ open, setOpen, taskId, onTaskAdded }) {
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
-    <TaskForm
-      onSubmit={submitHandler}
-      loading={loading}
-      setOpen={setOpen}
-      stage={stage}
-      setStage={setStage}
-      priority={priority}
-      setPriority={setPriority}
-    />
+    
   </ModalWrapper>
   )
 }

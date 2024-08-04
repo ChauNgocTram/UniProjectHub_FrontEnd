@@ -1,6 +1,4 @@
 import React from "react";
-//import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdOutlineSearch } from "react-icons/md";
@@ -10,7 +8,6 @@ import NotificationPanel from "../Notification";
 import { ALL_TEAM_PROJECTS } from "../../routes/constant";
 
 function CommonHeader() {
-  //const user = useSelector((state) => state?.user?.user);
   return (
     <div className="flex items-center justify-between w-full bg-white p-4 shadow sticky top-0 ">
       <div className="flex items-center justify-center ">
@@ -36,13 +33,13 @@ function CommonHeader() {
           />
         </div>
 
-        <div>
+        {/* <div>
           <NotificationPanel />
-        </div>
+        </div> */}
 
         
-        <div>
-          <UserAvatar />
+        <div className="px-6">
+          <UserAvatar/>
         </div>
       </div>
     </div>

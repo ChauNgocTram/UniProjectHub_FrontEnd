@@ -8,10 +8,10 @@ import api from "../../config/axios";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import { REGISTER_PAGE } from "../../routes/constant";
 import logo from "../../assets/images/logo.png";
-import googleIcon from "../../assets/images/googleIcon.png"
+import googleIcon from "../../assets/images/googleIcon.png";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../../redux/features/userSlice";
-import { auth } from "../../config/firebase"
+import { auth } from "../../config/firebase";
 import { alert } from "../../components/Alert/Alert";
 const provider = new GoogleAuthProvider();
 
@@ -23,7 +23,6 @@ const onFinishFailed = (errorInfo) => {
 };
 
 function Login() {
-
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,8 +34,8 @@ function Login() {
     const token = result.user.accessToken;
     console.log(token);
 
-    const res = await api.post("/api/account/login-google", { token });
-  //  const role = res.data.role;
+    const res = await api.get("/api/account/login-google", { token });
+    //  const role = res.data.role;
 
     console.log(res.data.role);
     localStorage.setItem("token", res.data.token);
@@ -59,18 +58,18 @@ function Login() {
   };
 
   const onFinish = async (value) => {
-    try{
+    try {
       const response = await api.post("/api/account/login", value);
-      console.log(response.data)
+      console.log(response.data);
       if (response.status === 200) {
         const user = response.data;
         console.log(user);
-  
+
         localStorage.setItem("token", user.token);
         localStorage.setItem("userId", user.userId);
-  
+
         dispatch(login(user));
-  
+
         alert.alertSuccessWithTime(
           "Đăng nhập thành công",
           "",
@@ -78,13 +77,13 @@ function Login() {
           "30",
           () => {}
         );
-  
+
         navigate("/");
       }
-    }catch (e) {
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   // useEffect(() => {
   //   console.log(user);
@@ -120,19 +119,27 @@ function Login() {
       () => {}
     );
     navigate("/");
-  }
+  };
 
   return (
     <>
       <div className="bg-mainBg h-screen -mb-14 pb-0">
-        <main className="pt-2">
+        <main className="pt-2 h-screen flex-1">
           <div
-            className="relative w-full max-w-[1020px] h-auto bg-white rounded-[3.3rem] mx-auto mt-12"
+            className="relative md:w-full w-[70%] max-w-[1020px] h-auto bg-white rounded-2xl shadow-xl my-0 mx-auto mt-14"
             style={{ height: "80vh" }}
           >
-            <div className="inner-box flex justify-center items-center">
-              <div className="h-[75%] w-full m-auto flex justify-between rounded-xl p-0">
-                <div className="videoDiv h-[500px] lg:flex md:hidden sm:hidden">
+            <div
+              //  className="relative w-full max-w-[1020px] h-auto bg-white rounded-[3.3rem] mx-auto mt-12"
+              className="absolute  inner-box inner-log-in flex justify-content-center"
+              // style={{ height: "80vh" }}
+            >
+              <div
+                //  className="inner-box flex justify-center items-center"
+                className="h-[75vh] justify-between items-center rounded-xl px-0 pb-6 flex"
+              >
+                {/* <div className="h-[75%] w-full m-auto flex justify-between rounded-xl p-0"> */}
+                <div className="videoDiv h-[500px] flex-1 lg:flex md:hidden sm:hidden">
                   <video
                     className="absolute h-full w-full object-cover top-0 bottom-0 right-0 left-0"
                     src={intro}
@@ -164,8 +171,8 @@ function Login() {
                   </div>
                 </div>
 
-                <div className="w-1/2 flex items-center justify-center">
-                  <div className="w-full px-4">
+                <div className="w-1/2 flex flex-1 items-center justify-center mx-auto">
+                  <div className="md:w-full w-[90%] px-4 mx-auto">
                     <NavLink to="/" className="flex justify-center mb-6">
                       <img src={logo} alt="" width={100} />
                     </NavLink>
@@ -233,33 +240,37 @@ function Login() {
                         </Form.Item>
                       </div>
 
-                      <button
-                      type="submit"
-                    //  onClick={handleClick}
-                        className="bg-black text-white text-lg px-3 py-2 mx-4 w-[430px] rounded-lg tracking-wider
+                      <div className="flex flex-col justify-center mx-auto md:w-full w-[80%]">
+                        <button
+                          type="submit"
+                          //  onClick={handleClick}
+                          className="bg-black text-white text-lg px-3 py-2 mx-auto w-full rounded-lg tracking-wider
                           font-bold focus:outline-none focus:shadow-outline hover:bg-hoverBtn hover:text-black
                           shadow-lg mt-3 "
-                      >
-                        Đăng nhập
-                      </button>
-                      <button onClick={handleLoginGoogle}
-                        className="flex justify-center items-center p-3 mx-4 my-4 w-[430px] shadow-lg border-neutral-300 border-2 focus:shadow-outline rounded-lg"
-                      >
-                        <img src={googleIcon} className="h-[20px] px-2"/>
-                        Sign in with Google
-                      </button>
-
-                      <div className="text-center mt-3">
-                        <NavLink
-                          onClick={handleForgetPassword}
-                          className="mt-3 text-center font-semibold italic"
                         >
-                          Quên mật khẩu?
-                        </NavLink>
+                          Đăng nhập
+                        </button>
+                        <button
+                          onClick={handleLoginGoogle}
+                          className="flex justify-center items-center p-3 mx-auto my-4 md:w-[430px] w-[385px] shadow-lg border-neutral-300 border-2 focus:shadow-outline rounded-lg"
+                        >
+                          <img src={googleIcon} className="h-[20px] px-2" />
+                          Sign in with Google
+                        </button>
+
+                        <div className="text-center mt-3">
+                          <NavLink
+                            onClick={handleForgetPassword}
+                            className="mt-3 text-center font-semibold italic"
+                          >
+                            Quên mật khẩu?
+                          </NavLink>
+                        </div>
                       </div>
                     </Form>
                   </div>
                 </div>
+                {/* </div> */}
               </div>
             </div>
           </div>

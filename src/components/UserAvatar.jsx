@@ -1,29 +1,26 @@
-import React from "react";
-import {
-  Menu,
-  MenuButton,
-  MenuItems,
-  MenuItem,
-  Transition,
-} from "@headlessui/react";
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
+import { Menu, MenuButton, MenuItems, MenuItem, Transition } from "@headlessui/react";
 import { IoLogOutOutline } from "react-icons/io5";
 import { AiOutlineUser } from "react-icons/ai";
-//import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-//import { getInitials } from "../utils";
-
-import userDefault from "../assets/images/userDefault.png";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../redux/features/userSlice";
+import { useUserById } from "../api/userApi";
+import { getInitials } from "../utils";
 
 const UserAvatar = () => {
-  const [open, setOpen] = useState(false);
-  const [openPassword, setOpenPassword] = useState(false);
-  //const { user } = useSelector((state) => state.auth);
-  // const dispatch = useDispatch();
+ 
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const { data: userDetail, isLoading: userLoading, isError: userError } = useUserById(user.userId);
+ 
   const navigate = useNavigate();
 
   const logoutHandler = () => {
-    console.log("logout");
+    localStorage.removeItem("token");
+    dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -31,13 +28,13 @@ const UserAvatar = () => {
       <div>
         <Menu as="div" className="relative inline-block text-left">
           <div className="flex items-center space-x-2">
-            <MenuButton className="w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full">
-              {/* <span className='text-white font-semibold'>
-                 {getInitials(user?.name)}
-              </span> */}
-              <img src={userDefault} alt="avatar" />
+            <MenuButton className="w-10 h-10 2xl:w-11 2xl:h-11 items-center justify-center rounded-full bg-blueLevel5">
+              <span className='text-white font-semibold'>
+                {getInitials(userDetail?.userName)}
+              </span>
+              {/* <img src={userDefault} alt="avatar" /> */}
             </MenuButton>
-            <span>Châu Ngọc Trâm</span>
+            <span>{userDetail?.userName}</span>
           </div>
 
           <Transition
@@ -64,7 +61,7 @@ const UserAvatar = () => {
                 <MenuItem>
                   <button
                     onClick={logoutHandler}
-                    className={`text-red-600 group flex w-full items-center rounded-md px-2 py-2 text-base hover:bg-slate-100`}
+                    className="text-red-600 group flex w-full items-center rounded-md px-2 py-2 text-base hover:bg-slate-100"
                   >
                     <IoLogOutOutline className="mr-2" aria-hidden="true" />
                     Đăng xuất

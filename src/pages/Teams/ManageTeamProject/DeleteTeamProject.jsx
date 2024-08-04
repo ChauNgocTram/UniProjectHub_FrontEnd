@@ -8,7 +8,7 @@ function DeleteTeamProject({ project, onDelete }) {
   const handleDeleteProject = async () => {
     const result = await showConfirmationDialog({
       title: "Bạn muốn xoá dự án?",
-      text: `"${project.name}" sẽ bị xoá khỏi không gian làm việc của bạn`,
+      html: `<strong>${project.name}</strong> sẽ bị xoá khỏi không gian làm việc của bạn`,
       confirmButtonText: "Xác nhận",
       cancelButtonText: "Huỷ",
     });

@@ -57,8 +57,9 @@ const TeacherSchedule = lazy(() => import("../pages/TeacherSchedule/TeacherSched
 const SavedProjectsPage = lazy(() => import("../pages/Teams/TeamProjects/SaveProjectPage"));
 
 import PrivateRoute from "./PrivateRoute";
+import Loading from "../components/Loading/Loading";
 const AppRouter = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<Loading/>}>
     <Outlet />
   </Suspense>
 );

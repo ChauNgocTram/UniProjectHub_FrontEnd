@@ -1,5 +1,4 @@
 import React from "react";
-import intro from "../../assets/images/intro.jpg";
 import { IoMdArrowDropright, IoIosArrowUp } from "react-icons/io";
 
 function Intro() {
@@ -8,13 +7,6 @@ function Intro() {
       <div className="relative overflow-hidden bg-[#f1fdfe] lg:py-5 py-8">
         <div className="xl:w-[1200px] mx-auto px-4 pb-2">
           <section className="lg:flex justify-between items-center relative my-4 p-6 gap-8">
-            {/* <div className="flex justify-center lg:w-1/2">
-              <img
-                src={intro}
-                alt=""
-                className="lg:w-[420px] w-80 rounded-tl-[100px] rounded-br-[100px] "
-              />
-            </div> */}
 
             <div className=" lg:py-0 py-10 mr-24 sm:mx-auto px-12 my-8">
               <p className="text-black">UNIPROJECTHUB</p>
