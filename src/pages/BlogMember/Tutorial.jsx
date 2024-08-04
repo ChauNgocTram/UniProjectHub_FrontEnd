@@ -2,7 +2,6 @@ import React from 'react'
 
 import step1 from '../../assets/images/step1.png'
 import step2 from '../../assets/images/step2.png'
-import step3 from '../../assets/images/step3.png'
 import Footer from '../../components/Footer/Footer'
 
 function Tutorial() {
@@ -16,9 +15,6 @@ function Tutorial() {
             <div className='pl-14'>
                 <img src={step2} className=' px-24 pt-8' />
             </div>
-
-           
-                {/* <img src={step3} className=' px-24 pt-8' /> */}
             
     </div>
     <Footer/>
