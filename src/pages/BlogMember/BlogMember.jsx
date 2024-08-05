@@ -15,13 +15,16 @@ function BlogMember() {
   if (isLoadingBlogs) return <div>Loading...</div>;
   if (errorBlogs) return <div>Error: {errorBlogs.message}</div>;
 
+  // Sắp xếp các blog từ mới nhất đến cũ nhất
+  const sortedBlogs = blogs.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
     <>
       <div className="flex w-full">
         <BlogSidebar />
 
         <div className="flex flex-col w-full mr-10">
-          <div className="bg-slate-100 shadow-md rounded-lg flex justify-between items-center w-full my-10 px-6 py-3">
+          <div className="bg-slate-100 shadow-md rounded-lg flex justify-between items-center w-full my-6 px-6 py-2">
             <span className="font-semibold text-xl text-blueLevel4">
               UniProjectHub
             </span>
@@ -41,21 +44,23 @@ function BlogMember() {
             </div>
           </div>
 
-          {blogs.map((blog) => (
-            <div
-              key={blog.id}
-              className="flex items-center justify-start border-2 rounded-lg border-neutral-200 mb-5"
-            >
-              <BlogUserInfo />
-              <div className="flex flex-col w-full">
-                <BlogDetails blog={blog} />
+          <div className="overflow-y-auto h-[500px] scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent flex flex-col items-center justify-start">
+            {sortedBlogs.map((blog) => (
+              <div
+                key={blog.id}
+                className="flex items-center w-full justify-start border-2 rounded-lg border-neutral-200 mb-5"
+              >
+                <BlogUserInfo blog={blog} />
+                <div className="flex flex-col w-full">
+                  <BlogDetails blog={blog} />
 
-                <CommentsSection blogId={blog.id} />
-                
-                <AddComment blogId={blog.id} />
+                  <CommentsSection blogId={blog.id} />
+
+                  <AddComment blogId={blog.id} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </>

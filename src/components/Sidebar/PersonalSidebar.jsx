@@ -1,53 +1,57 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { AiOutlineFileSearch, AiOutlineIdcard } from "react-icons/ai";
-import {
-  ALL_PERSONAL_PROJECTS,
-  CREATE_PERSONAL_PROJECT,
-} from "../../routes/constant";
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { IoFileTrayStackedOutline } from "react-icons/io5";
+import { BsBookmarks, BsChatDots } from "react-icons/bs";
+import { IoAdd } from "react-icons/io5";
+import { ALL_PERSONAL_PROJECTS, CREATE_PERSONAL_PROJECT,  } from "../../routes/constant";
 
-function PersonalSidebar() {
+import backlog from "../../assets/images/backlog.png";
+import add from "../../assets/images/add.png";
+
+function PersonalSideBar() {
+  const location = useLocation();
+  const [activeIndex, setActiveIndex] = useState(null);
+
   const Menus = [
     {
-      title: "Dự án",
-      icon: <AiOutlineFileSearch />,
+      //icon: <IoFileTrayStackedOutline />,
+      image: backlog,
       path: `/${ALL_PERSONAL_PROJECTS}`,
+      title: "Dự án của tôi",
     },
     {
-      title: "Tạo dự án",
-      icon: <AiOutlineIdcard />,
+     // icon: <IoAdd />,
+      image: add,
       path: `/${CREATE_PERSONAL_PROJECT}`,
+      title: "Tạo dự án",
     },
   ];
+
+  useEffect(() => {
+    const activePath = location.pathname;
+    const index = Menus.findIndex(menu => menu.path === activePath);
+    setActiveIndex(index);
+  }, [location.pathname, Menus]);
+
   return (
-    <div className="flex pr-4">
-      <div
-        className={` ${
-          open ? "w-64" : "w-20 "
-        } bg-white h-auto p-5 pt-7 relative duration-300 `}
-      >
-        <ul className="pr-2 border-r-2 border-neutral-200">
+    <div className="flex bg-white w-[260px] h-screen border-r-2 border-neutral-200 pt-2">
+      <div className="px-4">
+        <ul className="">
           {Menus.map((Menu, index) => (
             <NavLink
               key={index}
               to={Menu.path}
-              className="text-decoration-none"
+              className={
+                "flex -z-10 mb-2 gap-1 space-x-1 w-full px-5 py-2 rounded " +
+                (activeIndex === index
+                  ? "bg-blueLevel1 text-blueLevel5 font-bold"
+                  : "text-gray-800 hover:bg-slate-200 ")
+              }
+              onClick={() => setActiveIndex(index)}
             >
-              <li
-                key={index}
-                className={`flex my-2 rounded-md p-2 cursor-pointer hover:bg-neutral-200 text-black hover:text-mainColor text-sm items-center gap-x-4 
-            ${Menu.gap ? "mt-9" : "mt-2"} ${
-                  index === 0 && "bg-mainBg text-black"
-                } `}
-              >
-                <span style={{ fontSize: "24px" }}>{Menu.icon}</span>
-
-                <span
-                  className={`${!open && "hidden"} origin-left duration-200`}
-                >
-                  {Menu.title}
-                </span>
-              </li>
+              {/* <span style={{ fontSize: "22px" }}>{Menu.icon}</span> */}
+              <img src={Menu.image} alt="" width={25} height={10} />
+              <span className="">{Menu.title}</span>
             </NavLink>
           ))}
         </ul>
@@ -56,4 +60,4 @@ function PersonalSidebar() {
   );
 }
 
-export default PersonalSidebar;
+export default PersonalSideBar;

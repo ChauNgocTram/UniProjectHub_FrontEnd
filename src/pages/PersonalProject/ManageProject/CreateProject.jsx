@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 import { alert } from "../../../components/Alert/Alert";
 import { ALL_PERSONAL_PROJECTS } from "../../../routes/constant";
-import { useCreateGroupProject } from "../../../api/projectApi"; 
+import { useCreateGroupProject } from "../../../api/projectApi";
 import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
@@ -63,9 +63,9 @@ function CreateProject() {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex mt-10">
         <PersonalSidebar />
-        <div className="mt-12 mx-12 md:mx-48 wrapper-body">
+        <div className=" mt-4 mx-12 md:mx-24 md:px-24 wrapper-body">
           <div>
             <p className="pb-2 text-xl font-semibold border-b border-neutral-900">
               Hãy xây dựng một Không gian làm việc
@@ -91,6 +91,10 @@ function CreateProject() {
                     required: true,
                     message: "Vui lòng nhập tên không gian làm việc",
                   },
+                  {
+                    min: 10,
+                    message: "Tên không gian làm việc phải ít nhất 10 kí tự",
+                  },
                 ]}
               >
                 <Input
@@ -104,33 +108,36 @@ function CreateProject() {
                 label={
                   <span className="flex items-center">
                     <FaAsterisk size={6} className="text-red-600 px-1" />
-                    Loại không gian làm việc
+                    Danh mục
                   </span>
                 }
                 name="typeOfSpace"
                 rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng chọn loại không gian làm việc",
-                  },
+                  { required: true, message: "Vui lòng nhập tên danh mục" },
                 ]}
                 style={{ width: "300px" }}
               >
-                <Select
-                  placeholder="Chọn..."
+                <Input
+                  placeholder="vd: thiết kế, marketing,..."
                   value={formData.typeOfSpace}
-                  onChange={(value) => handleSelectChange(value, "typeOfSpace")}
-                >
-                  <Option value={0}>Nhân sự</Option>
-                  <Option value={1}>Marketing</Option>
-                  <Option value={2}>Giáo dục</Option>
-                </Select>
+                  onChange={(e) => handleInputChange(e, "typeOfSpace")}
+                />
               </Form.Item>
 
-              <Form.Item label="Mô tả không gian làm việc" name="description">
+              <Form.Item
+                label="Mô tả không gian làm việc"
+                name="description"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng mô tả không gian làm việc",
+                  },
+                  { min: 10, message: "Mô tả phải tối thiểu 10 kí tự" },
+                ]}
+              >
                 <TextArea
                   rows={4}
-                  placeholder="Nhóm của chúng tôi tổ chức mọi thứ ở đây..."
+                  placeholder="Dự án của tôi tổ chức mọi thứ ở đây..."
                   value={formData.description}
                   onChange={(e) => handleInputChange(e, "description")}
                 />

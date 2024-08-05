@@ -41,9 +41,9 @@ function AllTeamProject() {
   ];
 
   return (
-    <div className="flex ">
+    <div className="flex mt-10">
       <TeamSidebar />
-      <div className="wrapper-body w-full mt-8">
+      <div className="wrapper-body w-full mt-2">
         <SearchBar />
         {sortedProjects.length > 0 ? (
           <>

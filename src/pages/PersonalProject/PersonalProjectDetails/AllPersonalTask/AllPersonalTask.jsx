@@ -8,6 +8,8 @@ import Button from "../../../../components/Button";
 import PersonalListView from "../../../../components/Tasks/ViewTask/Personal/PersonalListView";
 import PersonalBoardView from "../../../../components/Tasks/ViewTask/Personal/PersonalBoardView"
 import AddPersonalTask from "../../../../components/Tasks/ManageTask/AddPersonalTask";
+import { useParams } from "react-router-dom";
+import { useTasksByProjectId } from "../../../../api/taskApi";
 
 const TABS = [
   { title: "Bảng", icon: <BsGrid /> },
@@ -20,7 +22,8 @@ const TASK_TYPE = {
   completed: "bg-green-600",
 };
 function AllPersonalTask() {
-   //const params = useParams();
+  const { id: projectId } = useParams();
+   const { data: allTask , isLoading, error } = useTasksByProjectId(projectId);
 
    const [selected, setSelected] = useState(0);
    const [open, setOpen] = useState(false);
@@ -43,12 +46,10 @@ function AllPersonalTask() {
 
       <Tabs tabs={TABS} setSelected={setSelected}>
         {selected !== 1 ? (
-          // <BoardView tasks={tasks} />
-          <PersonalBoardView />
+          <PersonalBoardView tasks={allTask}/>
         ) : (
           <div className="w-full">
-            {/* <ListView tasks={tasks} /> */}
-            <PersonalListView />
+            <PersonalListView tasks={allTask}/>
           </div>
         )}
       </Tabs>

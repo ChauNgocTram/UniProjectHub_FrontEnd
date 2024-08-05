@@ -17,9 +17,10 @@ function ProjectAvatar({ cardName }) {
               <img
                 src={cardName.img}
                 alt=""
-                className="relative inline-block h-[50px] w-[50px] !rounded-full object-cover object-center"
+                className="relative inline-block w-12 h-12 object-cover object-center"
               />
             ) : (
+              
               <span className="text-xl font-semibold">
                 {getInitials(cardName.name)}
               </span>

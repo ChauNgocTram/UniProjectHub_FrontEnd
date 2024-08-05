@@ -50,7 +50,7 @@ function Schedule() {
 
   return (
     <>
-      <div className="flex justify-between mt-28 mb-1 mr-36 pr-4">
+      <div className="flex justify-between mt-10 mb-1 mr-36 pr-4">
         <div className="flex items-center gap-3 ml-28 text-lg font-semibold text-blueLevel5 uppercase">
           <RiCalendarScheduleLine size={30} />
           Schedule

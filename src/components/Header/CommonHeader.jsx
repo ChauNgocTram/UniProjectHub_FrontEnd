@@ -9,7 +9,7 @@ import { ALL_TEAM_PROJECTS } from "../../routes/constant";
 
 function CommonHeader() {
   return (
-    <div className="flex items-center justify-between w-full bg-white p-4 shadow sticky top-0 ">
+    <div className="flex items-center justify-between w-full bg-white p-4 shadow sticky top-0 z-10">
       <div className="flex items-center justify-center ">
         <div
          // to={`/${ALL_TEAM_PROJECTS}`}

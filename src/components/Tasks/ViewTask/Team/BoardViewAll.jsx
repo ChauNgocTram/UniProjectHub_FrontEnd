@@ -17,7 +17,6 @@ const BoardViewAll = ({ tasks }) => {
           key={task.id}
           className={clsx("rounded-lg h-fit p-4", BG_TASK_CARD[task.status])}
         >
-
           <TaskCard task={task} />
         </div>
       ))}

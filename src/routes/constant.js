@@ -18,7 +18,7 @@ export const TASK_INPROGRESS = 'in-progress/:id'
 export const TASK_COMPLETED = 'completed/:id'
 export const TASK_PENDING = 'pending/:id'
 
-export const TASK_DETAILS = 'nhiem-vu/chi-tiet/:id'
+export const TASK_DETAILS = 'chi-tiet/:id'
 
 export const MEMBERS = 'thanh-vien/:id'
 
@@ -29,7 +29,7 @@ export const ALL_PERSONAL_PROJECTS = 'du-an-ca-nhan'
 export const CREATE_PERSONAL_PROJECT = 'tao-du-an-ca-nhan'
 export const EDIT_PERSONAL_PROJECT = 'chinh-sua-du-an-cua-ban/:id'
 export const ALL_PERSONAL_TASK = 'tat-ca-nhiem-vu/:id'
-export const PERSONAL_TASK_DETAILS = 'chi-tiet-nhiem-vu'
+export const PERSONAL_TASK_DETAILS = 'chi-tiet-nhiem-vu/:id'
 
 // Dự thính lớp học
 export const SCHEDULE = 'schedule'

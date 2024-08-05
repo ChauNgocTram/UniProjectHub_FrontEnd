@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/features/userSlice';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { BLOG_MEMBER } from '../../routes/constant';
-import api from '../../config/axios';
+import Select from 'react-select'; 
+import { useGetAllCategory, useCreateBlog } from '../../api/blogApi';
 
 function CreateBlog() {
+  const navigate = useNavigate()
   const user = useSelector(selectUser);
   const ownerId = user.userId;
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState(0);
-  const [categoryID, setCategoryID] = useState(0);
+  const [categoryID, setCategoryID] = useState(null); 
 
-  const handleSubmit = async (event) => {
+  const { data: categories, isLoading, isError } = useGetAllCategory();
+  const { mutate: createBlog } = useCreateBlog();
+
+  const categoryOptions = categories?.map(category => ({
+    value: category.id,
+    label: category.name,
+  })) || [];
+
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     const dateCreated = new Date().toISOString();
@@ -28,16 +37,18 @@ function CreateBlog() {
       dateCreated,
     };
 
-    try {
-      const response = await api.post(`/api/Blog/CreateBlogAsync`, newBlog);
-      console.log('Blog created successfully:', response.data);
-    } catch (error) {
-      console.error('Error creating blog:', error);
-    }
+    createBlog(newBlog, {
+      onSuccess: () => {
+        navigate(`/${BLOG_MEMBER}`)
+      },
+      onError: (error) => {
+        console.error('Error creating blog:', error);
+      },
+    });
   };
 
   return (
-    <div className=" mx-12 p-4">
+    <div className="mx-12 p-4">
       <h1 className="text-2xl font-bold mb-4">Create Blog</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -65,41 +76,32 @@ function CreateBlog() {
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
           />
         </div>
-        {/* <div>
-          <label htmlFor="status" className="block text-sm font-medium text-gray-700">
-            Status
-          </label>
-          <select
-            id="status"
-            value={status}
-            onChange={(e) => setStatus(parseInt(e.target.value))}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          >
-            <option value={0}>Draft</option>
-            <option value={1}>Published</option>
-          </select>
-        </div> */}
-        {/* <div>
+        <div>
           <label htmlFor="categoryID" className="block text-sm font-medium text-gray-700">
-            Category ID
+            Category
           </label>
-          <input
-            type="number"
-            id="categoryID"
-            value={categoryID}
-            onChange={(e) => setCategoryID(parseInt(e.target.value))}
-            required
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-          />
-        </div> */}
+          {isLoading ? (
+            <p>Loading categories...</p>
+          ) : isError ? (
+            <p>Error loading categories</p>
+          ) : (
+            <Select
+              id="categoryID"
+              options={categoryOptions}
+              onChange={(selectedOption) => setCategoryID(selectedOption?.value || null)}
+              value={categoryOptions.find(option => option.value === categoryID)}
+              placeholder="Select a category"
+              isClearable
+            />
+          )}
+        </div>
         <button
-//    type="submit"
+          type="button"
           className="mt-4 bg-neutral-300 text-black p-2 rounded-md mr-2"
         >
-            <NavLink to={`/${BLOG_MEMBER}`}>
+          <NavLink to={`/${BLOG_MEMBER}`}>
             Cancel
-            </NavLink>
-          
+          </NavLink>
         </button>
         <button
           type="submit"

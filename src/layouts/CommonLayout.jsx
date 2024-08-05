@@ -7,11 +7,10 @@ function CommonLayout() {
   return (
     <div>
       <Navbar />
-      <div className="mt-24">
+      <div className="mt-16 flex-1 overflow-y-hidden">
         <Outlet />
       </div>
 
-      
     </div>
   );
 }

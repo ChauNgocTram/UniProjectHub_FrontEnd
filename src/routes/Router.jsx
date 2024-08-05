@@ -95,7 +95,7 @@ const appRoutes = [
       },
       { path: CREATE_PERSONAL_PROJECT, element: <CreateProject /> },
       { path: EDIT_PERSONAL_PROJECT, element: <EditProject /> },
-
+      
       { path: SCHEDULE, element: <Schedule /> },
       { path: TEACHER_SCHEDULE, element: <TeacherSchedule /> },
 
@@ -119,11 +119,16 @@ const appRoutes = [
       { path: TASK_TODO, element: <AllTask /> },
       { path: TASK_INPROGRESS, element: <AllTask /> },
       { path: TASK_COMPLETED, element: <AllTask /> },
-      { path: TASK_PENDING, element: <AllTask /> },
-
+      { path: TASK_PENDING, element: <AllTask /> },      
+      { path: MEMBERS, element: <Members /> },
+    ],
+  },
+  {
+    path: "/nhiem-vu",
+    element: <TaskDetails />,
+    children: [
       { path: TASK_DETAILS, element: <TaskDetails /> },
 
-      { path: MEMBERS, element: <Members /> },
     ],
   },
   {

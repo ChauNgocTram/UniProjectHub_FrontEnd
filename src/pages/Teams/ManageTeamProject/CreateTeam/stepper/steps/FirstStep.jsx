@@ -58,8 +58,8 @@ function FirstStep() {
       >
          <Input
           placeholder="vd: thiết kế, marketing,..."
-          value={userData.name}
-          onChange={(e) => handleInputChange(e, "name")}
+          value={userData.typeOfSpace}
+          onChange={(e) => handleInputChange(e, "typeOfSpace")}
         />
         {/* <Select
           placeholder="Chọn..."

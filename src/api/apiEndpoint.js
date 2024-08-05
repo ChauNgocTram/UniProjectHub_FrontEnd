@@ -6,4 +6,5 @@ export const API_ENDPOINTS = {
     SCHEDULE: "/api/Schedules",
     BLOG: "/api/Blog",
     COMMENT: "/api/Comments",
+    CATEGORY: "/api/Category",
   };

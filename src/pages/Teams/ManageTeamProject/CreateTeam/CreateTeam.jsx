@@ -26,7 +26,7 @@ function CreateTeam() {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex mt-10">
         <TeamSidebar />
         <div className=" mt-4 mx-12 md:mx-24 md:px-24 wrapper-body">
           <div>

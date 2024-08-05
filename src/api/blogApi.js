@@ -19,6 +19,67 @@ export const useGetBlogs = () => {
   });
 };
 
+//======== create blog
+const createBlog = async (payload) => {
+  const { data } = await api.post(`${API_ENDPOINTS.BLOG}/CreateBlogAsync`, payload);
+  return data;
+};
+
+export const useCreateBlog = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createBlog,
+    onSuccess: () => {
+      alert.alertSuccessWithTime(
+        "Tạo blog thành công!",
+        "",
+        2000,
+        "25",
+        () => {}
+      );
+      queryClient.invalidateQueries(["blogs"]);
+    },
+    onError: (error) => {
+      alert.alertFailedWithTime(
+        "Tạo blog thất bại",
+        error.message,
+        2000,
+        "25",
+        () => {}
+      );
+    },
+  });
+};
+
+// =========== get category list
+const getAllCategory = async () => {
+  const { data } = await api.get(`${API_ENDPOINTS.CATEGORY}/GetCategoriesAsync`);
+  return data;
+};
+
+export const useGetAllCategory = () => {
+  return useQuery({
+    queryKey: ["categories"],
+    queryFn: getAllCategory,
+  });
+};
+
+// ========== get category by id
+const getCategoryById = async (categoryId) => {
+  const { data } = await api.get(
+    `${API_ENDPOINTS.CATEGORY}/GetCategoryAsync/${categoryId}`
+  );
+  return data;
+};
+
+export const useGetCategoryById = (categoryId) => {
+  return useQuery({
+    queryKey: ["category", categoryId],
+    queryFn: () => getCategoryById(categoryId),
+  });
+};
+
+
 //========= get comment of blog
 
 const getCommentOfBlog = async (blogId) => {

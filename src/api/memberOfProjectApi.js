@@ -89,3 +89,40 @@ export const useUpdateMember = () => {
     },
   });
 };
+
+
+//----------delete
+const deleteMember = async (id) => {
+  const { data } = await api.delete(
+    `${API_ENDPOINTS.MEMBER_PROJECT}/delete-member/${id}`
+  );
+  console.log('API Response:', response.data);
+  return data;
+};
+
+export const useDeleteMember = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteMember,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["members"] });
+      alert.alertSuccessWithTime(
+        "Thành viên đã được xóa!",
+        "",
+        2000,
+        "25",
+        () => {}
+      );
+    },
+    onError: (error) => {
+      alert.alertFailedWithTime(
+        "Xóa thành viên thất bại",
+        error.message,
+        2000,
+        "25",
+        () => {}
+      );
+    },
+  });
+};

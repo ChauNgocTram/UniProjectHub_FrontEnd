@@ -7,7 +7,6 @@ import { useTasksByProjectId } from "../api/taskApi";
 
 function TeamTaskLayout() {
   const { id: projectId } = useParams();
-
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);

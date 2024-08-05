@@ -3,7 +3,16 @@ import { NavLink, useLocation } from "react-router-dom";
 import { IoFileTrayStackedOutline } from "react-icons/io5";
 import { BsBookmarks, BsChatDots } from "react-icons/bs";
 import { IoAdd } from "react-icons/io5";
-import { ALL_TEAM_PROJECTS, CREATE_TEAM_PROJECT, GROUP_CHAT, SAVED_TEAM_PROJECT } from "../../routes/constant";
+import {
+  ALL_TEAM_PROJECTS,
+  CREATE_TEAM_PROJECT,
+  GROUP_CHAT,
+  SAVED_TEAM_PROJECT,
+} from "../../routes/constant";
+
+import folders from "../../assets/images/folders.png";
+import bookmark from "../../assets/images/bookmark.png";
+import addfolder from "../../assets/images/addfolder.png";
 
 function TeamSidebar() {
   const location = useLocation();
@@ -11,17 +20,20 @@ function TeamSidebar() {
 
   const Menus = [
     {
-      icon: <IoFileTrayStackedOutline />,
+      // icon: <IoFileTrayStackedOutline />,
+      image: folders,
       path: `/${ALL_TEAM_PROJECTS}`,
       title: "Tất cả dự án",
     },
     {
-      icon: <BsBookmarks />,
+      //    icon: <BsBookmarks />,
+      image: bookmark,
       path: `/${SAVED_TEAM_PROJECT}`,
       title: "Dự án đã lưu",
     },
     {
-      icon: <IoAdd />,
+     // icon: <IoAdd />,
+      image: addfolder,
       path: `/${CREATE_TEAM_PROJECT}`,
       title: "Tạo dự án",
     },
@@ -29,7 +41,7 @@ function TeamSidebar() {
 
   useEffect(() => {
     const activePath = location.pathname;
-    const index = Menus.findIndex(menu => menu.path === activePath);
+    const index = Menus.findIndex((menu) => menu.path === activePath);
     setActiveIndex(index);
   }, [location.pathname, Menus]);
 
@@ -49,7 +61,8 @@ function TeamSidebar() {
               }
               onClick={() => setActiveIndex(index)}
             >
-              <span style={{ fontSize: "22px" }}>{Menu.icon}</span>
+              {/* <span style={{ fontSize: "22px" }}>{Menu.icon}</span> */}
+              <img src={Menu.image} alt="" width={25} height={10} />
               <span className="">{Menu.title}</span>
             </NavLink>
           ))}

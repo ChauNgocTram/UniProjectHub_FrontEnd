@@ -62,7 +62,7 @@ function Navbar() {
         }`}
       >
         <div className="bg-gradient-to-r from-primary to-secondary text-white font-semibold"></div>
-        <div className="w-full mx-auto py-[2px] sm:block hidden font-semibold">
+        <div className="w-full mx-auto py-[2px] sm:block hidden font-semibold ">
           <div className="flex flex-row justify-between items-center w-full">
             <div className="flex items-center justify-center mx-6 gap-4 font-bold text-2xl basis-1/6">
               <NavLink to="/">

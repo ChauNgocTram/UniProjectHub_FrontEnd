@@ -37,7 +37,7 @@ function EventCard({ events }) {
         {paginatedEvents.map((event) => {
           const eventDate = new Date(event.startTime);
           const endTime = new Date(event.endTime);
-          let bgColor = isToday(eventDate) ? "bg-blueLevel2" : "bg-white";
+          let bgColor = isToday(eventDate) ? "bg-blueLevel1" : "bg-white";
 
           return (
             <div

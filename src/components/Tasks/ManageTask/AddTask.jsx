@@ -8,6 +8,8 @@ import Button from "../../Button";
 import { alert } from "../../../components/Alert/Alert";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { useCreateTask } from "../../../api/taskApi";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/features/userSlice";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED", "PENDING"];
 const PRIORITY = ["LOW", "MEDIUM", "HIGH"];
@@ -25,10 +27,13 @@ function AddTask({ open, setOpen, projectId }) {
   const [loading, setLoading] = useState(false);
 
   const mutation = useCreateTask();
+  const user = useSelector(selectUser);
+  const owner = user.userId
 
   const submitHandler = async (data) => {
     setLoading(true);
     const payload = {
+      ownerId: owner,
       taskName: data.taskName,
       status: LISTS.indexOf(stage) + 1,
       category: data.category,

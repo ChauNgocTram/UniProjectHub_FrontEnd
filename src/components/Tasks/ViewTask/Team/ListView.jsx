@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import { BiMessageAltDetail } from "react-icons/bi";
 import {
   MdAttachFile,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { toast } from "sonner";
 import { BGS, PRIOTITYSTYELS, formatDate } from "../../../../utils";
 import clsx from "clsx";
 import { FaList } from "react-icons/fa";
 import Button from "../../../Button";
-import ConfirmatioDialog from "../../../Dialog/Dialogs";
-import TaskStatusBadge from "../../../Status/TaskStatusBadge";
 import FormattedDate from "../../../FormattedDate";
 import { useUserById } from "../../../../api/userApi";
+import DeleteTask from "../../ManageTask/DeleteTask";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -43,16 +40,6 @@ const getPriorityLabel = (rate) => {
 };
 
 function ListView({ tasks }) {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [selected, setSelected] = useState(null);
-
-  const deleteClicks = (id) => {
-    setSelected(id);
-    setOpenDialog(true);
-  };
-
-  const deleteHandler = () => {};
-
   const TableHeader = () => (
     <thead className="w-full border-b border-gray-300">
       <tr className="w-full text-left">
@@ -117,9 +104,11 @@ function ListView({ tasks }) {
           </div>
         </td>
 
-        <td className="py-2">{userDetail?.userName || "Unknown"}</td>
+        <td className="py-2">{userDetail?.userName}</td>
+
         <td>
-           {/* <div className='flex'>
+          {" "}
+          {/* <div className='flex'>
           {task?.team?.map((m, index) => (
             <div
               key={m._id}
@@ -141,12 +130,7 @@ function ListView({ tasks }) {
             type="button"
           />
 
-          <Button
-            className="text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base"
-            label="Delete"
-            type="button"
-            onClick={() => deleteClicks(task._id)}
-          />
+          <DeleteTask task={task} />
         </td>
       </tr>
     );
@@ -166,13 +150,6 @@ function ListView({ tasks }) {
           </table>
         </div>
       </div>
-
-      {/* TODO */}
-      <ConfirmatioDialog
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={deleteHandler}
-      />
     </>
   );
 }

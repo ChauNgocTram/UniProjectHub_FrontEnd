@@ -14,11 +14,9 @@ function AddComment({ blogId }) {
   };
 
   const handleEmojiClick = () => {
-    // Implement emoji picker logic here
   };
 
   const handleFileUpload = () => {
-    // Implement file upload logic here
   };
 
   const handleSendClick = () => {
@@ -37,7 +35,7 @@ function AddComment({ blogId }) {
   };
 
   return (
-    <div className="flex items-center border-t-2 border-neutral-200 p-2 mx-3">
+    <div className="flex items-center border-t-2 border-neutral-200 p-2 mx-3 ">
       <TextField
         id="comment-input"
         label="Thêm bình luận..."

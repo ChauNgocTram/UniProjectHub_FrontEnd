@@ -1,41 +1,50 @@
 import React, { useState } from "react";
-import { BiMessageAltDetail } from "react-icons/bi";
 import {
   MdAttachFile,
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
 } from "react-icons/md";
-import { toast } from "sonner";
-import { BGS, PRIOTITYSTYELS,  formatDate } from "../../../../utils";
+import { BGS, PRIOTITYSTYELS, formatDate } from "../../../../utils";
 import clsx from "clsx";
 import { FaList } from "react-icons/fa";
 import Button from "../../../Button";
-import ConfirmatioDialog from "../../../Dialog/Dialogs";
-import TaskStatusBadge from "../../../Status/TaskStatusBadge";
+import FormattedDate from "../../../FormattedDate";
+import DeleteTask from "../../ManageTask/DeleteTask";
 
 const ICONS = {
-  high: <MdKeyboardDoubleArrowUp />,
-  medium: <MdKeyboardArrowUp />,
-  low: <MdKeyboardArrowDown />,
+  3: <MdKeyboardDoubleArrowUp />,
+  2: <MdKeyboardArrowUp />,
+  1: <MdKeyboardArrowDown />,
 };
 
-function PersonalListView({ tasks }) {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [selected, setSelected] = useState(null);
+const TASK_TYPE = {
+  1: "bg-toDo",
+  2: "bg-inProgress",
+  3: "bg-completed",
+  4: "bg-pending",
+};
 
-  const deleteClicks = (id) => {
-    setSelected(id);
-    setOpenDialog(true);
-  };
+const getPriorityLabel = (rate) => {
+  switch (rate) {
+    case 1:
+      return "Low";
+    case 2:
+      return "Medium";
+    case 3:
+      return "High";
+    default:
+      return "";
+  }
+};
 
-  const deleteHandler = () => {};
+function PersonalListView({ tasks = [] }) {
   const TableHeader = () => (
     <thead className="w-full border-b border-gray-300">
       <tr className="w-full text-left">
         <th className="py-2">Tiêu đề</th>
         <th className="py-2">Độ ưu tiên</th>
-        <th className="py-2">Ngày tạo</th>
+        <th className="py-2">Ngày bắt đầu</th>
         <th className="py-2 line-clamp-1">Deadline</th>
         <th className="py-2">File</th>
         <th className="py-2"></th>
@@ -43,45 +52,40 @@ function PersonalListView({ tasks }) {
     </thead>
   );
 
-  const TableRow = ({ task }) => (
+  const TableRow = ({ task = {} }) => (
     <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-300/10">
-      <td className="py-2">
+      <td className="py-2 w-64">
         <div className="flex items-center gap-2">
           <div
-            //className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
-            className="w-4 h-4 rounded-full"
+            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.status])}
           />
           <p className="w-full line-clamp-2 text-base text-black">
-            {/* {task?.title} */}
-            Mini Project
+            {task.taskName}
           </p>
         </div>
       </td>
 
       <td className="py-2">
         <div className={"flex gap-1 items-center"}>
-          {/* <span className={clsx("text-lg", PRIOTITYSTYELS[task?.priority])}>
-              {ICONS[task?.priority]}
-            </span> */}
-          <span className="text-lg">
-            <MdKeyboardDoubleArrowUp />
+          <span className={clsx("text-lg", PRIOTITYSTYELS[task.rate])}>
+            {ICONS[task.rate]}
           </span>
-          {/* <span className='capitalize line-clamp-1'>
-              {task?.priority} Priority
-            </span> */}
-          <span className="capitalize line-clamp-1">High Priority</span>
+          <span className="capitalize line-clamp-1">
+            {getPriorityLabel(task.rate)} Priority
+          </span>
         </div>
       </td>
 
       <td className="py-2">
-        <div className={"flex gap-1 items-center"}>23-04-2024</div>
+        <span>
+          <FormattedDate date={task.startDate} />
+        </span>
       </td>
 
       <td className="py-2">
-        {/* <span className='text-sm text-gray-600'>
-            {formatDate(new Date(task?.date))}
-          </span> */}
-        <span>28-04-2024</span>
+        <span>
+          <FormattedDate date={task.deadline} />
+        </span>
       </td>
 
       <td className="py-2">
@@ -99,10 +103,6 @@ function PersonalListView({ tasks }) {
         </div>
       </td>
 
-   
-
-      
-
       <td className="py-2 flex gap-2 md:gap-4 justify-end">
         <Button
           className="text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base"
@@ -110,12 +110,7 @@ function PersonalListView({ tasks }) {
           type="button"
         />
 
-        <Button
-          className="text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base"
-          label="Delete"
-          type="button"
-          onClick={() => deleteClicks(task._id)}
-        />
+        <DeleteTask task={task} />
       </td>
     </tr>
   );
@@ -126,21 +121,14 @@ function PersonalListView({ tasks }) {
           <table className="w-full ">
             <TableHeader />
             <tbody>
-              {/* {tasks.map((task, index) => (
-                  <TableRow key={index} task={task} />
-                ))} */}
+              {tasks.map((task, index) => (
+                <TableRow key={index} task={task} />
+              ))}
               <TableRow />
             </tbody>
           </table>
         </div>
       </div>
-
-      {/* TODO */}
-      <ConfirmatioDialog
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={deleteHandler}
-      />
     </>
   );
 }

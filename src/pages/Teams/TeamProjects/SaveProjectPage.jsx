@@ -28,9 +28,9 @@ const SavedProjectsPage = () => {
   }
 
   return (
-    <div className="flex ">
+    <div className="flex mt-10">
       <TeamSidebar />
-      <div className="wrapper-body w-full mt-8">
+      <div className="wrapper-body w-full mt-2">
       <SearchBar />
         <h1 className="text-2xl font-bold mb-4 mx-6">Dự án đã lưu</h1>
         {projects.length > 0 ? (

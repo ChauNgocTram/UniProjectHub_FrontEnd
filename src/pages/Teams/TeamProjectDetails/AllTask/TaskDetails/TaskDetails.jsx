@@ -24,6 +24,7 @@ import ManageFile from "./ManageFile";
 import api from "../../../../../config/axios";
 import Loading from "../../../../../components/Loading/Loading";
 import { format, parseISO } from "date-fns"; 
+import CommonHeader from "../../../../../components/Header/CommonHeader";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -140,7 +141,10 @@ const TaskDetails = () => {
   return (
     <>
       <Loading loading={loading} />
-      <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden ">
+      <div className="flex-1 overflow-y-auto sticky top-0">
+      <CommonHeader />
+          <div className="p-4 2xl:px-10">
+          <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden ">
         <div className="flex items-center justify-between mb-4 mx-4 ">
           <h1 className="text-2xl text-gray-600 font-bold">
             {taskDetail.taskName}
@@ -274,6 +278,9 @@ const TaskDetails = () => {
         </TabsFilter>
         <AddSubTask open={open} setOpen={setOpen} />
       </div>
+          </div>
+      </div>
+    
     </>
   );
 };

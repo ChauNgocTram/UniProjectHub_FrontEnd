@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../../../components/Button";
 import Title from "../../../../components/Title";
 import { IoMdAdd } from "react-icons/io";
 import AddMember from "../../../../components/TeamMember/AddMember";
-import ConfirmatioDialog, { UserAction } from "../../../../components/Dialog/Dialogs";
+import ConfirmatioDialog from "../../../../components/Dialog/Dialogs";
 import { useOutletContext } from "react-router-dom";
-import { useMemberByProjectId } from "../../../../api/memberOfProjectApi";
+import { useMemberByProjectId, useDeleteMember } from "../../../../api/memberOfProjectApi";
 import { useUserById } from "../../../../api/userApi";
 import { getInitials } from "../../../../utils";
 import { useGetProjectById } from "../../../../api/projectApi";
@@ -20,16 +20,38 @@ function Members() {
 
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
-  const [openAction, setOpenAction] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [userColors, setUserColors] = useState({}); 
+  const [userColors, setUserColors] = useState({});
+  const [memberToDelete, setMemberToDelete] = useState(null);
 
-  const userActionHandler = () => {};
-  const deleteHandler = () => {};
+  const { mutate: deleteMember } = useDeleteMember();
 
-  const deleteClick = (id) => {
-    setSelected(id);
+  const handleDeleteClick = (member) => {
+    console.log("Member ID:", member.id); // Log ID để kiểm tra
+    setMemberToDelete(member);
     setOpenDialog(true);
+  };
+
+const confirmDelete = () => {
+  if (memberToDelete) {
+    console.log("Payload:", memberToDelete.id);
+
+    deleteMember(memberToDelete.id, {
+      onSuccess: (data) => {
+        console.log("Response Data:", data);
+        setOpenDialog(false);
+      },
+      onError: (error) => {
+        console.log("Error Response:", error);
+      }
+    });
+  }
+};
+
+
+  const cancelDelete = () => {
+    setMemberToDelete(null);
+    setOpenDialog(false);
   };
 
   const editClick = (el) => {
@@ -51,32 +73,32 @@ function Members() {
   const TableRow = ({ userId, role }) => {
     const { data: userDetail, isLoading: userLoading, isError: userError } = useUserById(userId);
 
+    const [userColor, setUserColor] = useState(getRandomColor());
 
-    const userColor = userColors[userId] || getRandomColor();
-    if (!userColors[userId]) {
-      setUserColors((prevColors) => ({ ...prevColors, [userId]: userColor }));
-    }
+    useEffect(() => {
+      setUserColor((prevColor) => {
+        if (userColors[userId]) return userColors[userId];
+        const newColor = getRandomColor();
+        setUserColors((prevColors) => ({ ...prevColors, [userId]: newColor }));
+        return newColor;
+      });
+    }, [userId]);
 
-    if (userLoading) return <tr><td colSpan="3">Loading...</td></tr>;
-    if (userError) return <tr><td colSpan="3">Error loading user details</td></tr>;
+    if (userLoading) return <tr><td colSpan="5">Loading...</td></tr>;
+    if (userError) return <tr><td colSpan="5">Error loading user details</td></tr>;
     if (!userDetail) return null;
 
-  //  const fullName = `${userDetail.userName} ${userDetail.firstName}`;
-    const displayRole  = project?.nameLeader === userDetail.userName ? 'LEADER' : role;
+    const displayRole = project?.nameLeader === userDetail.userName ? 'LEADER' : role;
 
     return (
       <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-400/10">
         <td className="p-2">
           <div className="flex items-center gap-3">
-            {/* {userDetail.avatarURL ? (
-              <img src={userDetail.avatarURL} alt="" className="w-10 h-10 rounded-full"/>
-            ) : ( */}
-              <div className={`w-9 h-9 rounded-full text-white flex items-center justify-center text-sm ${userColor}`}>
-                <span className="text-xs md:text-sm text-center">
-                  {getInitials(userDetail.userName)}
-                </span>
-              </div>
-            {/* )} */}
+            <div className={`w-9 h-9 rounded-full text-white flex items-center justify-center text-sm ${userColor}`}>
+              <span className="text-xs md:text-sm text-center">
+                {getInitials(userDetail.userName)}
+              </span>
+            </div>
             {userDetail.userName}
           </div>
         </td>
@@ -96,7 +118,7 @@ function Members() {
             className="text-red-700 hover:text-red-500 font-semibold sm:px-0"
             label="Delete"
             type="button"
-            onClick={() => deleteClick(userId)}
+            onClick={() => handleDeleteClick({ id: userId })}
           />
         </td>
       </tr>
@@ -122,12 +144,12 @@ function Members() {
               <tbody>
                 {membersLoading && (
                   <tr>
-                    <td colSpan="3">Loading members...</td>
+                    <td colSpan="5">Loading members...</td>
                   </tr>
                 )}
                 {membersError && (
                   <tr>
-                    <td colSpan="3">Error loading members</td>
+                    <td colSpan="5">Error loading members</td>
                   </tr>
                 )}
                 {members?.map((member) => (
@@ -147,20 +169,16 @@ function Members() {
         open={open}
         setOpen={setOpen}
         userData={selected}
-        key={new Date().getTime().toString()}
+        projectId={projectId}
       />
 
-      <ConfirmatioDialog
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={deleteHandler}
-      />
+<ConfirmatioDialog
+  open={openDialog}
+  setOpen={setOpenDialog}  // Ensure this matches the state updater function
+  msg="Bạn có chắc chắn muốn xóa thành viên này không?"
+  onClick={confirmDelete}  // Pass the confirmDelete function
+/>
 
-      <UserAction
-        open={openAction}
-        setOpen={setOpenAction}
-        onClick={userActionHandler}
-      />
     </>
   );
 }

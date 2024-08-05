@@ -67,7 +67,7 @@ const TaskCard = ({ task }) => {
         </div>
 
         <div className="flex items-center min-h-12 gap-2 my-1 px-2">
-          <NavLink to={`/du-an-nhom/${TASK_DETAILS.replace(":id", task.id)}`}>
+          <NavLink to={`/nhiem-vu/${TASK_DETAILS.replace(":id", task.id)}`}>
             <h4 className="line-clamp-2 text-black font-medium">
               {task.taskName}
             </h4>
