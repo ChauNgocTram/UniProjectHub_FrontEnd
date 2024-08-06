@@ -1,5 +1,4 @@
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaTasks } from "react-icons/fa";
 import {
@@ -7,24 +6,29 @@ import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
-  MdOutlineDoneAll,
-  MdOutlineInsertComment,
-  MdOutlineMessage,
   MdTaskAlt,
   MdCalendarMonth,
 } from "react-icons/md";
 import TabsFilter from "../../../../../components/Tabs/TabsFilter";
-import { PRIOTITYSTYELS, getInitials } from "../../../../../utils";
+import {
+  PRIOTITYSTYELS,
+  TASK_TYPE,
+  bgColor,
+  getInitials,
+} from "../../../../../utils";
 import Button from "../../../../../components/Button";
 import { IoMdAdd } from "react-icons/io";
-import AddSubTask from "../../../../../components/Tasks/ManageTask/AddSubTask";
-import UploadFile from "../../../../../components/FileUpload/UploadFile";
-import FileUpload from "../../../../../components/FileUpload/FileUpload";
+import AddSubTask from "../../../../../components/Tasks/ManageSubTask/AddSubTask";
 import ManageFile from "./ManageFile";
-import api from "../../../../../config/axios";
-import Loading from "../../../../../components/Loading/Loading";
-import { format, parseISO } from "date-fns"; 
 import CommonHeader from "../../../../../components/Header/CommonHeader";
+import { useTaskById } from "../../../../../api/taskApi";
+import { useSubTasksByTaskId } from "../../../../../api/subTaskApi";
+import FormattedDate from "../../../../../components/FormattedDate";
+import Loading from "../../../../../components/Loading/Loading";
+import AllSubTask from "../../../../../components/Tasks/TaskDetails/AllSubTask";
+import { useMemberByTaskId } from "../../../../../api/memberInTaskApi";
+import MemberInTask from "../../../../../components/Tasks/TaskDetails/MemberInTask";
+import clsx from "clsx";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -32,31 +36,10 @@ const ICONS = {
   1: <MdKeyboardArrowDown />,
 };
 
-const bgColor = {
-  3: "bg-red-200",
-  2: "bg-yellow-200",
-  1: "bg-blue-200",
-};
-
 const TABS = [
-  { title: "Chi tiết nhiệm vụ ", icon: <FaTasks /> },
+  { title: "Chi tiết nhiệm vụ", icon: <FaTasks /> },
   { title: "File", icon: <MdAttachFile /> },
 ];
-
-export const TASK_TYPE = {
-  1: "bg-toDo",
-  2: "bg-inProgress",
-  3: "bg-completed",
-  4: "bg-pending",
-};
-
-const TASKTYPEICON = {
-  commented: (
-    <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white">
-      <MdOutlineMessage />,
-    </div>
-  ),
-};
 
 const getPriorityLabel = (rate) => {
   switch (rate) {
@@ -88,199 +71,116 @@ const TaskDetails = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(0);
-  const [taskDetail, setTaskDetail] = useState({});
-  const [subTask, setSubTask] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [reloadContent, setReloadContent] = useState(false);
 
-  const handleReloadContent = () => {
-    setReloadContent((prev) => !prev);
-  };
+  const { data: taskDetail, isLoading: isLoadingTask } = useTaskById(id);
+  const { data: subTask, isLoading: isLoadingSub } = useSubTasksByTaskId(id);
+  const { data: members, isLoading: isLoadingMembers } = useMemberByTaskId(id);
 
-  const getTaskDetailById = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get(`/api/Task/GetTaskAsync/${id}`);
-      if (response.data) {
-        setTaskDetail({
-          ...response.data,
-          deadline: format(parseISO(response.data.deadline), "dd/MM/yyyy"),
-        });
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching request:", error);
-      setLoading(false);
-    }
-  };
-
-  const getAllSubTaskByTaskId = async () => {
-    try {
-      const response = await api.get(`/api/SubTask/GetSubTasksByTaskId/${id}`);
-      if (response.data && response.data.length > 0) {
-        const formattedTasks = response.data.map((subtask) => ({
-          ...subtask,
-          created: format(parseISO(subtask.created), "dd/MM/yyyy"),
-          deadline: format(parseISO(subtask.deadline), "dd/MM/yyyy"),
-        }));
-        setSubTask(formattedTasks);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching request:", error);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    getTaskDetailById();
-    getAllSubTaskByTaskId();
-  }, [id, reloadContent]);
+  if (isLoadingTask || isLoadingSub || isLoadingMembers) {
+    return <Loading loading={true} />;
+  }
 
   return (
     <>
-      <Loading loading={loading} />
       <div className="flex-1 overflow-y-auto sticky top-0">
-      <CommonHeader />
-          <div className="p-4 2xl:px-10">
-          <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden ">
-        <div className="flex items-center justify-between mb-4 mx-4 ">
-          <h1 className="text-2xl text-gray-600 font-bold">
-            {taskDetail.taskName}
-          </h1>
+        <CommonHeader />
+        <div className="p-4 2xl:px-10">
+          <div className="w-full flex flex-col gap-3 mb-4 overflow-y-hidden">
+            <div className="flex items-center justify-between mb-1 mx-4">
+              <div className="flex flex-col">
+                <h1 className="text-2xl text-gray-600 font-bold">
+                  {taskDetail?.taskName}
+                </h1>
+                <span>Tạo bởi: </span>
+              </div>
 
-          <Button
-            onClick={() => setOpen(true)}
-            label="Thêm việc cần làm"
-            icon={<IoMdAdd className="text-lg" />}
-            className="flex flex-row-reverse gap-1 items-center bg-mainColor font-semibold text-white rounded-md py-2 2xl:py-2.5"
-          />
-        </div>
+              <Button
+                onClick={() => setOpen(true)}
+                label="Thêm việc cần làm"
+                icon={<IoMdAdd className="text-lg" />}
+                className="flex flex-row-reverse gap-1 items-center bg-mainColor font-semibold text-white rounded-md py-2 2xl:py-2.5"
+              />
+            </div>
 
-        <TabsFilter tabs={TABS} setSelected={setSelected}>
-          {selected === 0 && (
-            <>
-              <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 border-slate-200 border-2 rounded-xl shadow-xl p-8 mt-3 overflow-y-auto">
-                {/* LEFT */}
-                <div className="w-full md:w-1/2 space-y-4">
-                  <div className="flex items-center gap-5 space-x-4">
-                    <div
-                      className={clsx(
-                        "flex gap-1 items-center text-base font-semibold px-3 py-1 rounded-full",
-                        PRIOTITYSTYELS[taskDetail.rate],
-                        bgColor[taskDetail.rate]
-                      )}
-                    >
-                      <span className="text-base">{ICONS[taskDetail.rate]}</span>
-                      <span className="uppercase">
-                        {getPriorityLabel(taskDetail.rate)} Priority
-                      </span>
-                    </div>
-
-                    <div className={clsx("flex items-center gap-2")}>
-                      <div
-                        className={clsx(
-                          "w-4 h-4 rounded-full",
-                          TASK_TYPE[taskDetail.status]
-                        )}
-                      />
-                      <span className="text-black uppercase">
-                        {getStatusLabel(taskDetail.status)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2 items-center pt-4">
-                    <MdCalendarMonth className="text-blueLevel5" />
-                    <p className="text-textPrimary font-medium">
-                      Deadline: {taskDetail.deadline}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-8 p-4 border-y border-gray-200">
-                    <div className="space-x-2">
-                      <span className="font-semibold">File :</span>
-                      <span>0</span>
-                    </div>
-
-                    <span className="text-gray-400">|</span>
-
-                    <div className="space-x-2">
-                      <span className="font-semibold">Việc cần làm:</span>
-                      <span>{subTask.length}</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 py-6">
-                    <p className="text-gray-500 font-semibold text-sm">
-                      NGƯỜI PHỤ TRÁCH
-                    </p>
-                    <div className="space-y-3">
-                      <div
-                        className="flex gap-4 py-2 items-center border-t border-gray-200"
-                      >
+            <TabsFilter tabs={TABS} setSelected={setSelected}>
+              {selected === 0 && (
+                <>
+                  <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 border-slate-200 border-2 rounded-xl shadow-xl p-8 mt-1 overflow-y-auto">
+                    {/* LEFT */}
+                    <div className="w-full md:w-1/2">
+                      <div className="flex items-center gap-5 space-x-4">
                         <div
-                          className={
-                            "w-10 h-10 rounded-full text-white flex items-center justify-center text-sm -mr-1 bg-blue-600"
-                          }
+                          className={clsx(
+                            "flex gap-1 items-center text-base font-semibold px-3 py-1 rounded-full",
+                            PRIOTITYSTYELS[taskDetail?.rate],
+                            bgColor[taskDetail?.rate]
+                          )}
                         >
-                          <span className="text-center">
-                            CH
+                          <span className="text-base">
+                            {ICONS[taskDetail?.rate]}
+                          </span>
+                          <span className="uppercase">
+                            {getPriorityLabel(taskDetail?.rate)} Priority
                           </span>
                         </div>
 
-                        <div>
-                          <p className="text-lg font-semibold">Chau Ngoc Tram</p>
-                          <span className="text-gray-500">
-                            Front-end Developer
+                        <div className={clsx("flex items-center gap-2")}>
+                          <div
+                            className={clsx(
+                              "w-4 h-4 rounded-full",
+                              TASK_TYPE[taskDetail?.status]
+                            )}
+                          />
+                          <span className="text-black uppercase">
+                            {getStatusLabel(taskDetail?.status)}
                           </span>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                {/* RIGHT */}
 
-                <div className="w-full md:w-1/2 space-y-8">
-                  <div className="space-y-4 py-6">
-                    <p className="text-blueLevel5 font-semibold text-lg">
-                      VIỆC CẦN LÀM
-                    </p>
-                    <div className="space-y-8">
-                      {subTask.map((el, index) => (
-                        <div
-                          key={index}
-                          className="flex gap-3"
-                        >
-                          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-violet-50-200">
-                            <MdTaskAlt className="text-green-600" size={26} />
-                          </div>
+                      <div className="flex items-center pt-4">
+                        <MdCalendarMonth className="text-blueLevel5" />
+                        <p className="text-textPrimary font-medium">
+                          Ngày bắt đầu:{" "}
+                          <FormattedDate date={taskDetail?.startDate} />
+                        </p>
+                      </div>
 
-                          <div className="space-y-1">
-                            <div className="flex gap-2 items-center">
-                              <span className='text-sm text-blueLevel4 font-medium'>
-                                {el.deadline}
-                              </span>
-                            </div>
+                      <div className="flex items-center pt-4">
+                        <MdCalendarMonth className="text-blueLevel5" />
+                        <p className="text-textPrimary font-medium">
+                          Ngày hết hạn:{" "}
+                          <FormattedDate date={taskDetail?.deadline} />
+                        </p>
+                      </div>
 
-                            <p className='text-gray-700'>{el.description}</p>
-                          </div>
+                      <div className="flex items-center gap-8 p-4 border-y border-gray-200">
+                        <div className="space-x-2">
+                          <span className="font-semibold">File :</span>
+                          <span>0</span>
                         </div>
-                      ))}
+
+                        <span className="text-gray-400">|</span>
+
+                        <div className="space-x-2">
+                          <span className="font-semibold">Việc cần làm:</span>
+                          <span>{subTask?.length}</span>
+                        </div>
+                      </div>
+
+                      <MemberInTask members={members} /> 
                     </div>
+
+                    {/* RIGHT */}
+                    <AllSubTask subTask={subTask} />
                   </div>
-                </div>
-              </div>
-            </>
-          )}
-          {selected === 1 && <ManageFile />}
-        </TabsFilter>
-        <AddSubTask open={open} setOpen={setOpen} />
-      </div>
+                </>
+              )}
+              {selected === 1 && <ManageFile />}
+            </TabsFilter>
+            <AddSubTask open={open} setOpen={setOpen} taskId={id} />
           </div>
+        </div>
       </div>
-    
     </>
   );
 };

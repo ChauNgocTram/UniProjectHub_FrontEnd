@@ -47,11 +47,12 @@ export const formatDate = (date) => {
     1: "text-blue-600",
   };
   
-  // export const TASK_TYPE = {
-  //   1: "bg-blue-600",
-  //   2: "bg-yellow-600",
-  //   3: "bg-green-600",
-  // };
+  export const TASK_TYPE = {
+    1: "bg-toDo",
+    2: "bg-inProgress",
+    3: "bg-completed",
+    4: "bg-pending",
+  };
   
   export const BGS = [
     "bg-blue-600",
@@ -67,3 +68,8 @@ export const formatDate = (date) => {
     pending:"bg-pending"
   };
   
+  export const bgColor = {
+    3: "bg-red-200",
+    2: "bg-yellow-200",
+    1: "bg-blue-200",
+  };

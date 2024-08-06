@@ -1,23 +1,23 @@
 import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDeleteTask } from "../../../api/taskApi";
 import { showConfirmationDialog } from "../../Alert/showConfirmationDialog";
+import { useDeleteSubTask } from "../../../api/subTaskApi";
 
-function DeleteTask({ task, onDelete }) {
-  const mutation = useDeleteTask();
+function DeleteSubTask({ subTask, onDelete }) {
+  const mutation = useDeleteSubTask();
 
-  const handleDeleteTask = async () => {
+  const handleDeleteSubTask = async () => {
     const result = await showConfirmationDialog({
-      title: "Bạn muốn xoá task này?",
-      html: `<strong>${task.taskName}</strong> sẽ được xoá khỏi dự án của bạn`,
+      title: "Bạn muốn xoá công việc này?",
+      html: `Công việc này sẽ được xoá khỏi task của bạn`,
       confirmButtonText: "Xác nhận",
       cancelButtonText: "Huỷ",
     });
 
     if (result.isConfirmed) {
-      mutation.mutate(task.id, {
+      mutation.mutate(subTask.id, {
         onSuccess: () => {
-          if (onDelete) onDelete(task.id);
+          if (onDelete) onDelete(subTask.id);
         },
       });
     }
@@ -25,7 +25,7 @@ function DeleteTask({ task, onDelete }) {
 
   return (
     <button
-      onClick={handleDeleteTask}
+      onClick={handleDeleteSubTask}
       className="group flex w-full items-center rounded-md px-2 py-2 text-sm text-red-900 hover:bg-blueLevel1"
     >
       <RiDeleteBin6Line
@@ -37,4 +37,4 @@ function DeleteTask({ task, onDelete }) {
   );
 }
 
-export default DeleteTask;
+export default DeleteSubTask;

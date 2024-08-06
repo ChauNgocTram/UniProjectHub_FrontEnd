@@ -7,12 +7,16 @@ import Button from "../Button";
 import Select from "react-select";
 import { useGetAllUser } from "../../api/userApi";
 import { useAddMember } from "../../api/memberOfProjectApi";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/userSlice";
 
 function AddMember({ open, setOpen, userData, projectId }) {
   const { data: users, isLoading } = useGetAllUser();
   const [selectedUser, setSelectedUser] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
   const { mutate: addMember } = useAddMember();
+  const user = useSelector(selectUser);
+  const managerId = user.userId;
 
   const {
     register,
@@ -30,20 +34,20 @@ function AddMember({ open, setOpen, userData, projectId }) {
     }
   
     const newMember = {
-      userId: selectedUser.value,
+      userId: managerId,
       projectId: projectId,
       isOwner: isOwner,
       role: data.role,
-      memberId: selectedUser.value, // Ensure this matches the expected format
+      menberId: selectedUser.value,
     };
   
-    console.log("Submitting payload:", newMember); // Debugging line
+    console.log("Submitting payload:", newMember); 
   
     await addMember(newMember, {
       onSuccess: (response) => {
-        console.log("API response:", response); // Debugging line
-        reset(); // Reset form after success
-        setOpen(false); // Close modal
+        console.log("API response:", response); 
+        reset(); 
+        setOpen(false); 
       },
     });
     

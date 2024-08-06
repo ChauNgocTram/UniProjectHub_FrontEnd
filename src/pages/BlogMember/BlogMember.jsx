@@ -8,14 +8,16 @@ import { GrAdd } from "react-icons/gr";
 import { NavLink } from "react-router-dom";
 import { CREATE_BLOG } from "../../routes/constant";
 import { useGetBlogs, useGetCommentOfBlog } from "../../api/blogApi";
+import Loading from "../../components/Loading/Loading";
 
 function BlogMember() {
   const { data: blogs, isLoading: isLoadingBlogs, error: errorBlogs } = useGetBlogs();
 
-  if (isLoadingBlogs) return <div>Loading...</div>;
+  if (isLoadingBlogs) {
+    return <Loading loading={isLoadingBlogs} />;
+  }
   if (errorBlogs) return <div>Error: {errorBlogs.message}</div>;
 
-  // Sắp xếp các blog từ mới nhất đến cũ nhất
   const sortedBlogs = blogs.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return (

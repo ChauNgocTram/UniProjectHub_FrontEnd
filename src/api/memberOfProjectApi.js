@@ -96,7 +96,6 @@ const deleteMember = async (id) => {
   const { data } = await api.delete(
     `${API_ENDPOINTS.MEMBER_PROJECT}/delete-member/${id}`
   );
-  console.log('API Response:', response.data);
   return data;
 };
 

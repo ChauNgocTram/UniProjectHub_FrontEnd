@@ -15,12 +15,12 @@ import { FiUser } from "react-icons/fi";
 import { useSubTasksByTaskId } from "../../../../api/subTaskApi";
 import UserInfo from "../../../UserInfo/UserInfo";
 import TaskDialog from "../../../Dialog/TaskDialog";
-import AddSubTask from "../../ManageTask/AddSubTask";
 import TaskStatusBadge from "../../../Status/TaskStatusBadge";
 import FormattedDate from "../../../FormattedDate";
 import { PRIOTITYSTYELS } from "../../../../utils";
 import { TASK_DETAILS } from "../../../../routes/constant";
 import { useUserById } from "../../../../api/userApi";
+import AddSubTask from "../../ManageSubTask/AddSubTask";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -45,7 +45,9 @@ const TaskCard = ({ task }) => {
   const [open, setOpen] = useState(false);
   const { data: subTasks, isLoading, isError } = useSubTasksByTaskId(task.id);
   const { data: userDetail } = useUserById(task.ownerId);
-
+  if (!task) {
+    return <div>Loading...</div>; 
+  }
   return (
     <>
       <div className="w-full h-fit bg-white shadow-md p-2 rounded">
@@ -140,7 +142,7 @@ const TaskCard = ({ task }) => {
         </div>
       </div>
 
-      <AddSubTask open={open} setOpen={setOpen} id={task.id} />
+      <AddSubTask open={open} setOpen={setOpen} taskId={task.id} />
     </>
   );
 };

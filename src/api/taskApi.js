@@ -59,7 +59,7 @@ export const useCreateTask = () => {
     onError: (error) => {
       alert.alertFailed(
         "Tạo Task Thất Bại",
-        "Vui lòng thử lại",
+        error.message,
         2000,
         "30",
         () => {}
@@ -95,7 +95,7 @@ export const useUpdateTask = () => {
     },
     onError: (error) => {
       alert.alertFailedWithTime(
-        "Failed to update",
+        "Cập nhật task Thất Bại",
         error.message,
         2000,
         "25",

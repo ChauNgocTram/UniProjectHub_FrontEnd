@@ -27,27 +27,26 @@ function Members() {
   const { mutate: deleteMember } = useDeleteMember();
 
   const handleDeleteClick = (member) => {
-    console.log("Member ID:", member.id); // Log ID để kiểm tra
+    console.log("Member ID:", member.id);
     setMemberToDelete(member);
     setOpenDialog(true);
   };
 
-const confirmDelete = () => {
-  if (memberToDelete) {
-    console.log("Payload:", memberToDelete.id);
+  const confirmDelete = () => {
+    if (memberToDelete) {
+      console.log("Payload:", memberToDelete.id);
 
-    deleteMember(memberToDelete.id, {
-      onSuccess: (data) => {
-        console.log("Response Data:", data);
-        setOpenDialog(false);
-      },
-      onError: (error) => {
-        console.log("Error Response:", error);
-      }
-    });
-  }
-};
-
+      deleteMember(memberToDelete.id, {
+        onSuccess: (data) => {
+          console.log("Response Data:", data);
+          setOpenDialog(false);
+        },
+        onError: (error) => {
+          console.log("Error Response:", error);
+        }
+      });
+    }
+  };
 
   const cancelDelete = () => {
     setMemberToDelete(null);
@@ -70,7 +69,7 @@ const confirmDelete = () => {
     </thead>
   );
 
-  const TableRow = ({ userId, role }) => {
+  const TableRow = ({ id, userId, role }) => {
     const { data: userDetail, isLoading: userLoading, isError: userError } = useUserById(userId);
 
     const [userColor, setUserColor] = useState(getRandomColor());
@@ -118,7 +117,7 @@ const confirmDelete = () => {
             className="text-red-700 hover:text-red-500 font-semibold sm:px-0"
             label="Delete"
             type="button"
-            onClick={() => handleDeleteClick({ id: userId })}
+            onClick={() => handleDeleteClick({ id, userId, role })}
           />
         </td>
       </tr>
@@ -155,6 +154,7 @@ const confirmDelete = () => {
                 {members?.map((member) => (
                   <TableRow
                     key={member.id}
+                    id={member.id}
                     userId={member.userId}
                     role={member.role}
                   />
@@ -172,13 +172,12 @@ const confirmDelete = () => {
         projectId={projectId}
       />
 
-<ConfirmatioDialog
-  open={openDialog}
-  setOpen={setOpenDialog}  // Ensure this matches the state updater function
-  msg="Bạn có chắc chắn muốn xóa thành viên này không?"
-  onClick={confirmDelete}  // Pass the confirmDelete function
-/>
-
+      <ConfirmatioDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        msg="Bạn có chắc chắn muốn xóa thành viên này không?"
+        onClick={confirmDelete}
+      />
     </>
   );
 }

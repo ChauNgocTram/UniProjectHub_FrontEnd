@@ -8,6 +8,7 @@ import EventCard from "../../components/Schedule/EventCard";
 import { useGetAllSchedule } from "../../api/scheduleApi";
 import { useGetAllUser } from "../../api/userApi";
 import Footer from "../../components/Footer/Footer";
+import Loading from "../../components/Loading/Loading";
 
 function Schedule() {
   const [open, setOpen] = useState(false);
@@ -45,7 +46,10 @@ function Schedule() {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return <Loading loading={isLoading} />;
+  }
+  
   if (isError) return <p>Error fetching data.</p>;
 
   return (
