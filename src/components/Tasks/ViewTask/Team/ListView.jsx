@@ -12,6 +12,7 @@ import Button from "../../../Button";
 import FormattedDate from "../../../FormattedDate";
 import { useUserById } from "../../../../api/userApi";
 import DeleteTask from "../../ManageTask/DeleteTask";
+import { useSubTasksByTaskId } from "../../../../api/subTaskApi";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -48,7 +49,6 @@ function ListView({ tasks }) {
         <th className="py-2 line-clamp-1">Deadline</th>
         <th className="py-2">File</th>
         <th className="py-2">Tạo bởi</th>
-        <th className="py-2">Người phụ trách</th>
         <th className="py-2"></th>
       </tr>
     </thead>
@@ -60,6 +60,8 @@ function ListView({ tasks }) {
       isLoading: userLoading,
       isError: userError,
     } = useUserById(task.ownerId);
+
+    const { data: subTasks = [], isLoading, isError } = useSubTasksByTaskId(task.id);
 
     return (
       <tr className="border-b border-gray-200 text-gray-600 hover:bg-gray-300/10">
@@ -99,29 +101,14 @@ function ListView({ tasks }) {
             </div>
             <div className="flex gap-1 items-center text-sm text-gray-600 dark:text-gray-400">
               <FaList />
-              <span>0</span>
+              <span>{subTasks.length}</span>
             </div>
           </div>
         </td>
 
         <td className="py-2">{userDetail?.userName}</td>
 
-        <td>
-          {" "}
-          {/* <div className='flex'>
-          {task?.team?.map((m, index) => (
-            <div
-              key={m._id}
-              className={clsx(
-                "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
-                BGS[index % BGS?.length]
-              )}
-            >
-              <UserInfo user={m} />
-            </div>
-          ))}
-        </div> */}
-        </td>
+      
 
         <td className="py-2 flex gap-2 md:gap-4 justify-end">
           <Button

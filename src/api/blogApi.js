@@ -19,6 +19,21 @@ export const useGetBlogs = () => {
   });
 };
 
+//======= get blog by category
+const getBlogByCategory = async (categoryId) => {
+  const { data } = await api.get(
+    `${API_ENDPOINTS.BLOG}/GetBlogsByCategoryIdAsync/${categoryId}`
+  );
+  return data;
+};
+
+export const useGetBlogByCategory = (categoryId) => {
+  return useQuery({
+    queryKey: ["blogOfCategory", categoryId],
+    queryFn: () => getBlogByCategory(categoryId),
+  });
+};
+
 //======== create blog
 const createBlog = async (payload) => {
   const { data } = await api.post(`${API_ENDPOINTS.BLOG}/CreateBlogAsync`, payload);

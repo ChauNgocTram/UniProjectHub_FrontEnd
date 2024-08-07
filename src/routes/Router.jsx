@@ -27,6 +27,12 @@ import {
   SCHEDULE,
   TEACHER_SCHEDULE,
   SAVED_TEAM_PROJECT,
+  DASHBOARD,
+  PERSONAL_TASK_TODO,
+  PERSONAL_TASK_INPROGRESS,
+  PERSONAL_TASK_COMPLETED,
+  PERSONAL_TASK_PENDING,
+  CATEGORY,
 } from "./constant";
 
 const Home = lazy(() => import("../pages/Home/Home"));
@@ -58,6 +64,11 @@ const SavedProjectsPage = lazy(() => import("../pages/Teams/TeamProjects/SavePro
 
 import PrivateRoute from "./PrivateRoute";
 import Loading from "../components/Loading/Loading";
+import AdminLayout from "../layouts/AdminLayout";
+import Dashboard from "../pages/Admin/Dashboard";
+import CategoryList from "../pages/BlogMember/CategoryList";
+import CategoryBlogs from "../pages/BlogMember/CategoryBlogs";
+import AccountManagementPage from "../pages/Admin/AccountManagementPage";
 const AppRouter = () => (
   <Suspense fallback={<Loading/>}>
     <Outlet />
@@ -109,6 +120,8 @@ const appRoutes = [
         ),
       },
       { path: CREATE_BLOG, element: <CreateBlog /> },
+      { path: CATEGORY, element: <CategoryList /> },
+      { path: "/category/:categoryId", element: <CategoryBlogs  /> },
     ],
   },
   {
@@ -136,7 +149,19 @@ const appRoutes = [
     element: <PersonalTaskLayout />,
     children: [
       { path: ALL_PERSONAL_TASK, element: <AllPersonalTask /> },
+      { path: PERSONAL_TASK_TODO, element: <AllPersonalTask /> },
+      { path: PERSONAL_TASK_INPROGRESS, element: <AllPersonalTask /> },
+      { path: PERSONAL_TASK_COMPLETED, element: <AllPersonalTask /> },
+      { path: PERSONAL_TASK_PENDING, element: <AllPersonalTask /> },
       { path: PERSONAL_TASK_DETAILS, element: <DetailedInfo /> },
+    ],
+  },
+  {
+    path: "/nhiem-vu",
+    element: <DetailedInfo />,
+    children: [
+      { path: PERSONAL_TASK_DETAILS, element: <DetailedInfo /> },
+
     ],
   },
   {
@@ -146,7 +171,15 @@ const appRoutes = [
       { path: LOGIN_PAGE, element: <Login /> },
       { path: REGISTER_PAGE, element: <Register /> },
     ],
-    //
+  },
+
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "manage-user", element: <AccountManagementPage /> },
+    ],
   },
 ];
 

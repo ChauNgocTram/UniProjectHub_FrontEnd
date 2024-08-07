@@ -8,12 +8,10 @@ import {
   MenuItems,
   MenuItem,
 } from "@headlessui/react";
-import AddSubTask from "../Tasks/ManageSubTask/AddSubTask";
 import DeleteSubTask from "../Tasks/ManageSubTask/DeleteSubTask";
 import UpdateSubTask from "../Tasks/ManageSubTask/UpdateSubTask";
 
 const SubTaskDialog = ({ subTask, onDelete }) => {
-  const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
 
   const items = [
@@ -75,8 +73,6 @@ const SubTaskDialog = ({ subTask, onDelete }) => {
         setOpen={setOpenEdit}
         subTaskId={subTask.id}
       />
-
-      <AddSubTask open={open} setOpen={setOpen} taskId={subTask.id} />
     </>
   );
 };

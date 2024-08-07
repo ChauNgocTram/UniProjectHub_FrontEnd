@@ -6,7 +6,6 @@ import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
-  MdTaskAlt,
   MdCalendarMonth,
 } from "react-icons/md";
 import TabsFilter from "../../../../../components/Tabs/TabsFilter";
@@ -29,6 +28,7 @@ import AllSubTask from "../../../../../components/Tasks/TaskDetails/AllSubTask";
 import { useMemberByTaskId } from "../../../../../api/memberInTaskApi";
 import MemberInTask from "../../../../../components/Tasks/TaskDetails/MemberInTask";
 import clsx from "clsx";
+import { RxCounterClockwiseClock } from "react-icons/rx";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -91,7 +91,6 @@ const TaskDetails = () => {
                 <h1 className="text-2xl text-gray-600 font-bold">
                   {taskDetail?.taskName}
                 </h1>
-                <span>Tạo bởi: </span>
               </div>
 
               <Button
@@ -105,7 +104,7 @@ const TaskDetails = () => {
             <TabsFilter tabs={TABS} setSelected={setSelected}>
               {selected === 0 && (
                 <>
-                  <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 border-slate-200 border-2 rounded-xl shadow-xl p-8 mt-1 overflow-y-auto">
+                  <div className="w-full flex flex-col md:flex-row gap-5 2xl:gap-8 border-slate-200 border-2 rounded-xl shadow-xl px-8 py-6 mt-1 overflow-y-auto">
                     {/* LEFT */}
                     <div className="w-full md:w-1/2">
                       <div className="flex items-center gap-5 space-x-4">
@@ -137,7 +136,7 @@ const TaskDetails = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center pt-4">
+                      <div className="flex gap-2 items-center pt-4">
                         <MdCalendarMonth className="text-blueLevel5" />
                         <p className="text-textPrimary font-medium">
                           Ngày bắt đầu:{" "}
@@ -145,8 +144,8 @@ const TaskDetails = () => {
                         </p>
                       </div>
 
-                      <div className="flex items-center pt-4">
-                        <MdCalendarMonth className="text-blueLevel5" />
+                      <div className="flex gap-2 items-center pt-4">
+                        <RxCounterClockwiseClock className="text-blueLevel5" />
                         <p className="text-textPrimary font-medium">
                           Ngày hết hạn:{" "}
                           <FormattedDate date={taskDetail?.deadline} />
@@ -175,7 +174,7 @@ const TaskDetails = () => {
                   </div>
                 </>
               )}
-              {selected === 1 && <ManageFile />}
+              {selected === 1 && <ManageFile taskId={id}/>}
             </TabsFilter>
             <AddSubTask open={open} setOpen={setOpen} taskId={id} />
           </div>

@@ -1,46 +1,18 @@
 import React, { useState } from "react";
-
+import axios from "axios";
+import ModalWrapper from "../Modal/ModalWrapper";
 import ProgressBar from "./ProgressBar";
 import { LuFilePlus2, LuFile } from "react-icons/lu";
 import { LiaTimesSolid } from "react-icons/lia";
-import axios from "axios";
-import clsx from "clsx";
-import ModalWrapper from "../Modal/ModalWrapper";
+import api from "../../config/axios";
 
-function FileUpload({ open2, setOpen2 }) {
+function FileUpload({ open2, setOpen2, taskId, userId }) {
   const [files, setFiles] = useState([]);
   const [progress, setProgress] = useState(0);
   const [loader, setLoader] = useState(false);
 
-  // const fileExist = (file) => {
-  //   if (file) {
-  //     const result = Array.from(files).filter((f) => f.name === file.name);
-  //     if (result.length) {
-  //       return true;
-  //     }
-  //     return false;
-  //   }
-  // };
-  const fileExist = (file) => {
-    return files.some((f) => f.name === file.name);
-  };
+  const fileExist = (file) => files.some((f) => f.name === file.name);
 
-  // const validExtensions = (file) => {
-  //   if (
-  //     file.type === "image/jpeg" ||
-  //     file.type === "image/jpg" ||
-  //     file.type === "image/png" ||
-  //     file.type === "application/pdf" ||
-  //     file.type ===
-  //       "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-  //     file.type === "application/msword" ||
-  //     file.type ===
-  //       "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
   const validExtensions = (file) => {
     const validTypes = [
       "image/jpeg",
@@ -54,15 +26,6 @@ function FileUpload({ open2, setOpen2 }) {
     return validTypes.includes(file.type);
   };
 
-  // const validFileSize = (file, maxSizeMb) => {
-  //   let maxfilesize_in_mb = maxSizeMb || 100, //100mb
-  //     filesize = file.size,
-  //     filesize_in_mb = Math.round(filesize / 1048576);
-  //   if (filesize_in_mb > maxfilesize_in_mb) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
   const validFileSize = (file, maxSizeMb) => {
     const maxfilesize_in_mb = maxSizeMb || 100;
     const filesize_in_mb = file.size / 1048576;
@@ -92,27 +55,8 @@ function FileUpload({ open2, setOpen2 }) {
     }
     setFiles([...files, ...validFiles]);
   };
-  // const handleFileInput = (event) => {
-  //   const selectedFiles = Array.from(event.target.files);
-  //   let validFiles = [];
 
-  //   selectedFiles.forEach((file) => {
-  //     if (!fileExist(file) && validExtensions(file) && validFileSize(file, 25)) {
-  //       validFiles.push({ ...file });
-  //     } else {
-  //       alert(`${file.name} không hợp lệ hoặc kích thước tệp quá lớn`);
-  //     }
-  //   });
-
-  //   setFiles((prevFiles) => [...prevFiles, ...validFiles]);
-  // };
-
-  const isImage = (file) => {
-    return file && file["type"].split("/")[0] === "image";
-  };
-  // const isImage = (file) => {
-  //   return file && file.type && file.type.startsWith("image");
-  // };
+  const isImage = (file) => file && file.type.split("/")[0] === "image";
 
   const fileSize = (sizeInBytes) => {
     const names = ["bytes", "KB", "MB"];
@@ -121,7 +65,6 @@ function FileUpload({ open2, setOpen2 }) {
     while (size >= 1024 && ++count) {
       size = size / 1024;
     }
-
     return size.toFixed(size < 10 && count > 0 ? 1 : 0) + " " + names[count];
   };
 
@@ -134,19 +77,24 @@ function FileUpload({ open2, setOpen2 }) {
   };
 
   const handleUploads = async () => {
-    if (!files.length) {
-      return;
-    }
-
+    if (!files.length) return;
+  
     try {
       const data = new FormData();
       for (let i = 0; i < files.length; i++) {
         data.append("files", files[i]);
       }
-
+      data.append("taskId", taskId); // Add taskId to FormData
+      data.append("userId", userId); // Add userId to FormData
+  
+      // Log FormData contents for debugging
+      for (let pair of data.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
+  
       const config = {
         headers: {
-          "Content-Type": "application/form-data",
+          "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
           const progressResult = Math.round(
@@ -155,56 +103,16 @@ function FileUpload({ open2, setOpen2 }) {
           setProgress(progressResult);
         },
       };
-
-      axios
-        .post(``, data, config)
-        .then((response) => {
-          setLoader(false);
-          console.log("Response here: ", response);
-        })
-        .catch((error) => {
-          setLoader(false);
-          throw new Error(error.message);
-        });
-    } catch (err) {
-      console.log(err);
+  
+      await api.post(`/api/file/upload-file`, data, config);
+      setLoader(false);
+      console.log("Files uploaded successfully");
+    } catch (error) {
+      setLoader(false);
+      console.error("Error uploading files: ", error.response ? error.response.data : error.message);
     }
   };
-  // const handleUploads = async () => {
-  //   if (!files.length) return;
-
-  //   setLoader(true);
-  //   const data = new FormData();
-  //   files.forEach((file) => data.append("files", file));
-
-  //   try {
-  //     const config = {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //       onUploadProgress: (progressEvent) => {
-  //         const totalLoaded = progressEvent.loaded;
-  //         const totalSize = progressEvent.total;
-  //         const progressPercentage = Math.round((totalLoaded * 100) / totalSize);
-  //         const remainingTime = (totalSize - totalLoaded) / 1000; // Tính thời gian ước tính
-  //       //  setProgress(progressPercentage);
-  //         setFiles((prevFiles) =>
-  //           prevFiles.map((file) => ({
-  //             ...file,
-  //             estimated: remainingTime,
-  //           }))
-  //         );
-  //       },
-  //     };
-
-  //     await axios.post(``, data, config);
-  //     setLoader(false);
-  //     setFiles((prevFiles) =>
-  //       prevFiles.map((file) => ({ ...file, estimated: null }))
-  //     );
-  //   } catch (error) {
-  //     setLoader(false);
-  //     console.error(error);
-  //   }
-  // };
+  
 
   const handleFileDrop = (event) => {
     event.preventDefault();
@@ -226,22 +134,8 @@ function FileUpload({ open2, setOpen2 }) {
         }
       }
     }
+    setFiles([...files, ...validFiles]);
   };
-  // const handleFileDrop = (event) => {
-  //   event.preventDefault();
-  //   const droppedFiles = Array.from(event.dataTransfer.files);
-  //   let validFiles = [];
-
-  //   droppedFiles.forEach((file) => {
-  //     if (!fileExist(file) && validExtensions(file) && validFileSize(file, 25)) {
-  //       validFiles.push({ ...file, estimated: 0 });
-  //     } else {
-  //       alert(`${file.name} không hợp lệ hoặc kích thước tệp quá lớn`);
-  //     }
-  //   });
-
-  //   setFiles((prevFiles) => [...prevFiles, ...validFiles]);
-  // };
 
   const getTimeString = (timeInSeconds) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -283,7 +177,6 @@ function FileUpload({ open2, setOpen2 }) {
             className="flex flex-col justify-between items-center gap-5 bg-slate-100 border-dashed border-[#5a5a5a] rounded-2xl py-10 px-5 text-center cursor-pointer transition duration-[400ms] hover:bg-neutral-100 hover:border-[#4e4d4d]"
             onDrop={handleFileDrop}
             onDragOver={handleFileDrop}
-            //onDragOver={(e) => e.preventDefault()}
           >
             <div className="flex justify-center items-center w-20 h-20 rounded-full border-2 border-dashed border-neutral-400">
               <LuFilePlus2 className="text-[40px] text-neutral-700" />
@@ -304,9 +197,6 @@ function FileUpload({ open2, setOpen2 }) {
           </label>
 
           <div className="my-5 mx-0 max-h-[200px] overflow-hidden overflow-y-auto ">
-            {/* {Array.from(files)
-            .reverse()
-            .map((file, index) => { */}
             {files.reverse().map((file, index) => (
               <div
                 className="w-[450px] bg-neutral-200 border-solid border-[#5a5a5a] py-2 px-5 rounded-3xl my-2 mx-0 flex items-center gap-4"
@@ -338,26 +228,28 @@ function FileUpload({ open2, setOpen2 }) {
                 <div className=" ">
                   <LiaTimesSolid
                     className="text-2xl font-medium text-[#fc5355] cursor-pointer"
-                    //onClick={() => handleFileDelete(file.name)}
                     onClick={() => handleFileDelete(file.name)}
                   />
                 </div>
               </div>
-              // })}
             ))}
           </div>
         </div>
 
-        <div className="bottom flex gap-5 justify-between mt-10">
-          <button className="block w-full" onClick={handleCancel}>
-            Huỷ
-          </button>
+        <div className="flex justify-between mt-5">
           <button
-            className="block w-full bg-mainColor p-2 rounded-xl font-bold"
-            //onClick={() => handleUploads()}
+            type="button"
+            className="bg-mainColor text-white px-4 py-2 rounded-lg hover:bg-mainColor-dark transition"
             onClick={handleUploads}
           >
-            {loader ? "Vui lòng đợi..." : "Lưu"}
+            Upload
+          </button>
+          <button
+            type="button"
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+            onClick={handleCancel}
+          >
+            Cancel
           </button>
         </div>
       </form>

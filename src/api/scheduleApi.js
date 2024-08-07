@@ -33,6 +33,7 @@ export const useGetScheduleByUserId = (userId) => {
   });
 };
 
+//======== adđ schedule
 const addSchedule = async (scheduleData) => {
   try {
     const response = await api.post(
@@ -53,9 +54,60 @@ export const useAddSchedule = () => {
     mutationFn: addSchedule,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["schedules"] });
+      queryClient.invalidateQueries({ queryKey: ["scheduleOfUser"] });
+      alert.alertSuccessWithTime(
+        "Tạo Schedule thành công!",
+        "",
+        2000,
+        "25",
+        () => {}
+      );
     },
     onError: (error) => {
-      alert.error("Failed to add schedule: " + error.message);
+      alert.alertFailedWithTime(
+        "Tạo Schedule thất bại",
+        error.message,
+        2000,
+        "25",
+        () => {}
+      );
     },
   });
 };
+
+// ====== delete schedule
+const deleteSchedule = async (scheduleId) => {
+  const { data } = await api.delete(
+    `${API_ENDPOINTS.SCHEDULE}/delete-schedule/${scheduleId}`
+  );
+  return data;
+};
+
+export const useDeleteSchedule = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (scheduleId) => deleteSchedule(scheduleId),
+    onSuccess: () => {
+      alert.alertSuccessWithTime(
+        "Xoá schedule thành công!",
+        "",
+        2000,
+        "25",
+        () => {}
+      );
+      queryClient.invalidateQueries(["schedules"]);
+      queryClient.invalidateQueries({ queryKey: ["scheduleOfUser"] });
+    },
+    onError: (error) => {
+      alert.alertFailedWithTime(
+        "Failed to delete",
+        error.message,
+        2000,
+        "25",
+        () => {}
+      );
+    },
+  });
+};
+

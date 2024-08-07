@@ -22,7 +22,7 @@ function BlogMember() {
 
   return (
     <>
-      <div className="flex w-full">
+      <div className="flex w-full mt-8">
         <BlogSidebar />
 
         <div className="flex flex-col w-full mr-10">

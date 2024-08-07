@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useDeleteComment } from "../../api/blogApi";
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Swal from 'sweetalert2'; 
+import { useUserById } from "../../api/userApi";
 
 function Comment({ comments, blogId }) {
   const [showAll, setShowAll] = useState(false);
@@ -14,6 +15,7 @@ function Comment({ comments, blogId }) {
   
   const user = useSelector(selectUser);
   const owner = user.userId;
+  const { data: userDetail } = useUserById(owner);
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
@@ -66,7 +68,7 @@ function Comment({ comments, blogId }) {
                 className="w-[40px] h-[40px] rounded-full"
               />
               <div className="flex flex-col">
-                <p className="font-semibold text-base">User123</p>
+                <p className="font-semibold text-base">{userDetail?.userName}</p>
                 <p className="text-sm text-textSecondary">{format(new Date(comment.createdAt), "dd-MM-yyyy HH:mm:ss")}</p>
                 <p className="mt-1 text-justify text-sm">
                   {comment.description}

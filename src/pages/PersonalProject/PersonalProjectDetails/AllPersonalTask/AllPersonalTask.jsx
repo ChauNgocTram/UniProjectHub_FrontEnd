@@ -6,58 +6,72 @@ import Title from "../../../../components/Title";
 import Tabs from "../../../../components/Tabs/Tabs";
 import Button from "../../../../components/Button";
 import PersonalListView from "../../../../components/Tasks/ViewTask/Personal/PersonalListView";
-import PersonalBoardView from "../../../../components/Tasks/ViewTask/Personal/PersonalBoardView"
-import AddPersonalTask from "../../../../components/Tasks/ManageTask/AddPersonalTask";
-import { useParams } from "react-router-dom";
-import { useTasksByProjectId } from "../../../../api/taskApi";
+import PersonalBoardView from "../../../../components/Tasks/ViewTask/Personal/PersonalBoardView";
+import AddTask from "../../../../components/Tasks/ManageTask/AddTask";
+import { useOutletContext, useParams } from "react-router-dom";
+import { useGetProjectById } from "../../../../api/projectApi";
+import Loading from "../../../../components/Loading/Loading";
+import NoDataPlaceholder from "../../../../components/NoDataPlaceholder";
+import Empty from "../../../../assets/Empty.json";
 
 const TABS = [
   { title: "Bảng", icon: <BsGrid /> },
   { title: "Danh Sách", icon: <BsListUl /> },
 ];
 
-const TASK_TYPE = {
-  todo: "bg-blue-600",
-  "in progress": "bg-yellow-600",
-  completed: "bg-green-600",
-};
 function AllPersonalTask() {
-  const { id: projectId } = useParams();
-   const { data: allTask , isLoading, error } = useTasksByProjectId(projectId);
+  const { selected, setSelected, filteredTasks, open, setOpen, projectId } =
+    useOutletContext();
+  const { data: project, isLoading, isError } = useGetProjectById(projectId);
 
-   const [selected, setSelected] = useState(0);
-   const [open, setOpen] = useState(false);
-   // const [loading, setLoading] = useState(false);
- 
-   const [selectedStatus, setSelectedStatus] = useState(0);
+  if (isLoading) {
+    return <Loading loading={isLoading} />;
+  }
+  if (isError) return <div>Error loading project details</div>;
+
+  const messageLines = [
+    "Chiếc hộp này đang chờ đợi nội dung từ bạn.",
+    "Hãy tạo dữ liệu mới ngay thôi!",
+  ];
+
+  const sortedTasks = filteredTasks
+    .slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
     <>
-    <div className="w-full">
-      <div className="flex items-center justify-between mb-4 mx-4">
-        <Title title={"Tasks"} />
+      <div className="w-full">
+        <div className="flex items-center justify-between mb-4 mx-4">
+          <Title title={project.name} />
 
-        <Button
-          onClick={() => setOpen(true)}
-          label="Tạo Task"
-          icon={<IoMdAdd className="text-lg" />}
-          className="flex flex-row-reverse gap-1 items-center bg-mainColor font-semibold text-white rounded-md py-2 2xl:py-2.5"
-        />
+          <Button
+            onClick={() => setOpen(true)}
+            label="Tạo Task"
+            icon={<IoMdAdd className="text-lg" />}
+            className="flex flex-row-reverse gap-1 items-center bg-mainColor font-semibold text-white rounded-md py-2 2xl:py-2.5"
+          />
+        </div>
+        <Tabs tabs={TABS} setSelected={setSelected}>
+          {sortedTasks.length > 0 ? (
+            selected !== 1 ? (
+              <PersonalBoardView tasks={sortedTasks} />
+            ) : (
+              <div className="w-full">
+                <PersonalListView tasks={sortedTasks} />
+              </div>
+            )
+          ) : (
+            <NoDataPlaceholder
+              animationData={Empty}
+              messageLines={messageLines}
+            />
+          )}
+        </Tabs>
+
+        <AddTask open={open} setOpen={setOpen} projectId={projectId} />
       </div>
-
-      <Tabs tabs={TABS} setSelected={setSelected}>
-        {selected !== 1 ? (
-          <PersonalBoardView tasks={allTask}/>
-        ) : (
-          <div className="w-full">
-            <PersonalListView tasks={allTask}/>
-          </div>
-        )}
-      </Tabs>
-
-      <AddPersonalTask open={open} setOpen={setOpen} />
-    </div>
-  </>
-  )
+    </>
+  );
 }
 
-export default AllPersonalTask
+export default AllPersonalTask;

@@ -5,11 +5,17 @@ import { PiShootingStarLight } from "react-icons/pi";
 import UserSidebar from "../../components/Sidebar/UserSidebar";
 import { useParams } from "react-router-dom";
 import AccountSetting from "../../components/ManageProfile/AccountSetting";
-import ChangePassword from "../../components/ManageProfile/ChangePassword"
+import ChangePassword from "../../components/ManageProfile/ChangePassword";
 import { PROFILE } from "../../routes/constant";
+import { useUserById } from "../../api/userApi";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/userSlice";
 
 function Profile() {
   const { activepage } = useParams();
+  const user = useSelector(selectUser);
+  const { data: userDetail } = useUserById(user.userId);
+
   return (
     <>
       <div className="wrapper-body">
@@ -30,17 +36,17 @@ function Profile() {
 
           <div className="flex flex-col items-center justify-center">
             <div className="flex items-center space-x-2">
-              <h4 className="text-24 font-semibold">Châu Ngọc Trâm</h4>
+              <h4 className="text-24 font-semibold">
+                {userDetail?.lastName && userDetail?.firstName
+                  ? `${userDetail.lastName} ${userDetail.firstName}`
+                  : <span className="text-red-700 italic">Chưa có thông tin</span>}
+              </h4>
               <span className="text-tagMemberText bg-tagMemberBg py-1 px-2 rounded-lg font-semibold text-sm flex">
                 <PiShootingStarLight size={20} className="font-bold mr-1" />{" "}
                 Thành viên{" "}
               </span>
             </div>
 
-            <span className="font-light mt-2">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint,
-              tempore.
-            </span>
           </div>
         </div>
 
@@ -50,7 +56,7 @@ function Profile() {
           </div>
 
           <div className="right w-[80%] border border-solid border-slate-200 rounded-md shadow-lg min-h-[50vh]">
-            {activepage === "thong-tin-ca-nhan" && <AccountSetting />}
+            {activepage === "thong-tin-ca-nhan" && <AccountSetting userInfo={userDetail}/>}
             {activepage === "thay-doi-mat-khau" && <ChangePassword />}
           </div>
         </div>

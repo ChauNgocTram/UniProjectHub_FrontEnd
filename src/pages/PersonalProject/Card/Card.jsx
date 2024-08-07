@@ -35,7 +35,7 @@ function Card({ project, onDelete }) {
                         className="inline-block w-full rounded-md p-2 hover:bg-mainBg/20 text-center"
                         to={`/${EDIT_PERSONAL_PROJECT.replace(
                           ":id",
-                          project.id
+                          item.id
                         )}`}
                       >
                         Chỉnh sửa
@@ -43,7 +43,7 @@ function Card({ project, onDelete }) {
                     </li>
                     <li>
                       <DeleteTeamProject
-                        project={project}
+                        project={item}
                         onDelete={onDelete}
                       />
                     </li>

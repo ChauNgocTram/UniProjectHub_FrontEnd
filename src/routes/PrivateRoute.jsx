@@ -17,6 +17,11 @@ const PrivateRoute = ({children }) => {
     );
     return  <Navigate to={`/auth/${LOGIN_PAGE}`} replace />;
   }
+
+  if (user.userId === 'fb18366e-10e8-4688-874e-120afbc8dad1') {
+    return <Navigate to="/admin/dashboard" />;
+  }
+  
   return children;
 };
 

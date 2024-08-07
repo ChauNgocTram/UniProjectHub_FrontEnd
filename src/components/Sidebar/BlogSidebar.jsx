@@ -1,60 +1,66 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { AiOutlineFileSearch, AiOutlineIdcard } from "react-icons/ai";
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
-  ALL_PERSONAL_PROJECTS,
-  CREATE_PERSONAL_PROJECT,
+  BLOG_MEMBER,
+  CATEGORY,
+  CREATE_BLOG,
+  SAVED_TEAM_PROJECT,
 } from "../../routes/constant";
-import { GrBlog } from "react-icons/gr";
-import { PiTagChevron,PiBookBookmark } from "react-icons/pi";
+
+import networking from "../../assets/images/networking.png";
+import bookmark from "../../assets/images/bookmark.png";
+import add from "../../assets/images/add.png";
 
 function BlogSidebar() {
+  const location = useLocation();
+  const [activeIndex, setActiveIndex] = useState(null);
+
   const Menus = [
     {
+      // icon: <IoFileTrayStackedOutline />,
+      image: networking,
+      path: `/${BLOG_MEMBER}`,
       title: "Diễn đàn",
-      icon: <GrBlog />,
-     // path: `/${ALL_PERSONAL_PROJECTS}`,
     },
     {
+      //    icon: <BsBookmarks />,
+      image: bookmark,
+      path: `/${CATEGORY}`,
       title: "Danh mục",
-      icon: <PiTagChevron />,
-    //  path: `/${CREATE_PERSONAL_PROJECT}`,
     },
     {
-      title: "Blog của tôi",
-      icon: <PiBookBookmark />,
-    //  path: `/${CREATE_PERSONAL_PROJECT}`,
+     // icon: <IoAdd />,
+      image: add,
+      path: `/${CREATE_BLOG}`,
+      title: "Tạo blog",
     },
   ];
+
+  useEffect(() => {
+    const activePath = location.pathname;
+    const index = Menus.findIndex((menu) => menu.path === activePath);
+    setActiveIndex(index);
+  }, [location.pathname, Menus]);
+
   return (
-    <div className="flex pr-4">
-      <div
-        className={` ${
-          open ? "w-64" : "w-20 "
-        } bg-white h-auto p-5 pt-7 relative duration-300 `}
-      >
-        <ul className="pr-2 border-r-2 border-neutral-200">
+    <div className="flex bg-white w-[260px] h-fit border-r-2 border-neutral-200 pt-2 mr-10">
+      <div className="px-4">
+        <ul className="">
           {Menus.map((Menu, index) => (
             <NavLink
               key={index}
-            //  to={Menu.path}
-              className="text-decoration-none"
+              to={Menu.path}
+              className={
+                "flex -z-10 mb-2 gap-1 space-x-1 w-full px-5 py-2 rounded " +
+                (activeIndex === index
+                  ? "bg-blueLevel1 text-blueLevel5 font-bold"
+                  : "text-gray-800 hover:bg-slate-200 ")
+              }
+              onClick={() => setActiveIndex(index)}
             >
-              <li
-                key={index}
-                className={`flex my-2 rounded-md p-2 cursor-pointer hover:bg-neutral-200 text-black hover:text-mainColor text-sm items-center gap-x-4 
-            ${Menu.gap ? "mt-9" : "mt-2"} ${
-                  index === 0 && "bg-mainBg text-black"
-                } `}
-              >
-                <span style={{ fontSize: "24px" }}>{Menu.icon}</span>
-
-                <span
-                  className={`${!open && "hidden"} origin-left duration-200`}
-                >
-                  {Menu.title}
-                </span>
-              </li>
+              {/* <span style={{ fontSize: "22px" }}>{Menu.icon}</span> */}
+              <img src={Menu.image} alt="" width={25} height={10} />
+              <span className="">{Menu.title}</span>
             </NavLink>
           ))}
         </ul>

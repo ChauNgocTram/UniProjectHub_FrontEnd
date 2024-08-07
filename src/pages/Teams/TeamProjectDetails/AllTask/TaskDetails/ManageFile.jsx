@@ -6,10 +6,12 @@ import { GoFileZip } from "react-icons/go";
 import { LuUpload } from "react-icons/lu";
 import FileUpload from "../../../../../components/FileUpload/FileUpload";
 import Tabs from "../../../../../components/Tabs/Tabs";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../../../redux/features/userSlice";
 
-function ManageFile() {
+function ManageFile({ taskId }) {
   const [open2, setOpen2] = useState(false);
-
+  const user = useSelector(selectUser);
   const [selectedTab, setSelectedTab] = useState(0);
 
   const TABS = [
@@ -70,7 +72,8 @@ function ManageFile() {
         
       </div>
 
-      <FileUpload open2={open2} setOpen2={setOpen2} />
+      <FileUpload open2={open2} setOpen2={setOpen2} taskId={taskId} userId={user.userId} />
+
     </div>
   );
 }

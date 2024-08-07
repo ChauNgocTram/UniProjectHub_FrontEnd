@@ -25,3 +25,16 @@ export const useUserById = (userId) => {
     queryFn: () => getUserById(userId),
   });
 };
+
+//====== dashboard
+const getSummary = async () => {
+  const { data } = await api.get(`/api/Dashboard/summary`);
+  return data;
+};
+
+export const useGetSummary = () => {
+  return useQuery({
+    queryKey: ["summary"],
+    queryFn: getSummary,
+  });
+};

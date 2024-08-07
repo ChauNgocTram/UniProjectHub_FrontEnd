@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { BLOG_MEMBER } from '../../routes/constant';
 import Select from 'react-select'; 
 import { useGetAllCategory, useCreateBlog } from '../../api/blogApi';
+import BlogSidebar from '../../components/Sidebar/BlogSidebar';
 
 function CreateBlog() {
   const navigate = useNavigate()
@@ -48,12 +49,14 @@ function CreateBlog() {
   };
 
   return (
-    <div className="mx-12 p-4">
-      <h1 className="text-2xl font-bold mb-4">Create Blog</h1>
+    <div className="flex w-full mt-8 h-screen">
+<BlogSidebar />
+    <div className="mx-4 p-4 w-full">
+      <h1 className="text-2xl font-bold mb-4 text-blueLevel5">Tạo blog</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            Blog Name
+            Tiêu đề
           </label>
           <input
             type="text"
@@ -66,7 +69,7 @@ function CreateBlog() {
         </div>
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Description
+            Mô tả
           </label>
           <textarea
             id="description"
@@ -77,8 +80,8 @@ function CreateBlog() {
           />
         </div>
         <div>
-          <label htmlFor="categoryID" className="block text-sm font-medium text-gray-700">
-            Category
+          <label htmlFor="categoryID" className="block text-sm font-medium text-gray-700 mb-2">
+            Danh mục
           </label>
           {isLoading ? (
             <p>Loading categories...</p>
@@ -90,14 +93,14 @@ function CreateBlog() {
               options={categoryOptions}
               onChange={(selectedOption) => setCategoryID(selectedOption?.value || null)}
               value={categoryOptions.find(option => option.value === categoryID)}
-              placeholder="Select a category"
+              placeholder="Chọn danh mục"
               isClearable
             />
           )}
         </div>
         <button
           type="button"
-          className="mt-4 bg-neutral-300 text-black p-2 rounded-md mr-2"
+          className="mt-8 bg-neutral-300 text-black p-2 rounded-md mr-2"
         >
           <NavLink to={`/${BLOG_MEMBER}`}>
             Cancel
@@ -105,12 +108,14 @@ function CreateBlog() {
         </button>
         <button
           type="submit"
-          className="mt-4 bg-blue-500 text-white p-2 rounded-md"
+          className="mt-8 bg-blueLevel5 text-white p-2 rounded-md"
         >
-          Create Blog
+          Tạo Blog
         </button>
       </form>
     </div>
+    </div>
+    
   );
 }
 

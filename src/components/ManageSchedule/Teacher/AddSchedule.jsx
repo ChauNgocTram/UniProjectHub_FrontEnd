@@ -5,25 +5,49 @@ import { DialogTitle } from "@headlessui/react";
 import Textbox from "../../Textbox";
 import Button from "../../Button";
 import { useAddSchedule } from "../../../api/scheduleApi";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/features/userSlice";
+import Select from 'react-select';
+
+const daysOfWeek = [
+  { value: 'Monday', label: 'Monday' },
+  { value: 'Tuesday', label: 'Tuesday' },
+  { value: 'Wednesday', label: 'Wednesday' },
+  { value: 'Thursday', label: 'Thursday' },
+  { value: 'Friday', label: 'Friday' },
+  { value: 'Saturday', label: 'Saturday' },
+  { value: 'Sunday', label: 'Sunday' },
+];
 
 function AddSchedule({ open, setOpen }) {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm();
   const { mutate: addSchedule, isLoading } = useAddSchedule();
+  const user = useSelector(selectUser);
+  const userID = user.userId;
+
+  const [dateOfWeek, setDateOfWeek] = useState(null);
 
   const submitHandler = (data) => {
+    const convertToUTC = (localDateTime) => {
+      if (!localDateTime) return '';
+      const localDate = new Date(localDateTime);
+      return new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
+    };
+  
     const scheduleData = {
-      userId: data.userId, // Add userId from form data
-      dateOfWeek: data.dateOfWeek,
-      startTime: data.startTime,
-      endTime: data.endTime,
-      slotStartTime: data.slotStartTime,
-      slotEndTime: data.slotEndTime,
+      userId: userID,
+      dateOfWeek: dateOfWeek ? dateOfWeek.value : '',
+      startTime: convertToUTC(data.startTime),
+      endTime: convertToUTC(data.endTime),
+      slotStartTime: convertToUTC(data.slotStartTime),
+      slotEndTime: convertToUTC(data.slotEndTime),
       courseName: data.courseName,
     };
-
+  
     addSchedule(scheduleData);
-    setOpen(false); // Close modal after submission
+    setOpen(false);
   };
+  
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
@@ -33,25 +57,18 @@ function AddSchedule({ open, setOpen }) {
         </DialogTitle>
 
         <div className="mt-2 flex flex-col gap-6">
-          <Textbox
-            placeholder="Nhập userId"
-            type="text"
-            name="userId"
-            label="User ID"
-            className="w-full rounded"
-            register={register("userId", { required: "User ID is required" })}
-            error={errors.userId ? errors.userId.message : ""}
-          />
           
-          <Textbox
-            placeholder="Nhập ngày trong tuần"
-            type="text"
-            name="dateOfWeek"
-            label="Ngày trong tuần"
-            className="w-full rounded"
-            register={register("dateOfWeek", { required: "Date of Week is required" })}
-            error={errors.dateOfWeek ? errors.dateOfWeek.message : ""}
-          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Ngày trong tuần</label>
+            <Select
+              options={daysOfWeek}
+              value={dateOfWeek}
+              onChange={setDateOfWeek}
+              placeholder="Chọn ngày trong tuần"
+              className="mt-1"
+            />
+            {errors.dateOfWeek && <p className="text-red-600 text-xs">{errors.dateOfWeek.message}</p>}
+          </div>
 
           <Textbox
             placeholder="Bắt đầu (ISO 8601)"

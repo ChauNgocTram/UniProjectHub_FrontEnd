@@ -1,4 +1,3 @@
-
 // Login / Registration Page
 export const LOGIN_PAGE = 'dang-nhap';
 export const REGISTER_PAGE = 'dang-ki';
@@ -29,6 +28,10 @@ export const ALL_PERSONAL_PROJECTS = 'du-an-ca-nhan'
 export const CREATE_PERSONAL_PROJECT = 'tao-du-an-ca-nhan'
 export const EDIT_PERSONAL_PROJECT = 'chinh-sua-du-an-cua-ban/:id'
 export const ALL_PERSONAL_TASK = 'tat-ca-nhiem-vu/:id'
+export const PERSONAL_TASK_TODO = 'to-do/:id'
+export const PERSONAL_TASK_INPROGRESS = 'in-progress/:id'
+export const PERSONAL_TASK_COMPLETED = 'completed/:id'
+export const PERSONAL_TASK_PENDING = 'pending/:id'
 export const PERSONAL_TASK_DETAILS = 'chi-tiet-nhiem-vu/:id'
 
 // Dự thính lớp học
@@ -40,3 +43,7 @@ export const TEACHER_SCHEDULE = 'thoi-khoa-bieu-giang-vien/:userId'
 export const BLOG_MEMBER_TUTORIAL = 'blog-member-tutorial'
 export const BLOG_MEMBER = 'blog-member'
 export const CREATE_BLOG = 'tao-blog'
+export const CATEGORY = 'danh-muc'
+
+//============== ADMIN
+export const DASHBOARD = 'dashboard'

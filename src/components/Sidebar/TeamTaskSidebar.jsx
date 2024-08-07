@@ -30,7 +30,6 @@ const variants = {
 };
 
 function TeamTaskSidebar({ taskId, onSelectStatus }) {
-  const location = useLocation();
 
   const navLinks = [
     {

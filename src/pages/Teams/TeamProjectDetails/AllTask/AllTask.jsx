@@ -11,6 +11,7 @@ import { useOutletContext } from "react-router-dom";
 import Empty from "../../../../assets/Empty.json";
 import NoDataPlaceholder from "../../../../components/NoDataPlaceholder";
 import { useGetProjectById } from "../../../../api/projectApi";
+import Loading from "../../../../components/Loading/Loading";
 
 const TABS = [
   { title: "Bảng", icon: <BsGrid /> },
@@ -29,7 +30,9 @@ function AllTask() {
 
   const { data: project, isLoading, isError } = useGetProjectById(projectId);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading ) {
+    return <Loading loading={isLoading} />;
+  }
   if (isError) return <div>Error loading project details</div>;
 
   const messageLines = [

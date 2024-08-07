@@ -16,12 +16,12 @@ import { RxCounterClockwiseClock } from "react-icons/rx";
 import { IoMdAdd } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import { PERSONAL_TASK_DETAILS } from "../../../../routes/constant";
-import AddSubTask from "../../ManageTask/AddSubTask";
 import TaskDialog from "../../../Dialog/TaskDialog";
 import TaskStatusBadge from "../../../Status/TaskStatusBadge";
 import FormattedDate from "../../../FormattedDate";
 import { useSubTasksByTaskId } from "../../../../api/subTaskApi";
 import { BsDot } from "react-icons/bs";
+import AddSubTask from "../../ManageSubTask/AddSubTask";
 
 const ICONS = {
   3: <MdKeyboardDoubleArrowUp />,
@@ -67,7 +67,7 @@ function PersonalTaskCard({ task }) {
         </div>
 
         <div className="flex items-center min-h-12 gap-2 my-1 px-2">
-          <NavLink to={`/du-an-ca-nhan/${PERSONAL_TASK_DETAILS}`}>
+          <NavLink to={`/nhiem-vu/${PERSONAL_TASK_DETAILS.replace(":id", task.id)}`}>
             <h4 className="line-clamp-2 text-black font-medium">
               {task.taskName}
             </h4>

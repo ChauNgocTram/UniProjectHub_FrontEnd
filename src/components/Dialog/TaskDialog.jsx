@@ -11,7 +11,6 @@ import {
   MenuItems,
   MenuItem,
 } from "@headlessui/react";
-import AddTask from "../Tasks/ManageTask/AddTask";
 import AddSubTask from "../Tasks/ManageSubTask/AddSubTask";
 import ConfirmatioDialog from "../Dialog/Dialogs";
 import DeleteTask from "../Tasks/ManageTask/DeleteTask";
@@ -21,8 +20,6 @@ const TaskDialog = ({ task, onDelete }) => {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-
-
 
   const items = [
     {
@@ -83,18 +80,11 @@ const TaskDialog = ({ task, onDelete }) => {
         </Menu>
       </div>
 
-      <UpdateTask
-        open={openEdit}
-        setOpen={setOpenEdit}
-        taskId={task.id}
-      />
+      <UpdateTask open={openEdit} setOpen={setOpenEdit} taskId={task.id} />
 
       <AddSubTask open={open} setOpen={setOpen} taskId={task.id} />
 
-      <ConfirmatioDialog
-        open={openDialog}
-        setOpen={setOpenDialog}
-      />
+      <ConfirmatioDialog open={openDialog} setOpen={setOpenDialog} />
     </>
   );
 };

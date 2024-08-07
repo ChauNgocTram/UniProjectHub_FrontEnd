@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { MdTaskAlt } from "react-icons/md";
 import FormattedDate from "../../FormattedDate";
@@ -27,7 +27,12 @@ const getDeadlineStyles = (deadline) => {
 };
 
 const AllSubTask = ({ subTask }) => {
-  const sortedSubTasks = subTask?.slice().sort((a, b) => {
+  const [showAll, setShowAll] = useState(false);
+
+  // Ensure subTask is an array
+  const safeSubTask = Array.isArray(subTask) ? subTask : [];
+
+  const sortedSubTasks = safeSubTask.slice().sort((a, b) => {
     const today = new Date();
     const dateA = new Date(a.deadline);
     const dateB = new Date(b.deadline);
@@ -57,14 +62,24 @@ const AllSubTask = ({ subTask }) => {
 
     return dateA - dateB;
   });
+
+  const displayedSubTasks = showAll
+    ? sortedSubTasks
+    : sortedSubTasks.slice(0, 4);
+
+  useEffect(() => {
+    console.log("subTask:", subTask);
+    console.log("Is array:", Array.isArray(subTask));
+  }, [subTask]);
+
   return (
     <div className="w-full md:w-1/2 space-y-2">
-      <div className="pb-4">
+      <div className="pb-2">
         <p className="text-blueLevel5 font-semibold text-lg mb-3">
           VIỆC CẦN LÀM
         </p>
-        <div className="space-y-4">
-          {sortedSubTasks?.map((el, index) => {
+        <div className="space-y-4 overflow-y-auto h-[350px] scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent px-4">
+          {displayedSubTasks.map((el, index) => {
             const { textColor, iconColor } = getDeadlineStyles(el.deadline);
 
             return (
@@ -94,6 +109,16 @@ const AllSubTask = ({ subTask }) => {
               </div>
             );
           })}
+          {!showAll && sortedSubTasks.length > 4 && (
+            <div className="flex items-center justify-center mt-1">
+              <button
+                className="text-blue-500 italic"
+                onClick={() => setShowAll(true)}
+              >
+                Xem thêm...
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

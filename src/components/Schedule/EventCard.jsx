@@ -6,26 +6,22 @@ import { MdLocationOn } from "react-icons/md";
 import { Pagination } from 'antd';
 
 function EventCard({ events }) {
-  console.log('Events in EventCard:', events);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
+  const currentDate = new Date();
 
-  const currentDate = startOfDay(new Date());
+  // Filter events to exclude past events and sort them by startTime
+  const filteredAndSortedEvents = events
+    .filter(event => isAfter(new Date(event.startTime), currentDate) || isToday(new Date(event.startTime)))
+    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
+  const totalItems = filteredAndSortedEvents.length;
 
-
-  const filteredEvents = events.filter(
-    (event) => isAfter(new Date(event.startTime), currentDate) || isToday(new Date(event.startTime))
-  );
-  
-
-  const totalItems = filteredEvents.length;
-
-  const paginatedEvents = filteredEvents.slice(
+  // Paginate the sorted and filtered events
+  const paginatedEvents = filteredAndSortedEvents.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-  
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

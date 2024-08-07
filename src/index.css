@@ -14,7 +14,7 @@
 
 
 .wrapper-body{
-  @apply lg:w-[1280px] mt-24 mx-auto mb-0 overflow-hidden;
+  @apply lg:w-[1280px] mt-10 mx-auto mb-0 overflow-hidden;
 }
 
 .bg-custome {
