@@ -21,6 +21,7 @@ import AddSchedule from "../../components/ManageSchedule/Teacher/AddSchedule";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import ScheduleDetailsModal from "../../components/ManageSchedule/ScheduleDetailsModal";
+import DeleteSchedule from '../../components/ManageSchedule/Teacher/DeleteSchedule' 
 
 const TeacherSchedule = () => {
   const [open, setOpen] = useState(false);
