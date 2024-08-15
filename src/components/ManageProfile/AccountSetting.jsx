@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 
 function AccountSetting({ userInfo }) {

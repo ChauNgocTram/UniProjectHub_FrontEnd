@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import { useParams } from "react-router-dom";
 import BlogSidebar from "../../components/Sidebar/BlogSidebar";
 import BlogUserInfo from "../../components/BlogMember/BlogUserInfo";

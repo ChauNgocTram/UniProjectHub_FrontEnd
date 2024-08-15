@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import intro from "../../assets/video/intro.mp4";
 import { NavLink, useNavigate, useNavigationType } from "react-router-dom";
 import { Button, Checkbox, Form, Input } from "antd";
@@ -182,9 +182,7 @@ function Login() {
                       onFinishFailed={onFinishFailed}
                       size="large"
                       autoComplete="off"
-                      wrapperCol={{
-                        span: 24,
-                      }}
+                      wrapperCol={{ span: 24 }}
                     >
                       <div className="flex flex-col md:flex-row items-start justify-between">
                         <p className="w-full md:w-6/12 p-0 m-0 px-2 pt-2 flex items-center">
@@ -194,7 +192,6 @@ function Login() {
                           <span>Tên người dùng:</span>
                         </p>
                         <Form.Item
-                          // label="Email"
                           className="mx-0 px-0 w-full"
                           name="username"
                           rules={[
@@ -207,6 +204,7 @@ function Login() {
                           <Input
                             style={{ width: "100%" }}
                             placeholder="Nhập tên"
+                            autoComplete="username" // Thêm thuộc tính autocomplete
                           />
                         </Form.Item>
                       </div>
@@ -219,8 +217,7 @@ function Login() {
                           <span>Mật khẩu:</span>
                         </p>
                         <Form.Item
-                          //label="Mật khẩu"
-                          className="mx-0 px-0 w-full "
+                          className="mx-0 px-0 w-full"
                           name="password"
                           rules={[
                             {
@@ -236,6 +233,7 @@ function Login() {
                           <Input.Password
                             style={{ width: "100%" }}
                             placeholder="Nhập mật khẩu"
+                            autoComplete="current-password" // Thêm thuộc tính autocomplete
                           />
                         </Form.Item>
                       </div>
@@ -243,10 +241,9 @@ function Login() {
                       <div className="flex flex-col justify-center mx-auto md:w-full w-[80%]">
                         <button
                           type="submit"
-                          //  onClick={handleClick}
                           className="bg-black text-white text-lg px-3 py-2 mx-auto w-full rounded-lg tracking-wider
-                          font-bold focus:outline-none focus:shadow-outline hover:bg-hoverBtn hover:text-black
-                          shadow-lg mt-3 "
+      font-bold focus:outline-none focus:shadow-outline hover:bg-hoverBtn hover:text-black
+      shadow-lg mt-3 "
                         >
                           Đăng nhập
                         </button>

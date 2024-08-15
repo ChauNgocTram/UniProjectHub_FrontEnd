@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 import mainHero from "../../assets/images/mainHero.jpg";

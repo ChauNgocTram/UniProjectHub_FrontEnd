@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import avtDefault from "../../assets/images/avtDefault.png";
 import { PiShootingStarLight } from "react-icons/pi";
 import { useUserById } from "../../api/userApi";

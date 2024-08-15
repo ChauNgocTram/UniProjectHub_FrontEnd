@@ -7,7 +7,6 @@ export const alert = {
       position: "top-end",
       width: "30rem",
       background: "#eef6ec",
-      // color: " red",
       showConfirmButton: false,
       timer: 2500,
       timerProgressBar: true,
@@ -115,7 +114,7 @@ export const alert = {
       html: `${html}`,
     });
   },
-  alertInfoNotiForTrainee: function (title, html,time, width) {
+  alertInfoNotiForTrainee: function (title, html, time, width, callback = () => {}) {
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",

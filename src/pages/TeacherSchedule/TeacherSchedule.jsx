@@ -31,7 +31,7 @@ const TeacherSchedule = () => {
   const { userId } = useParams();
   const { data: userDetail } = useUserById(userId);
   const user = useSelector(selectUser);
-  const currentUserId = user.userId;
+  const currentUserId = user?.userId;
 
   const {
     data: scheduleData = [],

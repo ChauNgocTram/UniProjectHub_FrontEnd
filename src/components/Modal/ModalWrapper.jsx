@@ -5,7 +5,7 @@ import {
   DialogPanel,
 } from "@headlessui/react";
 import { Fragment, useRef } from "react";
-import React from "react";
+import React, { useState }  from "react";
 
 const ModalWrapper = ({ open, setOpen, children }) => {
   const cancelButtonRef = useRef(null);
