@@ -54,14 +54,14 @@ function Register() {
 
   return (
     <div className="bg-mainBg h-screen -mb-14 pb-0">
-      <main className="pt-2">
+      <main className="pt-2 h-screen flex-1">
         <div
-          className="relative w-full max-w-[1020px] h-auto bg-white rounded-[3.3rem] mx-auto mt-12"
+          className="relative w-full max-w-[1020px] h-auto bg-white rounded-[3.3rem] my-0 mx-auto mt-14"
           style={{ height: "80vh" }}
         >
-          <div className="inner-box flex justify-center items-center">
-            <div className="h-[75%] w-full m-auto flex justify-between rounded-xl p-0">
-              <div className="w-1/2 flex items-center justify-center">
+          <div className="absolute inner-box inner-log-in flex justify-content-center">
+            <div className="h-[75vh] w-full flex justify-between items-center rounded-xl px-0 pb-6">
+              <div className="w-1/2 flex flex-1 items-center justify-center">
                 <div className="w-full px-4">
                   <NavLink className="flex justify-center mb-6">
                     <img src={logo} alt="" width={100} />
@@ -195,7 +195,7 @@ function Register() {
                 </div>
               </div>
 
-              <div className="videoDiv h-[500px] lg:flex md:hidden sm:hidden">
+              <div className="videoDiv h-[500px] flex-1 lg:flex md:hidden sm:hidden">
                 <video
                   className="absolute h-full w-full object-cover top-0 bottom-0 right-0 left-0"
                   src={intro}
