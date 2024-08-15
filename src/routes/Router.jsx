@@ -40,27 +40,57 @@ const Login = lazy(() => import("../pages/Login/Login"));
 const Register = lazy(() => import("../pages/Register/Register"));
 const AuthLayout = lazy(() => import("../layouts/AuthLayout"));
 const CommonLayout = lazy(() => import("../layouts/CommonLayout"));
-const CreateTeam = lazy(() => import("../pages/Teams/ManageTeamProject/CreateTeam/CreateTeam"));
-const CreateProject = lazy(() => import("../pages/PersonalProject/ManageProject/CreateProject"));
-const AllTeamProject = lazy(() => import("../pages/Teams/TeamProjects/AllTeamProject"));
-const AllPersonalProject = lazy(() => import("../pages/PersonalProject/AllPersonalProject"));
-const EditProject = lazy(() => import("../pages/PersonalProject/ManageProject/EditProject"));
-const EditTeamProject = lazy(() => import("../pages/Teams/ManageTeamProject/EditTeamProject"));
-const AllTask = lazy(() => import("../pages/Teams/TeamProjectDetails/AllTask/AllTask"));
+const CreateTeam = lazy(() =>
+  import("../pages/Teams/ManageTeamProject/CreateTeam/CreateTeam")
+);
+const CreateProject = lazy(() =>
+  import("../pages/PersonalProject/ManageProject/CreateProject")
+);
+const AllTeamProject = lazy(() =>
+  import("../pages/Teams/TeamProjects/AllTeamProject")
+);
+const AllPersonalProject = lazy(() =>
+  import("../pages/PersonalProject/AllPersonalProject")
+);
+const EditProject = lazy(() =>
+  import("../pages/PersonalProject/ManageProject/EditProject")
+);
+const EditTeamProject = lazy(() =>
+  import("../pages/Teams/ManageTeamProject/EditTeamProject")
+);
+const AllTask = lazy(() =>
+  import("../pages/Teams/TeamProjectDetails/AllTask/AllTask")
+);
 const TeamTaskLayout = lazy(() => import("../layouts/TeamTaskLayout"));
-const TaskDetails = lazy(() => import("../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails"));
-const Members = lazy(() => import("../pages/Teams/TeamProjectDetails/Members/Members"));
+const TaskDetails = lazy(() =>
+  import("../pages/Teams/TeamProjectDetails/AllTask/TaskDetails/TaskDetails")
+);
+const Members = lazy(() =>
+  import("../pages/Teams/TeamProjectDetails/Members/Members")
+);
 const GeneralChat = lazy(() => import("../pages/Teams/Chat/GeneralChat"));
 const Profile = lazy(() => import("../pages/UserProfile/Profile"));
 const PersonalTaskLayout = lazy(() => import("../layouts/PersonalTaskLayout"));
-const AllPersonalTask = lazy(() => import("../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/AllPersonalTask"));
-const DetailedInfo = lazy(() => import("../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/PersonalTaskDetails/DetailedInfo"));
+const AllPersonalTask = lazy(() =>
+  import(
+    "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/AllPersonalTask"
+  )
+);
+const DetailedInfo = lazy(() =>
+  import(
+    "../pages/PersonalProject/PersonalProjectDetails/AllPersonalTask/PersonalTaskDetails/DetailedInfo"
+  )
+);
 const Tutorial = lazy(() => import("../pages/BlogMember/Tutorial"));
 const BlogMember = lazy(() => import("../pages/BlogMember/BlogMember"));
 const CreateBlog = lazy(() => import("../pages/BlogMember/CreateBlog"));
 const Schedule = lazy(() => import("../pages/TeacherSchedule/Schedule"));
-const TeacherSchedule = lazy(() => import("../pages/TeacherSchedule/TeacherSchedule"));
-const SavedProjectsPage = lazy(() => import("../pages/Teams/TeamProjects/SaveProjectPage"));
+const TeacherSchedule = lazy(() =>
+  import("../pages/TeacherSchedule/TeacherSchedule")
+);
+const SavedProjectsPage = lazy(() =>
+  import("../pages/Teams/TeamProjects/SaveProjectPage")
+);
 
 import PrivateRoute from "./PrivateRoute";
 import Loading from "../components/Loading/Loading";
@@ -70,7 +100,7 @@ import CategoryList from "../pages/BlogMember/CategoryList";
 import CategoryBlogs from "../pages/BlogMember/CategoryBlogs";
 import AccountManagementPage from "../pages/Admin/AccountManagementPage";
 const AppRouter = () => (
-  <Suspense fallback={<Loading/>}>
+  <Suspense fallback={<Loading />}>
     <Outlet />
   </Suspense>
 );
@@ -106,8 +136,15 @@ const appRoutes = [
       },
       { path: CREATE_PERSONAL_PROJECT, element: <CreateProject /> },
       { path: EDIT_PERSONAL_PROJECT, element: <EditProject /> },
-      
-      { path: SCHEDULE, element: <Schedule /> },
+
+      {
+        path: SCHEDULE,
+        element: (
+          <PrivateRoute>
+            <Schedule />
+          </PrivateRoute>
+        ),
+      },
       { path: TEACHER_SCHEDULE, element: <TeacherSchedule /> },
 
       { path: BLOG_MEMBER_TUTORIAL, element: <Tutorial /> },
@@ -121,7 +158,7 @@ const appRoutes = [
       },
       { path: CREATE_BLOG, element: <CreateBlog /> },
       { path: CATEGORY, element: <CategoryList /> },
-      { path: "/category/:categoryId", element: <CategoryBlogs  /> },
+      { path: "/category/:categoryId", element: <CategoryBlogs /> },
     ],
   },
   {
@@ -132,17 +169,14 @@ const appRoutes = [
       { path: TASK_TODO, element: <AllTask /> },
       { path: TASK_INPROGRESS, element: <AllTask /> },
       { path: TASK_COMPLETED, element: <AllTask /> },
-      { path: TASK_PENDING, element: <AllTask /> },      
+      { path: TASK_PENDING, element: <AllTask /> },
       { path: MEMBERS, element: <Members /> },
     ],
   },
   {
     path: "/nhiem-vu",
     element: <TaskDetails />,
-    children: [
-      { path: TASK_DETAILS, element: <TaskDetails /> },
-
-    ],
+    children: [{ path: TASK_DETAILS, element: <TaskDetails /> }],
   },
   {
     path: "/du-an-ca-nhan",
@@ -159,10 +193,7 @@ const appRoutes = [
   {
     path: "/nhiem-vu",
     element: <DetailedInfo />,
-    children: [
-      { path: PERSONAL_TASK_DETAILS, element: <DetailedInfo /> },
-
-    ],
+    children: [{ path: PERSONAL_TASK_DETAILS, element: <DetailedInfo /> }],
   },
   {
     path: "/auth",
